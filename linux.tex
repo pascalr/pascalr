@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{linux}
+\author{pascal.rainville }
+\date{March 2019}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\section{Programmes}
+  
+Pour voir javascript et jsx correctement dans vim:
+Installer pathogen
+https://github.com/tpope/vim-pathogen
+
+git clone https://github.com/pangloss/vim-javascript.git ~/.vim/bundle/vim-javascript
+git clone https://github.com/mxw/vim-jsx.git ~/.vim/bundle/vim-jsx
+
+vimrc
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
+
+set shiftwidth=2
+set tabstop=2
+
+set expandtab
+
+set autoindent
+set smartindent
+
+set number
+
+" Pour installer vim-sensible par exemple:
+"cd ~/.vim/bundle && \
+"git clone https://github.com/tpope/vim-sensible.git
+  
+terminal:
+click droit -> preferences -> (enlever title bar, et enlever terminal bell)
+
+
+sudo apt-get install ubuntu-restricted-extras curl gparted steam vim git tree blender gimp libcanberra-gtk-module xkeycaps
+
+sudo apt install indicator-multiload
+
+logiciel cad
+ librecad
+
+sudo add-apt-repository ppa:freecad-maintainers/freecad-stable
+sudo apt-get update
+sudo apt-get install freecad freecad-doc
+
+setting -> power -> power management -> 15 minutes sleep
+
+wine-stable vs wine-development
+
+Erreur: Wine Mono is not installed
+sudo apt-get install winetricks
+ensuite:
+winetricks dotnet45
+
+Pour installer react:
+Installer nvm
+https://github.com/creationix/nvm
+reload terminal
+Puis installer node.js
+nvm install node
+
+\section{Customize}
+
+\subsection{Firefox}
+  open menu... customize... uncheck title bar & compact # Plus compact comme dans chrome
+
+\section{Programmes sans apt-get}
+
+Python: installer pip, voir sur internet comment
+
+\end{document}

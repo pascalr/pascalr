@@ -1,0 +1,219 @@
+\documentclass{article}
+\input{common.tex}
+
+\title{Robots}
+\author{Pascal Rainville }
+\date{December 2018}
+
+\newcommand\ala\textsuperscript{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Les robots, c'est le future.
+
+J'ai souvent regardé pour fabriquer des robots. Le plus gros empêchement est l'argent. Les prix sont relativement faible, mais c'est trop cher quand même. Les moteurs sont cher, les drives sont cher, les batteries sont cher.
+
+Le pneumatique est ainsi choisi afin. Les compresseurs sont abondants. Comme source d'énergie, ce n'est pas efficace puisque les compresseurs ne le sont pas. Toutefois, cela ne requiert pas de batterie. Un réservoir est plus écologique. De plus c'est peu dispendieux.
+
+Il n'y a pas beaucoup de place à innover si j'utilise des pièces communes tel que des moteurs. Dans le pneumatique je crois pouvoir plus innover. Je vais tenter d'utiliser la technologie des imprimantes 3d.
+
+\todo{Un seal avec une bille et du PLA imprimé en 3d}
+
+\section{Plan}
+
+Fabriquer un robot capable de marcher pneumatiquement. Le haut du corps ça sera la version 2.0. Le haut du robot contiendra seulement un espace pour stocker une bonbonne d'air comprimé pour l'instant.
+
+Il y a plusieurs étapes à réaliser dans un ordre quelquonque.
+\begin{itemize}
+    \item Déterminer les composantes à se procurer
+    \item Fabriquer un muscle prototype
+    \item Désigner un modèle réaliste en 3d
+    \item Imprimer en 3d un prototype du squelette
+    \item Calculer les capacités du prototype
+    \item L'électronique pour controller les valves
+    \item Les valves
+    \item Fabriquer un robot avec une seule jambe!
+    \item Dessiner le prototype le plus de base
+    \item Programmer le contrôle des mouvements
+    \item Déterminer tous les mouvements nécessaires
+\end{itemize}
+
+\section{Fonctions}
+
+Plusieurs fonctions des robots sont possibles:
+\begin{itemize}
+    \item Transporteur: Par exemple, transporter l'épicerie.
+    \item Sportif: Un robot qui joue à des sports pour se pratiquer!
+\end{itemize}
+
+
+\section{Recherche}
+
+\subsection{Modèle de Ogden}
+
+The Ogden material model is a hyperelastic material model used to describe the non-linear stress–strain behaviour of complex materials such as rubbers, polymers, and biological tissue. The model was developed by Raymond Ogden in 1972. The Ogden model, like other hyperelastic material models, assumes that the material behaviour can be described by means of a strain energy density function, from which the stress–strain relationships can be derived.
+
+\subsection{rPAMs}
+Reverse pneumatic artificial muscles (rPAMs): Modeling, integration, and control
+
+Un article intéressant qui parle d'une autre manière de fabriquer un muscle artificiel.
+
+https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0204637
+
+\section{Taille}
+La taille du robot serait de l'ordre de deux fois plus petit qu'un humain. Ainsi, les coûts de production serait grandement diminuer. Le volume est 8 fois plus petit qu'un humain.
+
+\section{Robot pneumatique}
+Le plus réaliste et le plus de potentiel est la réalisation d'un robot pneumatique. Les avantages, un seul gros moteur. Pneumatique c'est plus simple que hydraulique aussi parce que les pressions sont plus basses.
+
+Limitations
+\begin{itemize}
+    \item Positionnement
+\end{itemize}
+
+Avantages:
+\begin{itemize}
+    \item Coût faible
+    \item simplicité
+    \item réserve d'énergie peu dispendieuse (bonbonne)
+    \item les compresseurs sont abondants (le robot pourrait aller se recharger à la station service du coin!!!)
+\end{itemize}
+
+\subsection{Matériaux}
+Le robot serait probablement fabriqué avec un aliage d'aluminium pour sa résistance et sa légèrté.
+
+\subsection{Forces}
+Un avant-bras est l'équivalent d'un cylindre de 3 po de diamètre. Une aire de 7,07 po\ala{2}. À 100 psi, c'est 707 livres.
+
+Un bras est l'équivalent d'un cylindre de 4 po de diamètre. Une aire de 12,57~po\ala{2}. À 100 psi, c'est 1257 livres.
+
+C'est amplement de force disponible dans l'espace.
+
+Si un vérin pneumatique est fixé par des pivots à l'avant et à l'arrière, c'est un membre à deux forces! Ainsi, le vérin va toujours travailler optimalement dans son sens.
+
+\subsection{Muscle avec balloune gonflable}
+
+Pour me pratiquer, fabriquer un muscle avec une balloune gonflable.
+
+C'est quoi la pression qu'il y a dans une balloune?
+
+Je pense que la pression dans une balloune est la même que la pression atmosphérique.
+
+\[P = \frac{RT}{\nu}\]
+
+La température $T$ est à 300 K (27 \textdegree C).
+
+Le site suivant explique bien ce qui ce passe dans un contenant sous-pression.
+
+\url{http://homepages.engineering.auckland.ac.nz/~pkel015/SolidMechanicsBooks/Part_I/BookSM_Part_I/07_ElasticityApplications/07_Elasticity_Applications_03_Presure_Vessels.pdf}
+
+\subsection{Valve}
+
+Est-que je serais capable de fabriquer en 3d une valve pneumatique?
+
+Composantes d'une valve:
+\begin{itemize}
+    \item Solénoïde
+    \item Ressort
+    \item O-ring
+    \item Piston
+    \item Opération manuelle
+\end{itemize}
+
+\todo{Imprimer un contenant en 3d pour essayer de mettre de l'air comprimé dedans. Est-ce que c'est assez fort? Est-ce que ça coule beaucoup à travers les parois?}
+
+Régulateur de débit:
+
+Régulateur de pression:
+
+Distributeur 5/2:
+
+
+
+\subsection{Squelette}
+
+Il va probablement falloir que mon robot possède un squelette. Les muscles tire sur le squelette pour le déplacer.
+
+Parce que je pourrais quand même à la place avoir un vérin, mais ça marche pour pour tourner par contre. Peut-être que je peux avoir un vérin pour les jambes, mais ça prend un squelette pour les pieds et probablement les bras.
+
+Le squelette peut peut-être être complémenté de trucs imprimés en 3d.
+
+Les cuisses sont un vérin. Les tibias sont des muscles à créer pour la rotation du pied.
+
+Ensuite, une rotule à la cheville et le pied imprimé en 3d peut-être
+
+\todo{Squelette dans blender (modèle 3d et skeleton!)}
+
+\subsection{Compresseur}
+
+La source d'énergie provient du compresseur. La puissance est mpointPV. La pression est à 100 psi. Le volume, 
+
+\subsection{Mouvements}
+
+Deux vérins pour les jambes. Les deux vérins sont activés simultanément pour sauter, et un après l'autre pour marcher.
+
+Pour marcher, le robot doit garder son balan.
+La marche du robot consiste à mouvements suivants:
+\begin{enumerate}
+    \item Penche le corps sur le côté pour garder l'équilibre sur un pied.
+    \item Raccourcit la deuxième jambe
+    \item Penche le corps par en avant pour avancer
+    \item Avance la deuxième jambe par en avant
+    \item Le robot attérit sur les deux jambes
+    \item Penche le corps par en arrière
+    \item Rammène le corps au centre
+    \item Étire la première jambe
+\end{enumerate}
+
+\subsection{Muscles à air}
+
+Lire plus sur les muscles à air. Calculé la force et le déplacement possible. Est-ce que je pourrais juste utilisé ça?
+
+\subsection{Composantes}
+
+Beaucoup de composants.
+
+\begin{table}[h!]
+\begin{tabular}{|c | c|} 
+ \hline
+ Quantité & Item \\ [0.5ex] 
+ \hline
+ 2 & vérins \\ 
+ 0 & 7 \\
+ 0 & 88 \\ [1ex] 
+ \hline
+\end{tabular}
+\label{table:nomDeRef}
+\end{table}
+
+\subsubsection{Rotules}
+https://www.mcmaster.com/rod-ends
+\subsubsection{Valves}
+
+J'aimerais ça fabriquer des composants qui s'imbriquent les uns dans les autres.
+
+\section{Muscle pneumatique}
+Combiner un vérin pneumatique avec un muscle à l'air. Le vérin à l'intérieu et le muscle à l'air qui utilise l'énergie sur les côtés.
+
+\section{Muscle électrique}
+
+Est-ce qu'il serait possible de générer un mouvement de translation avec la force de Coulomb des électrons.
+
+La loi de Coulomb:
+\begin{equation}
+    F = k_e\frac{q_1q_2}{r^2}
+\end{equation}{}
+$k_e$ vaut 9x10\ala{9} N m\ala{2} C\ala{-2}
+
+La loi de Coulomb ne fonctionne pas dans cette situation puisqu'elle est limité à une charge ponctuelle ou une charge métalique sphérique.
+
+\section{Muscle magnétique}
+
+Est-ce que qu'il serait possible de déporter l'énergie magnétique pour éviter d'avoir le cuivre lourd dans les muscles.
+
+\section{Budget}
+
+\end{document}

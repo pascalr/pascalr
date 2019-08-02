@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <title>FreeCAD model</title>
+            <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r50/three.min.js"></script>
+            
+            <script>
+            
+            var camera, controls, scene, renderer;
+            
+            window.onload = function() {
+
+                var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+                var VIEW_ANGLE = 35, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
+
+                renderer = new THREE.WebGLRenderer();
+                renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+                document.body.appendChild( renderer.domElement );
+        
+                scene = new THREE.Scene();
+        
+                camera = new THREE.PerspectiveCamera(
+                    VIEW_ANGLE,      // Field of view
+                    ASPECT,          // Aspect ratio
+                    NEAR,            // Near plane
+                    FAR              // Far plane
+                );
+                camera.position.set( 1986.849853515625, -3847.022705078125, 2040.8817138671875 );
+                camera.lookAt( scene.position );
+                 // placeholder for the FreeCAD camera
+                
+                controls = new THREE.TrackballControls( camera );
+                controls.rotateSpeed = 1.0;
+                controls.zoomSpeed = 1.2;
+                controls.panSpeed = 0.8;
+                controls.noZoom = false;
+                controls.noPan = false;
+                controls.staticMoving = true;
+                controls.dynamicDampingFactor = 0.3;
+                controls.keys = [ 65, 83, 68 ]; 
+        
+                var geom = new THREE.Geometry();
+                var v0 = new THREE.Vector3(-1524.0,-2032.0,0.0);
+                var v1 = new THREE.Vector3(0.0,-2032.0,0.0);
+                var v2 = new THREE.Vector3(0.0,-2032.0,254.0);
+                var v3 = new THREE.Vector3(-1524.0,-2032.0,254.0);
+                var v4 = new THREE.Vector3(-1524.0,0.0,254.0);
+                var v5 = new THREE.Vector3(-1524.0,0.0,0.0);
+                var v6 = new THREE.Vector3(0.0,0.0,0.0);
+                var v7 = new THREE.Vector3(0.0,0.0,254.0);
+                console.log(geom.vertices)
+                geom.vertices.push(v0);
+                geom.vertices.push(v1);
+                geom.vertices.push(v2);
+                geom.vertices.push(v3);
+                geom.vertices.push(v4);
+                geom.vertices.push(v5);
+                geom.vertices.push(v6);
+                geom.vertices.push(v7);
+                geom.faces.push( new THREE.Face3(0, 1, 2) );
+                geom.faces.push( new THREE.Face3(0, 2, 3) );
+                geom.faces.push( new THREE.Face3(4, 0, 3) );
+                geom.faces.push( new THREE.Face3(5, 0, 4) );
+                geom.faces.push( new THREE.Face3(6, 5, 4) );
+                geom.faces.push( new THREE.Face3(6, 4, 7) );
+                geom.faces.push( new THREE.Face3(2, 6, 7) );
+                geom.faces.push( new THREE.Face3(1, 6, 2) );
+                geom.faces.push( new THREE.Face3(5, 1, 0) );
+                geom.faces.push( new THREE.Face3(5, 6, 1) );
+                geom.faces.push( new THREE.Face3(2, 4, 3) );
+                geom.faces.push( new THREE.Face3(7, 4, 2) );
+                var basematerial = new THREE.MeshBasicMaterial( { color: 0xcccccc } );
+                var mesh = new THREE.Mesh( geom, basematerial );
+                scene.add( mesh );
+                var linematerial = new THREE.LineBasicMaterial({linewidth: 1, color: 0x000000,});
+                var wire = new THREE.Geometry();
+                wire.vertices.push(new THREE.Vector3(-1524.0, -2032.0, 254.0));
+                wire.vertices.push(new THREE.Vector3(-1524.0, -2032.0, 0.0));
+                wire.vertices.push(new THREE.Vector3(0.0, -2032.0, 0.0));
+                wire.vertices.push(new THREE.Vector3(0.0, -2032.0, 254.0));
+                wire.vertices.push(new THREE.Vector3(-1523.9999999999864, -2032.0, 254.0));
+                var line = new THREE.Line(wire, linematerial);
+                scene.add(line);
+                var wire = new THREE.Geometry();
+                wire.vertices.push(new THREE.Vector3(-1524.0, 0.0, 254.0));
+                wire.vertices.push(new THREE.Vector3(-1524.0, 0.0, 0.0));
+                wire.vertices.push(new THREE.Vector3(-1524.0, -2032.0, 0.0));
+                wire.vertices.push(new THREE.Vector3(-1524.0, -2032.0, 254.0));
+                wire.vertices.push(new THREE.Vector3(-1524.0, -1.7962520360015333e-11, 254.0));
+                var line = new THREE.Line(wire, linematerial);
+                scene.add(line);
+                var wire = new THREE.Geometry();
+                wire.vertices.push(new THREE.Vector3(0.0, 0.0, 254.0));
+                wire.vertices.push(new THREE.Vector3(0.0, 0.0, 0.0));
+                wire.vertices.push(new THREE.Vector3(-1524.0, 0.0, 0.0));
+                wire.vertices.push(new THREE.Vector3(-1524.0, 0.0, 254.0));
+                wire.vertices.push(new THREE.Vector3(-1.3642420526593924e-11, 0.0, 254.0));
+                var line = new THREE.Line(wire, linematerial);
+                scene.add(line);
+                var wire = new THREE.Geometry();
+                wire.vertices.push(new THREE.Vector3(0.0, -2032.0, 254.0));
+                wire.vertices.push(new THREE.Vector3(0.0, -2032.0, 0.0));
+                wire.vertices.push(new THREE.Vector3(0.0, 0.0, 0.0));
+                wire.vertices.push(new THREE.Vector3(0.0, 0.0, 254.0));
+                wire.vertices.push(new THREE.Vector3(0.0, -2031.999999999982, 254.0));
+                var line = new THREE.Line(wire, linematerial);
+                scene.add(line);
+                var wire = new THREE.Geometry();
+                wire.vertices.push(new THREE.Vector3(0.0, -2032.0, 0.0));
+                wire.vertices.push(new THREE.Vector3(-1524.0, -2032.0, 0.0));
+                wire.vertices.push(new THREE.Vector3(-1524.0, 0.0, 0.0));
+                wire.vertices.push(new THREE.Vector3(0.0, 0.0, 0.0));
+                wire.vertices.push(new THREE.Vector3(0.0, -2031.999999999982, 0.0));
+                var line = new THREE.Line(wire, linematerial);
+                scene.add(line);
+                var wire = new THREE.Geometry();
+                wire.vertices.push(new THREE.Vector3(-1524.0, -2032.0, 254.0));
+                wire.vertices.push(new THREE.Vector3(0.0, -2032.0, 254.0));
+                wire.vertices.push(new THREE.Vector3(0.0, 0.0, 254.0));
+                wire.vertices.push(new THREE.Vector3(-1524.0, 0.0, 254.0));
+                wire.vertices.push(new THREE.Vector3(-1524.0, -2031.999999999982, 254.0));
+                var line = new THREE.Line(wire, linematerial);
+                scene.add(line);
+ // placeholder for the FreeCAD objects
+        
+                var light = new THREE.PointLight( 0xFFFF00 );
+                light.position.set( -10000, -10000, 10000 );
+                scene.add( light );
+        
+                renderer.render( scene, camera );
+                
+                animate();
+            };
+            
+            function animate(){
+                requestAnimationFrame( animate );
+                render();
+            };
+            
+            function render(){
+                controls.update();
+                renderer.render( scene, camera );
+            };
+            </script>
+        </head>
+        <body></body>
+        </html>

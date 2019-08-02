@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+    <html>
+       <body>
+          <script type="text/javascript">
+            window.location.href = "foo123456";
+          </script>
+       </body>
+    </html>
