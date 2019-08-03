@@ -1,6 +1,18 @@
 body {
     background: #f4f4f4;
-    margin: 2em 1.5em;
+    margin: 0px;
+}
+#sideMenu {
+  width: 200px;
+  height: 100%;
+  border: solid 2px black;
+  position: fixed;
+}
+#filterValDiv {
+  text-align: center;
+}
+#filterVal {
+  width: 600px;
 }
 /*
 body {
@@ -28,7 +40,7 @@ li {
     clear:both;
 }
 .content {
-    width: 600px;
+    margin-left: 210px;
     background-color: white;
     margin-bottom: 5em;
     padding-bottom: 3em;

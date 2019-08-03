@@ -17,3 +17,8 @@ h2 {
     text-align: left;
     margin-left: 10%;
 }
+
+#sideMenu {
+  width: 200px;
+  height: 100%;
+}
