@@ -24,12 +24,14 @@ def process_dir(top_dir, opts):
      <body>
       <script src="jquery.min.js"></script>
       <script src="./main.js"></script>
-      <div id="filterValDiv"><input id="filterVal" type="text" onchange="filter()"></div>
       <div id="sideMenu">
-        <p>Images</p>
-        <p>Music</p>
-        <p>Karaoke</p>
+        <img src="film.png" alt="Film" width="128" height="128">
+        <img src="cauldron.png" alt="Cooking" width="128" height="128">
+        <img src="headphone.png" alt="Cooking" width="128" height="128">
+        <img src="guitar.png" alt="Cooking" width="128" height="128">
+        <img src="udes.png" alt="Cooking" width="128" height="128">
       </div>
+      <div id="filterValDiv"><input id="filterVal" type="text" onchange="filter()"></div>
       <div class="content">
        <h1>{curr_dir}</h1>
        <li><a style="display:block; width:100%" href="..">&#x21B0;</a></li>'''.format(
