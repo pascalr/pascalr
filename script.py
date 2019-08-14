@@ -26,6 +26,7 @@ def process_dir(top_dir, opts):
       <script src="./main.js"></script>
       <div id="sideMenu">
         <img src="headphone.png" alt="Music" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="accords.jpg" alt="Accords" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
         <img src="guitar.png" alt="Guitar" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
         <img src="film.png" alt="Film" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
         <img src="udes.png" alt="Udes" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
