@@ -1,19 +1,35 @@
 function shouldFilter(value, filters) {
   return !filters.map(f => {
-    console.log(value)
-    console.log(f)
     return ciIncludes(value,f);
   }).reduce((acc,curr) => acc && curr, true)
 }
 
+function toggleSelected(elem) {
+  if (elem.getAttribute("selected")) {
+    elem.removeAttribute("selected")
+  } else {
+    elem.setAttribute("selected", "true")
+  }
+  filter()
+}
+
 function filter() {
+  console.log('filtering')
   const list = $("li")
   const filterVal = $("#filterVal")[0].value
   const filterVals = filterVal.split(' ')
+  let filterTags = $(".filterTag")
+  filterTags = $.makeArray( filterTags )
+  filterTags = $.map( filterTags, function( val, i ) {
+    if (val.getAttribute("selected")) {
+      return val.alt
+    }
+  });
+  const filters = [...filterVals, ...filterTags]
 
   list.css("display", "block")
   list.filter(function( index ) {
-    return shouldFilter(list[index].innerText, filterVals)
+    return shouldFilter(list[index].innerText, filters)
     //return !ciIncludes(list[index].innerText,filterVal);
   }).css("display", "none")
 }

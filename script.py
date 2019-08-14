@@ -25,13 +25,13 @@ def process_dir(top_dir, opts):
       <script src="jquery.min.js"></script>
       <script src="./main.js"></script>
       <div id="sideMenu">
-        <img src="film.png" alt="Film" width="128" height="128">
-        <img src="cauldron.png" alt="Cooking" width="128" height="128">
-        <img src="headphone.png" alt="Cooking" width="128" height="128">
-        <img src="guitar.png" alt="Cooking" width="128" height="128">
-        <img src="udes.png" alt="Cooking" width="128" height="128">
+        <img src="headphone.png" alt="Music" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="guitar.png" alt="Guitar" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="film.png" alt="Film" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="udes.png" alt="Udes" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="cauldron.png" alt="Cooking" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
       </div>
-      <div id="filterValDiv"><input id="filterVal" type="text" onchange="filter()"></div>
+      <div id="filterValDiv"><input id="filterVal" type="text" onchange="filter()" autofocus></div>
       <div class="content">
        <h1>{curr_dir}</h1>
        <li><a style="display:block; width:100%" href="..">&#x21B0;</a></li>'''.format(
