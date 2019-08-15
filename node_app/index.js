@@ -16,8 +16,12 @@ app.use(function(req, res, next) {
 
 app.use(express.static("public"));
 
-app.get('/test1212', function(req, res) {
+app.get('/rename/:old_name/:new_name', function(req, res) {
   console.log('works!!!!!!! ' + req.path)
+  fs.rename(req.params.old_name, req.params.new_name, function (err) {
+    if (err) throw err;
+    console.log('renamed complete');
+  })
   //res.sendFile('test.html');
 //  res.sendFile('test.html', { root: __dirname });
   
