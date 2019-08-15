@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+    <html>
+     <head>
+       <link rel="stylesheet" type="text/css" href="style.css">
+       <meta charset="utf-8"/>
+     </head>
+     <body>
+      <script src="jquery.min.js"></script>
+      <script src="./main.js"></script>
+      <div id="sideMenu">
+        <img src="headphone.png" alt="Music" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="accords.jpg" alt="Accords" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="guitar.png" alt="Guitar" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="film.png" alt="Film" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="udes.png" alt="Udes" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="cauldron.png" alt="Cooking" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+      </div>
+      <div id="filterValDiv"><input id="filterVal" type="text" onchange="filter()" autofocus></div>
+      <div class="content">
+       <h1>pascalr</h1>
+       <li><a style="display:block; width:100%" href="..">&#x21B0;</a></li>
+       <li><a style="display:block; width:100%" href=".git">&#128193; .git</a></li>
+       <li>&#x1f4c4; <a href="Choix espagnol.txt">Choix espagnol.txt</a><span class="size">40 bytes</span></li>
+       <li>&#x1f4c4; <a href="Don McLean - American Pie #music #guitar">Don McLean - American Pie #music #guitar</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Eagle-Eye Cherry - Save Tonight,music,guitar">Eagle-Eye Cherry - Save Tonight,music,guitar</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Fais toi sen pas.chords.txt">Fais toi sen pas.chords.txt</a><span class="size">1 KB</span></li>
+       <li>&#x1f4c4; <a href="Fais toi sen pas.html">Fais toi sen pas.html</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Happy together.html">Happy together.html</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="House of gold.html">House of gold.html</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="How Far I'll Go.html">How Far I'll Go.html</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="It aint me babe.html">It aint me babe.html</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Jack Johnson - My Mind Is For Sale,music,guitar">Jack Johnson - My Mind Is For Sale,music,guitar</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Jet - Are You Gonna Be My Girl #music">Jet - Are You Gonna Be My Girl #music</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="John Legend - All of me #accords">John Legend - All of me #accords</a><span class="size">3 KB</span></li>
+       <li>&#x1f4c4; <a href="Koriass - Enfant de l'asphalte,music,quebecois">Koriass - Enfant de l'asphalte,music,quebecois</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="L ecrivain.html">L ecrivain.html</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="L horloge.html">L horloge.html</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="La_chicane_juste_pour_voir_le_monde.chords">La_chicane_juste_pour_voir_le_monde.chords</a><span class="size">5 KB</span></li>
+       <li>&#x1f4c4; <a href="Longue distance - Maudit qu'tes belle,music,karaoke">Longue distance - Maudit qu'tes belle,music,karaoke</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Manau - La tribu de Dana #accords">Manau - La tribu de Dana #accords</a><span class="size">6 KB</span></li>
+       <li>&#x1f4c4; <a href="Manau - La tribu de Dana #music">Manau - La tribu de Dana #music</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Overcoming Approach Anxiety,pick up,PUA">Overcoming Approach Anxiety,pick up,PUA</a><span class="size">267 bytes</span></li>
+       <li>&#x1f4c4; <a href="Petit pudding.html">Petit pudding.html</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Piano man.html">Piano man.html</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Psytrance Guide #music">Psytrance Guide #music</a><span class="size">194 bytes</span></li>
+       <li>&#x1f4c4; <a href="README.md">README.md</a><span class="size">408 bytes</span></li>
+       <li>&#x1f4c4; <a href="Rever mieux.html">Rever mieux.html</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Richard Séguin - Protest song,music">Richard S&#233;guin - Protest song,music</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Rose tattoo.html">Rose tattoo.html</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Semisonic - Closing Time,music">Semisonic - Closing Time,music</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Tal Bachman - She's So High,music,guitar">Tal Bachman - She's So High,music,guitar</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="The Rolling Stones - Angie #music #guitar">The Rolling Stones - Angie #music #guitar</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Timer.html">Timer.html</a><span class="size">193 bytes</span></li>
+       <li>&#x1f4c4; <a href="Toto - Africa,music">Toto - Africa,music</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="Untitled-5">Untitled-5</a><span class="size">354 bytes</span></li>
+       <li>&#x1f4c4; <a href="Where is my mind">Where is my mind</a><span class="size">212 bytes</span></li>
+       <li>&#x1f4c4; <a href="ZAZ - Si jamais j'oublie,music">ZAZ - Si jamais j'oublie,music</a><span class="size">211 bytes</span></li>
+       <li>&#x1f4c4; <a href="accords.jpg">accords.jpg</a><span class="size">735 KB</span></li>
+       <li>&#x1f4c4; <a href="auto.tex">auto.tex</a><span class="size">4 KB</span></li>
+       <li>&#x1f4c4; <a href="bookmarks.txt">bookmarks.txt</a><span class="size">49 bytes</span></li>
+       <li>&#x1f4c4; <a href="build.sh">build.sh</a><span class="size">30 bytes</span></li>
+       <li>&#x1f4c4; <a href="calc.ods">calc.ods</a><span class="size">7 KB</span></li>
+       <li>&#x1f4c4; <a href="calc.xlsx">calc.xlsx</a><span class="size">4 KB</span></li>
+       <li>&#x1f4c4; <a href="cauldron.png">cauldron.png</a><span class="size">340 KB</span></li>
+       <li>&#x1f4c4; <a href="common.tex">common.tex</a><span class="size">2 KB</span></li>
+       <li>&#x1f4c4; <a href="cordify.py">cordify.py</a><span class="size">4 KB</span></li>
+       <li>&#x1f4c4; <a href="debussyclairdelune.pdf">debussyclairdelune.pdf</a><span class="size">82 KB</span></li>
+       <li>&#x1f4c4; <a href="dust_in_the_wind.chords">dust_in_the_wind.chords</a><span class="size">1 KB</span></li>
+       <li>&#x1f4c4; <a href="dust_in_the_wind.tab">dust_in_the_wind.tab</a><span class="size">17 KB</span></li>
+       <li>&#x1f4c4; <a href="education.tex">education.tex</a><span class="size">1 KB</span></li>
+       <li>&#x1f4c4; <a href="electron.txt">electron.txt</a><span class="size">354 bytes</span></li>
+       <li>&#x1f4c4; <a href="father_and_son.chords.txt">father_and_son.chords.txt</a><span class="size">2 KB</span></li>
+       <li>&#x1f4c4; <a href="figureVoltageBatterie.jpg">figureVoltageBatterie.jpg</a><span class="size">32 KB</span></li>
+       <li>&#x1f4c4; <a href="film.png">film.png</a><span class="size">153 KB</span></li>
+       <li>&#x1f4c4; <a href="foo.docx">foo.docx</a><span class="size">4 KB</span></li>
+       <li>&#x1f4c4; <a href="foo.odt">foo.odt</a><span class="size">8 KB</span></li>
+       <li>&#x1f4c4; <a href="foo123456">foo123456</a><span class="size">178 bytes</span></li>
+       <li>&#x1f4c4; <a href="four.tex">four.tex</a><span class="size">8 KB</span></li>
+       <li>&#x1f4c4; <a href="fuseeNucleaire.tex">fuseeNucleaire.tex</a><span class="size">214 bytes</span></li>
+       <li>&#x1f4c4; <a href="gabaritProjetIntegration.tex">gabaritProjetIntegration.tex</a><span class="size">3 KB</span></li>
+       <li>&#x1f4c4; <a href="gamepad_logitech_F310.pdf">gamepad_logitech_F310.pdf</a><span class="size">1 MB</span></li>
+       <li>&#x1f4c4; <a href="gate22.txt">gate22.txt</a><span class="size">4 KB</span></li>
+       <li>&#x1f4c4; <a href="git">git</a><span class="size">30 bytes</span></li>
+       <li>&#x1f4c4; <a href="goodCapacitor.tex">goodCapacitor.tex</a><span class="size">12 KB</span></li>
+       <li>&#x1f4c4; <a href="guitar.png">guitar.png</a><span class="size">513 KB</span></li>
+       <li>&#x1f4c4; <a href="headphone.png">headphone.png</a><span class="size">308 KB</span></li>
+       <li>&#x1f4c4; <a href="image_drole_mcdonald_fruits.jpg">image_drole_mcdonald_fruits.jpg</a><span class="size">33 KB</span></li>
+       <li>&#x1f4c4; <a href="index2.html">index2.html</a><span class="size">3 KB</span></li>
+       <li>&#x1f4c4; <a href="inventaire.tex">inventaire.tex</a><span class="size">524 bytes</span></li>
+       <li>&#x1f4c4; <a href="je_ne_t_aime_plus.html">je_ne_t_aime_plus.html</a><span class="size">0 bytes</span></li>
+       <li>&#x1f4c4; <a href="je_ne_t_aime_plus.txt">je_ne_t_aime_plus.txt</a><span class="size">1 KB</span></li>
+       <li>&#x1f4c4; <a href="jquery.min.js">jquery.min.js</a><span class="size">86 KB</span></li>
+       <li>&#x1f4c4; <a href="label.sh">label.sh</a><span class="size">92 bytes</span></li>
+       <li>&#x1f4c4; <a href="le_vent_l_emportera.link.html">le_vent_l_emportera.link.html</a><span class="size">168 bytes</span></li>
+       <li>&#x1f4c4; <a href="ligne_du_temps.txt">ligne_du_temps.txt</a><span class="size">815 bytes</span></li>
+       <li>&#x1f4c4; <a href="link.sh">link.sh</a><span class="size">51 bytes</span></li>
+       <li>&#x1f4c4; <a href="link_script.py">link_script.py</a><span class="size">1 KB</span></li>
+       <li>&#x1f4c4; <a href="linux.tex">linux.tex</a><span class="size">1 KB</span></li>
+       <li>&#x1f4c4; <a href="main.js">main.js</a><span class="size">1 KB</span></li>
+       <li>&#x1f4c4; <a href="mariachi.chords">mariachi.chords</a><span class="size">2 KB</span></li>
+       <li>&#x1f4c4; <a href="mariachi.html">mariachi.html</a><span class="size">3 KB</span></li>
+       <li>&#x1f4c4; <a href="mariachi.txt">mariachi.txt</a><span class="size">2 KB</span></li>
+       <li>&#x1f4c4; <a href="mattress.html">mattress.html</a><span class="size">935 bytes</span></li>
+       <li>&#x1f4c4; <a href="metalColorTempChart.png">metalColorTempChart.png</a><span class="size">24 KB</span></li>
+       <li>&#x1f4c4; <a href="meteo.html">meteo.html</a><span class="size">267 bytes</span></li>
+       <li>&#x1f4c4; <a href="myroom.FCStd">myroom.FCStd</a><span class="size">9 KB</span></li>
+       <li>&#x1f4c4; <a href="myroom.FCStd1">myroom.FCStd1</a><span class="size">9 KB</span></li>
+       <li>&#x1f4c4; <a href="notes.txt">notes.txt</a><span class="size">354 bytes</span></li>
+       <li>&#x1f4c4; <a href="old_script.py">old_script.py</a><span class="size">7 KB</span></li>
+       <li>&#x1f4c4; <a href="oldindex.html">oldindex.html</a><span class="size">1 KB</span></li>
+       <li>&#x1f4c4; <a href="pageTitre.tex">pageTitre.tex</a><span class="size">712 bytes</span></li>
+       <li>&#x1f4c4; <a href="pain.txt">pain.txt</a><span class="size">307 bytes</span></li>
+       <li>&#x1f4c4; <a href="petit_pudding.chords.txt">petit_pudding.chords.txt</a><span class="size">1 KB</span></li>
+       <li>&#x1f4c4; <a href="powersupply.tex">powersupply.tex</a><span class="size">1 KB</span></li>
+       <li>&#x1f4c4; <a href="push.sh">push.sh</a><span class="size">93 bytes</span></li>
+       <li>&#x1f4c4; <a href="puzzle.html">puzzle.html</a><span class="size">157 bytes</span></li>
+       <li>&#x1f4c4; <a href="queen_mattress.FCStd">queen_mattress.FCStd</a><span class="size">7 KB</span></li>
+       <li>&#x1f4c4; <a href="queen_mattress_3d.html">queen_mattress_3d.html</a><span class="size">7 KB</span></li>
+       <li>&#x1f4c4; <a href="recipes.html">recipes.html</a><span class="size">178 bytes</span></li>
+       <li>&#x1f4c4; <a href="references.bib">references.bib</a><span class="size">215 bytes</span></li>
+       <li>&#x1f4c4; <a href="removeNewlines.sh">removeNewlines.sh</a><span class="size">32 bytes</span></li>
+       <li>&#x1f4c4; <a href="robots.tex">robots.tex</a><span class="size">7 KB</span></li>
+       <li>&#x1f4c4; <a href="room.FCStd">room.FCStd</a><span class="size">25 KB</span></li>
+       <li>&#x1f4c4; <a href="room.FCStd1">room.FCStd1</a><span class="size">19 KB</span></li>
+       <li>&#x1f4c4; <a href="script.py">script.py</a><span class="size">5 KB</span></li>
+       <li>&#x1f4c4; <a href="sommier.FCStd">sommier.FCStd</a><span class="size">17 KB</span></li>
+       <li>&#x1f4c4; <a href="sommier.FCStd1">sommier.FCStd1</a><span class="size">1 KB</span></li>
+       <li>&#x1f4c4; <a href="soudeuse.tex">soudeuse.tex</a><span class="size">1 KB</span></li>
+       <li>&#x1f4c4; <a href="sources.txt">sources.txt</a><span class="size">272 bytes</span></li>
+       <li>&#x1f4c4; <a href="style.css">style.css</a><span class="size">2 KB</span></li>
+       <li>&#x1f4c4; <a href="test.tex">test.tex</a><span class="size">4 KB</span></li>
+       <li>&#x1f4c4; <a href="timer555.png">timer555.png</a><span class="size">40 KB</span></li>
+       <li>&#x1f4c4; <a href="udes.png">udes.png</a><span class="size">2 KB</span></li>
+       <li>&#x1f4c4; <a href="universe.jpg">universe.jpg</a><span class="size">27 KB</span></li>
+       <li>&#x1f4c4; <a href="wood1x4.FCStd">wood1x4.FCStd</a><span class="size">8 KB</span></li>
+       <li>&#x1f4c4; <a href="wood1x4x53.FCStd">wood1x4x53.FCStd</a><span class="size">8 KB</span></li>
+       <li>&#x1f4c4; <a href="wood1x4x53.FCStd1">wood1x4x53.FCStd1</a><span class="size">8 KB</span></li>
+  </div>
+ </body>
+</html>

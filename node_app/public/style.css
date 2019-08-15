@@ -1,0 +1,103 @@
+body {
+    background: #f4f4f4;
+    margin: 0px;
+}
+#sideMenu {
+  text-align: center;
+  width: 150px;
+  height: 100%;
+  border-right: solid 2px black;
+  background-color: #c9c9c9;
+  position: fixed;
+  padding-top: 20px;
+}
+#filterValDiv {
+  text-align: center;
+}
+[selected~="true"] {
+  background-color: #555555;
+  filter: brightness(75%);
+}
+#filterVal {
+  width: 600px;
+}
+.filterTag {
+  width: 120px;
+  height: 120px;
+}
+/*
+body {
+    margin: 20px;
+    background: #f5f5f5;
+    -webkit-box-shadow: rgba(89, 89, 89, 0.449219) 2px 1px 9px 0px;
+    -moz-box-shadow: rgba(89, 89, 89, 0.449219) 2px 1px 9px 0px;
+    box-shadow: rgba(89, 89, 89, 0.449219) 2px 1px 9px 0px;
+    border-radius: 11px;
+    -moz-border-radius: 11px;
+    -webkit-border-radius: 11px;
+    height: 100%;
+    min-height: 100%;
+}
+*/
+li {
+    font-family: sans-serif;
+    font-size: 12pt;
+    line-height: 14pt;
+    list-style:none;
+    list-style-type:none;
+    padding: 3px 10px;
+    margin: 3px 15px;
+    display: block;
+    clear:both;
+}
+.content {
+    margin-left: 210px;
+    background-color: white;
+    margin-bottom: 5em;
+    padding-bottom: 3em;
+    -webkit-box-shadow: rgba(89, 89, 89, 0.449219) 2px 1px 9px 0px;
+    -moz-box-shadow: rgba(89, 89, 89, 0.449219) 2px 1px 9px 0px;
+    box-shadow: rgba(89, 89, 89, 0.449219) 2px 1px 9px 0px;
+    border: 0;
+    border-radius: 11px;
+    -moz-border-radius: 11px;
+    -webkit-border-radius: 11px;
+    height: 96%;
+    min-height: 90%;
+}
+.size {
+    float: right;
+    color: gray;
+}
+h1 {
+    padding: 10px;
+    margin: 15px;
+    font-size:13pt;
+    border-bottom: 1px solid lightgray;
+}
+a {
+    font-weight: 500;
+    perspective: 600px;
+    perspective-origin: 50% 100%;
+    transition: color 0.3s;
+    text-decoration: none;
+    color: #060606;
+}
+a:hover,
+a:focus {
+    color: #e74c3c;
+}
+a::before {
+    background-color: #fff;
+    transition: transform 0.2s;
+    transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+    transform: rotateX(90deg);
+    transform-origin: 50% 100%;
+}
+a:hover::before,
+a:focus::before {
+    transform: rotateX(0deg);
+}
+a::after {
+    border-bottom: 2px solid #fff;
+}
