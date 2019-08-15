@@ -4,6 +4,7 @@ import argparse
 import fnmatch
 import os
 import sys
+import urllib
 
 #  Recursively generate index.html files for
 #  all subdirectories in a directory tree
@@ -78,7 +79,7 @@ def process_dir(top_dir, opts):
                     index_file.write(
     """
        <li>&#x1f4c4; <a href="{link}">{link_text}</a><span class="size">{size}</span></li>""".format(
-                                link=filename_utf8,
+                                link=urllib.quote(filename_utf8),
                                 link_text=filename_escaped,
                                 size=pretty_size(size))
                     )
