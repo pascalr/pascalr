@@ -16,9 +16,14 @@ body {
 }
 [selected~="true"] {
   background-color: #555555;
+  filter: brightness(75%);
 }
 #filterVal {
   width: 600px;
+}
+.filterTag {
+  width: 120px;
+  height: 120px;
 }
 /*
 body {
