@@ -12,11 +12,8 @@ import urllib
 index_file_name = 'index.html'
 
 def process_dir(top_dir, opts):
-    for parentdir, dirs, files in os.walk(unicode(top_dir)):
-
-        if not opts.dryrun:
-            index_file = open(os.path.join(parentdir, index_file_name), "w")
-            index_file.write('''<!DOCTYPE html>
+    index_file = open(os.path.join(unicode(top_dir), index_file_name), "w")
+    index_file.write('''<!DOCTYPE html>
     <html>
      <head>
        <link rel="stylesheet" type="text/css" href="style.css">
@@ -37,52 +34,41 @@ def process_dir(top_dir, opts):
       <div class="content">
        <h1>{curr_dir}</h1>
        <li><a style="display:block; width:100%" href="..">&#x21B0;</a></li>'''.format(
-                curr_dir=os.path.basename(os.path.abspath(parentdir).encode('utf8'))
-            )
-            )
+            curr_dir=os.path.basename(os.path.abspath(top_dir).encode('utf8'))
+        )
+        )
 
-        for dirname in sorted(dirs):
-
-            absolute_dir_path = os.path.join(parentdir, dirname)
-
-            if not os.access(absolute_dir_path, os.W_OK):
-                print("***ERROR*** folder {} is not writable! SKIPPING!".format(absolute_dir_path))
+    for item in sorted(os.listdir(unicode(top_dir))):
+        absolute_path = os.path.join(top_dir, item)
+        if os.path.isdir(absolute_path):
+            if not os.access(absolute_path, os.W_OK):
+                print("***ERROR*** folder {} is not writable! SKIPPING!".format(absolute_path))
                 continue
-            if opts.verbose:
-                print('DIR:{}'.format(absolute_dir_path))
-
-            if not opts.dryrun:
-                index_file.write("""
+            index_file.write("""
        <li><a style="display:block; width:100%" href="{link}">&#128193; {link_text}</a></li>""".format(
-                    link=dirname.encode('utf8'),
-                    link_text=dirname.encode('us-ascii', 'xmlcharrefreplace')))
+                link=item.encode('utf8'),
+                link_text=item.encode('us-ascii', 'xmlcharrefreplace')))
 
-        for filename in sorted(files):
-
-            if opts.filter and not fnmatch.fnmatch(filename, opts.filter):
-                if opts.verbose:
-                    print('SKIP: {}/{}'.format(parentdir, filename))
+        if os.path.isfile(absolute_path):
+            if opts.filter and not fnmatch.fnmatch(item, opts.filter):
                 continue
 
-            if opts.verbose:
-                print('{}/{}'.format(parentdir, filename))
-            filename_escaped = filename.encode('us-ascii', 'xmlcharrefreplace')
-            filename_utf8 = filename.encode('utf8')
+            filename_escaped = item.encode('us-ascii', 'xmlcharrefreplace')
+            filename_utf8 = item.encode('utf8')
 
-            if filename.strip().lower() == index_file_name.lower():
+            if item.strip().lower() == index_file_name.lower():
                 continue
 
             try:
-                size = int(os.path.getsize(os.path.join(parentdir, filename)))
+                size = int(os.path.getsize(absolute_path))
 
-                if not opts.dryrun:
-                    index_file.write(
+                index_file.write(
     """
        <li>&#x1f4c4; <a href="{link}">{link_text}</a><span class="size">{size}</span></li>""".format(
-                                link=urllib.quote(filename_utf8),
-                                link_text=filename_escaped,
-                                size=pretty_size(size))
-                    )
+                            link=urllib.quote(filename_utf8),
+                            link_text=filename_escaped,
+                            size=pretty_size(size))
+                )
 
             except Exception as e:
                 print('ERROR writing file name:', e)
@@ -91,12 +77,11 @@ def process_dir(top_dir, opts):
                 print('filename_escaped:'),
                 repr(filename_escaped)
 
-        if not opts.dryrun:
-            index_file.write("""
+    index_file.write("""
   </div>
  </body>
 </html>""")
-            index_file.close()
+    index_file.close()
 
 
 # bytes pretty-printing
@@ -108,7 +93,6 @@ UNITS_MAPPING = [
     (1024 ** 1, ' KB'),
     (1024 ** 0, (' byte', ' bytes')),
 ]
-
 
 def pretty_size(bytes, units=UNITS_MAPPING):
     """Human-readable file sizes.
