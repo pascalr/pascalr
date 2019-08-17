@@ -105,7 +105,7 @@ app.delete('/:db/:path', function(req, res) {
 //  console.log('no routes matches: ' + req.path)
 //});
 
-var port = 8000
+var port = 3000
 
 app.listen(port);
 
