@@ -14,23 +14,50 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(express.static("public"));
-
 app.get('/rename/:old_name/:new_name', function(req, res) {
   console.log('works!!!!!!! ' + req.path)
   fs.rename(req.params.old_name, req.params.new_name, function (err) {
     if (err) throw err;
     console.log('renamed complete');
   })
-  //res.sendFile('test.html');
-//  res.sendFile('test.html', { root: __dirname });
+})
+
+app.get('/test', function(req, res) {
+  console.log('It works. Thats amazing!!!!!!! ' + req.path)
+
+  var names = null
+  //const directoryPath = path.join(__dirname, 'Documents');
+  fs.readdir(__dirname, function (err, files) {
+    //handling error
+    if (err) {
+      return console.log('Unable to scan directory: ' + err);
+    } 
+    //listing all files using forEach
+    names = files.map(function (file) {
+      //var name = dir + '/' + file;
+      //if (fs.statSync(name).isDirectory()){
+      //    getFiles(name, files_);
+      //} else {
+      //    files_.push(name);
+      //}
+      // Do whatever you want to do with the file
+      console.log(file); 
+      return file;
+    });
+    res.send(names);
+  });
+})
+
+app.use(express.static("public"));
+
+// res.sendFile('test.html');
+// res.sendFile('test.html', { root: __dirname });
   
 /*  const before = new Date().getMilliseconds()
   const val = "hello this is a test"
   res.send(val);
   const after = new Date().getMilliseconds()
   console.log('get: ' + req.path + ' in ' + (after - before) + ' ms.')*/
-});
 
 /*var express = require('express');
 var app = express();
@@ -101,9 +128,9 @@ app.delete('/:db/:path', function(req, res) {
   res.send('done');
 });*/
 
-//app.get('*',function (req, res) {
-//  console.log('no routes matches: ' + req.path)
-//});
+app.get('*',function (req, res) {
+  console.log('no routes matches: ' + req.path)
+});
 
 var port = 3000
 
