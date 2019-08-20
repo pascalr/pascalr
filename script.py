@@ -28,7 +28,7 @@ def process_dir(top_dir, opts):
         <img src="guitar.png" alt="Guitar" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
         <img src="film.png" alt="Film" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
         <img src="udes.png" alt="Udes" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
-        <img src="cauldron.png" alt="Cooking" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="cauldron.png" alt="Recette" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
       </div>
       <div id="filterValDiv"><input id="filterVal" type="text" onchange="filter()" autofocus></div>
       <div class="content">
