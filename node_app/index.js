@@ -2,8 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser')
 const fs = require('fs');
-const filename = 'file.txt';
-//fs.closeSync(fs.openSync(filename, 'w'));
+const path = require('path');
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -27,7 +26,7 @@ app.get('/test', function(req, res) {
 
   var names = null
   //const directoryPath = path.join(__dirname, 'Documents');
-  fs.readdir(__dirname, function (err, files) {
+  fs.readdir(__dirname + '/..', function (err, files) {
     //handling error
     if (err) {
       return console.log('Unable to scan directory: ' + err);
@@ -128,8 +127,63 @@ app.delete('/:db/:path', function(req, res) {
   res.send('done');
 });*/
 
+// TODO: read this
+// https://blog.soshace.com/en/programming-en/node-lessons-safe-way-to-file/
+
+// https://stackoverflow.com/questions/16333790/node-js-quick-file-server-static-files-over-http
 app.get('*',function (req, res) {
-  console.log('no routes matches: ' + req.path)
+  //console.log('no routes matches: ' + req.path)
+
+    console.log('request starting...');
+
+    var filePath = '.' + req.url;
+    if (filePath == './')
+        filePath = './public/index.html';
+
+    var extname = path.extname(filePath);
+    var contentType = 'text/html';
+    switch (extname) {
+        case '.js':
+            contentType = 'text/javascript';
+            break;
+        case '.css':
+            contentType = 'text/css';
+            break;
+        case '.json':
+            contentType = 'application/json';
+            break;
+        case '.png':
+            contentType = 'image/png';
+            break;      
+        case '.jpg':
+            contentType = 'image/jpg';
+            break;
+        case '.wav':
+            contentType = 'audio/wav';
+            break;
+    }
+
+    fs.readFile(filePath, function(error, content) {
+        if (error) {
+            if(error.code == 'ENOENT'){
+                fs.readFile('./404.html', function(error, content) {
+                    res.writeHead(200, { 'Content-Type': contentType });
+                    res.end(content, 'utf-8');
+                });
+            }
+            else {
+                res.writeHead(500);
+                res.end('Sorry, check with the site admin for error: '+error.code+' ..\n');
+                res.end(); 
+            }
+        }
+        else {
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(content, 'utf-8');
+        }
+    });
+
+
 });
 
 var port = 3000
