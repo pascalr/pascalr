@@ -47,6 +47,22 @@ app.get('/test', function(req, res) {
   });
 })
 
+app.get('/list', function(req, res) {
+  console.log('GET ' + req.path)
+
+  //const directoryPath = path.join(__dirname, 'Documents');
+  fs.readdir(__dirname + '/..', function (err, files) {
+    if (err) {
+      return console.log('Unable to scan directory: ' + err);
+    } 
+    var listing = files.map(function (file) {
+      console.log(file); 
+      return {name: file, isDirectory: fs.statSync(name).isDirectory()};
+    });
+    res.send(listing);
+  });
+})
+
 app.use(express.static("public"));
 
 // res.sendFile('test.html');
@@ -162,6 +178,21 @@ app.get('*',function (req, res) {
             contentType = 'audio/wav';
             break;
     }
+
+  const map = {
+    '.ico': 'image/x-icon',
+    '.html': 'text/html',
+    '.js': 'text/javascript',
+    '.json': 'application/json',
+    '.css': 'text/css',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.wav': 'audio/wav',
+    '.mp3': 'audio/mpeg',
+    '.svg': 'image/svg+xml',
+    '.pdf': 'application/pdf',
+    '.doc': 'application/msword'
+  };
 
     fs.readFile(filePath, function(error, content) {
         if (error) {
