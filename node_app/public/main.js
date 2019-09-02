@@ -1,3 +1,7 @@
+function filenameChanged() {
+  console.log('Filename change works! : ' + name)
+}
+
 function shouldFilter(value, filters) {
   return !filters.map(f => {
     return ciIncludes(value,f);
