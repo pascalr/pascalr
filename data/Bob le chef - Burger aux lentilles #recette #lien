@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+    <html>
+       <body>
+          <script type="text/javascript">
+            window.location.href = "https://boblechef.com/recettes/burger-aux-lentilles";
+          </script>
+       </body>
+    </html>
