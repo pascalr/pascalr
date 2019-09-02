@@ -9,26 +9,26 @@ import urllib
 #  Recursively generate index.html files for
 #  all subdirectories in a directory tree
 
-index_file_name = 'index.html'
+index_file_name = os.path.join(os.getcwd(),'public/index.html')
 
 def process_dir(top_dir, opts):
     index_file = open(os.path.join(unicode(top_dir), index_file_name), "w")
     index_file.write('''<!DOCTYPE html>
     <html>
      <head>
-       <link rel="stylesheet" type="text/css" href="style.css">
+       <link rel="stylesheet" type="text/css" href="../common/style.css">
        <meta charset="utf-8"/>
      </head>
      <body>
-      <script src="jquery.min.js"></script>
-      <script src="./main.js"></script>
+      <script src="../common/jquery.min.js"></script>
+      <script src="../common/main.js"></script>
       <div id="sideMenu">
-        <img src="headphone.png" alt="Music" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
-        <img src="accords.jpg" alt="Accords" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
-        <img src="guitar.png" alt="Guitar" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
-        <img src="film.png" alt="Film" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
-        <img src="udes.png" alt="Udes" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
-        <img src="cauldron.png" alt="Recette" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="../common/headphone.png" alt="Music" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="../common/accords.jpg" alt="Accords" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="../common/guitar.png" alt="Guitar" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="../common/film.png" alt="Film" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="../common/udes.png" alt="Udes" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
+        <img src="../common/cauldron.png" alt="Recette" width="128" height="128" onClick="toggleSelected(this)" class="filterTag">
       </div>
       <div id="filterValDiv"><input id="filterVal" type="text" onchange="filter()" autofocus></div>
       <div class="content">
@@ -46,7 +46,7 @@ def process_dir(top_dir, opts):
                 continue
             index_file.write("""
        <li><a style="display:block; width:100%" href="{link}">&#128193; {link_text}</a></li>""".format(
-                link=item.encode('utf8'),
+                link=os.path.join(top_dir,item).encode('utf8'),
                 link_text=item.encode('us-ascii', 'xmlcharrefreplace')))
 
         if os.path.isfile(absolute_path):
@@ -65,7 +65,7 @@ def process_dir(top_dir, opts):
                 index_file.write(
     """
        <li>&#x1f4c4; <a href="{link}">{link_text}</a><span class="size">{size}</span></li>""".format(
-                            link=urllib.quote(filename_utf8),
+                            link=urllib.quote(os.path.join(top_dir,filename_utf8)),
                             link_text=filename_escaped,
                             size=pretty_size(size))
                 )
@@ -122,7 +122,7 @@ if __name__ == "__main__":
                         action='store',
                         help='top folder from which to start generating indexes, '
                              'use current folder if not specified',
-                        default=os.getcwd())
+                        default=os.path.join(os.getcwd(),'data'))
 
     parser.add_argument('--filter', '-f',
                         help='only include files matching glob',

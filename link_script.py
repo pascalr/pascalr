@@ -5,12 +5,12 @@ import fnmatch
 import os
 import sys
 
-index_file_name = 'index.html'
+index_file_name = 'public/index.html'
 
 def create_link(link_name, link_value):
     if not link_name:
         link_name = link_value
-    index_file = open(link_name, "w")
+    index_file = open(os.path.join('data',link_name), "w")
     index_file.write('''<!DOCTYPE html>
     <html>
        <body>
