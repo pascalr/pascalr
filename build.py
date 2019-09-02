@@ -46,7 +46,7 @@ def process_dir(top_dir, opts):
                 continue
             index_file.write("""
        <li><a style="display:block; width:100%" href="{link}">&#128193; {link_text}</a></li>""".format(
-                link=os.path.join(top_dir,item).encode('utf8'),
+                link=os.path.join('../data',item).encode('utf8'),
                 link_text=item.encode('us-ascii', 'xmlcharrefreplace')))
 
         if os.path.isfile(absolute_path):
@@ -65,7 +65,7 @@ def process_dir(top_dir, opts):
                 index_file.write(
     """
        <li>&#x1f4c4; <a href="{link}">{link_text}</a><span class="size">{size}</span></li>""".format(
-                            link=urllib.quote(os.path.join(top_dir,filename_utf8)),
+                            link=urllib.quote(os.path.join('../data',filename_utf8)),
                             link_text=filename_escaped,
                             size=pretty_size(size))
                 )
