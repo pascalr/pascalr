@@ -17,6 +17,7 @@ def process_dir(top_dir, opts):
     <html>
      <head>
        <link rel="stylesheet" type="text/css" href="../common/style.css">
+       <link rel="shortcut icon" href="../common/favicon.ico" />
        <meta charset="utf-8"/>
      </head>
      <body>

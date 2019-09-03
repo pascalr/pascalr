@@ -3,6 +3,8 @@ var app = express();
 var bodyParser = require('body-parser')
 const fs = require('fs');
 const path = require('path');
+var _ = require('./common/lodash.min.js')
+var he = require('he')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -21,12 +23,12 @@ app.get('/rename/:old_name/:new_name', function(req, res) {
   })
 })
 
-app.get('/test', function(req, res) {
+app.get('/files', function(req, res) {
   console.log('It works. Thats amazing!!!!!!! ' + req.path)
 
   var names = null
   //const directoryPath = path.join(__dirname, 'Documents');
-  fs.readdir(__dirname + '/..', function (err, files) {
+  fs.readdir(__dirname + '/data', function (err, files) {
     //handling error
     if (err) {
       return console.log('Unable to scan directory: ' + err);
@@ -40,7 +42,6 @@ app.get('/test', function(req, res) {
       //    files_.push(name);
       //}
       // Do whatever you want to do with the file
-      console.log(file); 
       return file;
     });
     res.send(names);
@@ -63,7 +64,7 @@ app.get('/list', function(req, res) {
   });
 })
 
-app.use(express.static("public"));
+app.use(express.static("private"));
 
 // res.sendFile('test.html');
 // res.sendFile('test.html', { root: __dirname });
@@ -148,36 +149,16 @@ app.delete('/:db/:path', function(req, res) {
 
 // https://stackoverflow.com/questions/16333790/node-js-quick-file-server-static-files-over-http
 app.get('*',function (req, res) {
-  //console.log('no routes matches: ' + req.path)
 
-    console.log('request starting...');
+  console.log('GET * path=' + req.path);
 
-    var filePath = '.' + req.url;
-    if (filePath == './')
-        filePath = './public/index.html';
+  var filePath = '.' + req.url;
+  if (filePath == './')
+    filePath = './public/index.html';
 
-    var extname = path.extname(filePath);
-    var contentType = 'text/html';
-    switch (extname) {
-        case '.js':
-            contentType = 'text/javascript';
-            break;
-        case '.css':
-            contentType = 'text/css';
-            break;
-        case '.json':
-            contentType = 'application/json';
-            break;
-        case '.png':
-            contentType = 'image/png';
-            break;      
-        case '.jpg':
-            contentType = 'image/jpg';
-            break;
-        case '.wav':
-            contentType = 'audio/wav';
-            break;
-    }
+  filePath = decodeURIComponent(filePath)
+
+  var extname = path.extname(filePath);
 
   const map = {
     '.ico': 'image/x-icon',
@@ -193,22 +174,27 @@ app.get('*',function (req, res) {
     '.pdf': 'application/pdf',
     '.doc': 'application/msword'
   };
+  var contentType = map[extname] || 'text/html'
+  //var contentType = 'text/plain'
 
     fs.readFile(filePath, function(error, content) {
         if (error) {
             if(error.code == 'ENOENT'){
+                console.log('error ENOENT... filepath: ' + filePath);
                 fs.readFile('./404.html', function(error, content) {
                     res.writeHead(200, { 'Content-Type': contentType });
                     res.end(content, 'utf-8');
                 });
             }
             else {
+                console.log('error...');
                 res.writeHead(500);
                 res.end('Sorry, check with the site admin for error: '+error.code+' ..\n');
                 res.end(); 
             }
         }
         else {
+            console.log('no error...');
             res.writeHead(200, { 'Content-Type': contentType });
             res.end(content, 'utf-8');
         }
