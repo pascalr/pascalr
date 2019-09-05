@@ -1,0 +1,2 @@
+To switch:
+sudo dpkg-reconfigure sddm

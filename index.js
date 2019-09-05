@@ -15,11 +15,58 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/rename/:old_name/:new_name', function(req, res) {
+app.get('/rename', function(req, res) {
   console.log('works!!!!!!! ' + req.path)
-  fs.rename(req.params.old_name, req.params.new_name, function (err) {
+  fs.rename(req.params.oldName, req.params.newName, function (err) {
     if (err) throw err;
     console.log('renamed complete');
+  })
+})
+
+app.post('/bookmark', function(req, res) {
+  const filename = req.body.name
+  const value = req.body.link
+
+  const html = `<!DOCTYPE html>
+      <html>
+         <body>
+            <script type="text/javascript">
+              window.location.href = "${value}";
+            </script>
+         </body>
+      </html>`
+
+  fs.writeFile('data/'+filename, html, (err) => {
+    if (err) throw err;
+    console.log('The file has been saved!');
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('The file has been saved!', 'utf-8');
+  });
+
+  //console.log(html)
+})
+
+app.get('/edit/:filename', function(req, res) {
+
+  fs.readFile('data/'+filename, function(error, content) {
+    if (error) {
+      if(error.code == 'ENOENT'){
+        console.log('error ENOENT... filepath: ' + filePath);
+        fs.readFile('./404.html', function(error, content) {
+          res.writeHead(200, { 'Content-Type': contentType });
+          res.end(content, 'utf-8');
+        });
+      } else {
+        console.log('error...');
+        res.writeHead(500);
+        res.end('Sorry, check with the site admin for error: '+error.code+' ..\n');
+        res.end(); 
+      }
+    } else {
+      console.log('no error...');
+      res.writeHead(200, { 'Content-Type': contentType });
+      res.end(content, 'utf-8');
+    }
   })
 })
 
@@ -152,7 +199,7 @@ app.get('*',function (req, res) {
 
   console.log('GET * path=' + req.path);
 
-  var filePath = '.' + req.url;
+  var filePath = '.' + req.path;
   if (filePath == './')
     filePath = './public/index.html';
 
@@ -175,7 +222,8 @@ app.get('*',function (req, res) {
     '.doc': 'application/msword'
   };
   var contentType = map[extname] || 'text/html'
-  //var contentType = 'text/plain'
+  if (req.query.contentType && req.query.contentType == 'text')
+    contentType = 'text/plain'
 
     fs.readFile(filePath, function(error, content) {
         if (error) {

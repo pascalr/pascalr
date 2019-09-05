@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+      <html>
+         <body>
+            <script type="text/javascript">
+              window.location.href = "https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback";
+            </script>
+         </body>
+      </html>
