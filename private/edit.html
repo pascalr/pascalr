@@ -5,7 +5,7 @@
        <link rel="shortcut icon" href="../common/favicon.ico" />
        <meta charset="utf-8"/>
        <script src="../common/jquery.min.js"></script>
-       <script src="./edit.js" defer></script>
+       <script src="../private/edit.js" defer></script>
      </head>
      <body>
       <div id="sideMenu">
@@ -19,10 +19,12 @@
       <div id="filterValDiv"><input id="filterVal" type="text" onchange="filter()" autofocus></div>
       <div class="content">
       <iframe width="0" height="0" border="0" style="display: none;" name="dummyframe" id="dummyframe"></iframe>
-      <h1>Edit</h1>
-
-       <div id="root"></div>
+      <form action="/save" method="post" target="dummyframe">
+        <h1><span id="filename"></span><span style="margin-left: 50px;"><input type="submit" value="Save"/></span></h1>
+        <textarea rows="40" cols="180" id="editTextArea" name="content"></textarea>
+        <input type="hidden" id="hiddenInputFilename" name="filename"/>
+      </form>
+      <div id="root"></div>
   </div>
-  <script src="./app.js" type="module"></script>
  </body>
 </html>

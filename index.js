@@ -38,6 +38,21 @@ app.post('/newFile', function(req, res) {
   //console.log(html)
 })
 
+app.post('/save', function(req, res) {
+  console.log('saving')
+  const content = req.body.content
+  const filename = req.body.filename
+  
+  console.log(content)
+
+  fs.writeFile('data/'+filename, content, { flag: 'w' }, (err) => {
+    if (err) throw err;
+    console.log('The file has been saved!');
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('The file has been saved!', 'utf-8');
+  });
+})
+
 app.post('/bookmark', function(req, res) {
   const filename = req.body.name
   const value = req.body.link
@@ -61,7 +76,9 @@ app.post('/bookmark', function(req, res) {
   //console.log(html)
 })
 
-app.get('/edit/:filename', function(req, res) {
+app.get('/getFile/edit/:filename', function(req, res) {
+
+  console.log('/getFile')
 
   const filePath = decodeURIComponent(req.params.filename)
 
@@ -80,12 +97,15 @@ app.get('/edit/:filename', function(req, res) {
         res.end(); 
       }
     } else {
-      console.log('no error...');
-      //res.writeHead(200, { 'Content-Type': 'text/plain' });
-      //res.end(content, 'utf-8');
-      res.sendFile(path.join(__dirname, 'private/edit.html'));
+      console.log('should be working no error...');
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.end(content, 'utf-8');
     }
   })
+})
+
+app.get('/edit/:filename', function(req, res) {
+  res.sendFile(path.join(__dirname, 'private/edit.html'));
 })
 
 app.get('/files', function(req, res) {
