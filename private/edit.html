@@ -4,10 +4,10 @@
        <link rel="stylesheet" type="text/css" href="../common/style.css">
        <link rel="shortcut icon" href="../common/favicon.ico" />
        <meta charset="utf-8"/>
+       <script src="../common/jquery.min.js"></script>
+       <script src="./edit.js" defer></script>
      </head>
      <body>
-      <script src="../common/jquery.min.js"></script>
-      <script src="./main.js"></script>
       <div id="sideMenu">
         <img src="../common/headphone.png" alt="Music" onClick="toggleSelected(this)" class="filterTag">
         <img src="../common/accords.jpg" alt="Accords" onClick="toggleSelected(this)" class="filterTag">
@@ -19,17 +19,8 @@
       <div id="filterValDiv"><input id="filterVal" type="text" onchange="filter()" autofocus></div>
       <div class="content">
       <iframe width="0" height="0" border="0" style="display: none;" name="dummyframe" id="dummyframe"></iframe>
+      <h1>Edit</h1>
 
-      <form action="/bookmark" method="post" target="dummyframe">
-        Link:
-        <input type="text" name="link">
-        Name:
-        <input type="text" name="name">
-        <input type="submit" value="Bookmark">
-      </form>
-      <form action="/newFile" method="post" target="dummyframe">
-        <input type="submit" value="New File">
-      </form>
        <div id="root"></div>
   </div>
   <script src="./app.js" type="module"></script>

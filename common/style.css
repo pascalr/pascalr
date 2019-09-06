@@ -4,12 +4,12 @@ body {
 }
 #sideMenu {
   text-align: center;
-  width: 150px;
+  width: 86px;
   height: 100%;
   border-right: solid 2px black;
   background-color: #c9c9c9;
   position: fixed;
-  padding-top: 20px;
+  padding-top: 10px;
 }
 #filterValDiv {
   text-align: center;
@@ -22,8 +22,8 @@ body {
   width: 600px;
 }
 .filterTag {
-  width: 120px;
-  height: 120px;
+  width: 64px;
+  height: 64px;
 }
 /*
 body {
@@ -51,7 +51,7 @@ li {
     clear:both;
 }
 .content {
-    margin-left: 210px;
+    margin-left: 112px; /*86*/
     background-color: white;
     margin-bottom: 5em;
     padding-bottom: 3em;

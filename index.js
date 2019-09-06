@@ -24,6 +24,20 @@ app.post('/renameFile', function(req, res) {
   })
 })
 
+app.post('/newFile', function(req, res) {
+  console.log('Creating new file.')
+  const filename = ' untitled_'+Date.now()
+
+  fs.writeFile('data/'+filename, null, { flag: 'wx' }, (err) => {
+    if (err) throw err;
+    console.log('The file has been saved!');
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('The file has been saved!', 'utf-8');
+  });
+
+  //console.log(html)
+})
+
 app.post('/bookmark', function(req, res) {
   const filename = req.body.name
   const value = req.body.link
@@ -37,7 +51,7 @@ app.post('/bookmark', function(req, res) {
          </body>
       </html>`
 
-  fs.writeFile('data/'+filename, html, (err) => {
+  fs.writeFile('data/'+filename, html, { flag: 'wx' }, (err) => {
     if (err) throw err;
     console.log('The file has been saved!');
     res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -67,8 +81,9 @@ app.get('/edit/:filename', function(req, res) {
       }
     } else {
       console.log('no error...');
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end(content, 'utf-8');
+      //res.writeHead(200, { 'Content-Type': 'text/plain' });
+      //res.end(content, 'utf-8');
+      res.sendFile(path.join(__dirname, 'private/edit.html'));
     }
   })
 })
