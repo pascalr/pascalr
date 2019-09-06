@@ -49,12 +49,14 @@ app.post('/bookmark', function(req, res) {
 
 app.get('/edit/:filename', function(req, res) {
 
-  fs.readFile('data/'+filename, function(error, content) {
+  const filePath = decodeURIComponent(req.params.filename)
+
+  fs.readFile('data/'+filePath, function(error, content) {
     if (error) {
       if(error.code == 'ENOENT'){
         console.log('error ENOENT... filepath: ' + filePath);
         fs.readFile('./404.html', function(error, content) {
-          res.writeHead(200, { 'Content-Type': contentType });
+          res.writeHead(200, { 'Content-Type': 'text/html' });
           res.end(content, 'utf-8');
         });
       } else {
@@ -65,7 +67,7 @@ app.get('/edit/:filename', function(req, res) {
       }
     } else {
       console.log('no error...');
-      res.writeHead(200, { 'Content-Type': contentType });
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
       res.end(content, 'utf-8');
     }
   })
