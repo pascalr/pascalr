@@ -45,7 +45,7 @@ app.post('/save', function(req, res) {
   
   console.log(content)
 
-  fs.writeFile('data/'+filename, content, { flag: 'w' }, (err) => {
+  fs.writeFile('data/'+filename, content, (err) => {
     if (err) throw err;
     console.log('The file has been saved!');
     res.writeHead(200, { 'Content-Type': 'text/html' });
