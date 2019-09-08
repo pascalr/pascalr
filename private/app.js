@@ -8,6 +8,7 @@ $.getJSON('http://localhost:3000/files', function(data) {
       <a href="../data/${encodeURIComponent(elem)}">🔎</a>
       <a href="../data/${encodeURIComponent(elem)}?contentType=text">📖</a> 
       <a href="edit/${encodeURIComponent(elem)}">✏️</a> 
+      <a href="delete/${encodeURIComponent(elem)}">❌</a> 
       &nbsp;
       &#x1f4c4;
       <input type="text" name="filename" onfocus="this.oldValue = this.value;"

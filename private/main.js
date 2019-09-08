@@ -41,7 +41,7 @@ function filter() {
 
   list.css("display", "block")
   list.filter(function( index ) {
-    return shouldFilter(list[index].children[4].value, filters)
+    return shouldFilter(list[index].children[4].value, filters) // FIXME: children[4]
     //return !ciIncludes(list[index].innerText,filterVal);
   }).css("display", "none")
 }
