@@ -22,6 +22,7 @@ function toggleSelected(elem) {
 function clearFilter() {
   $("#filterVal").val('')
   filter()
+  $("#filterVal").focus()
 }
 
 function filter() {
