@@ -19,6 +19,11 @@ function toggleSelected(elem) {
   filter()
 }
 
+function clearFilter() {
+  $("#filterVal").val('')
+  filter()
+}
+
 function filter() {
   console.log('filtering')
   const list = $("li")
