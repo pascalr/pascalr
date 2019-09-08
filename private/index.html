@@ -9,6 +9,7 @@
       <script src="../common/jquery.min.js"></script>
       <script src="./main.js"></script>
       <div id="sideMenu">
+        <img src="../common/checklist.png" alt="TODO" onClick="toggleSelected(this)" class="filterTag">
         <img src="../common/headphone.png" alt="Music" onClick="toggleSelected(this)" class="filterTag">
         <img src="../common/accords.jpg" alt="Accords" onClick="toggleSelected(this)" class="filterTag">
         <img src="../common/guitar.png" alt="Guitar" onClick="toggleSelected(this)" class="filterTag">
@@ -17,7 +18,7 @@
         <img src="../common/cauldron.png" alt="Recette" onClick="toggleSelected(this)" class="filterTag">
         <img src="../common/mic.png" alt="Karaoke" onClick="toggleSelected(this)" class="filterTag">
       </div>
-      <div id="filterValDiv"><input id="filterVal" type="text" onchange="filter()" autofocus></div>
+      <div id="filterValDiv"><span onclick="clearFilter()">❌</span> &nbsp<input id="filterVal" type="text" onchange="filter()" autofocus></div>
       <div class="content">
       <iframe width="0" height="0" border="0" style="display: none;" name="dummyframe" id="dummyframe"></iframe>
 
