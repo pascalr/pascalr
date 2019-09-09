@@ -1,3 +1,36 @@
+function loadFiles() {
+  console.log('loading files')
+  $.getJSON('http://localhost:3000/files', function(data) {
+    const items = data.map(function(elem) {
+      const name = encodeURIComponent(elem)
+      return `
+      <li>
+        <a href="../data/${name}">🔎</a>
+        <a href="../data/${name}?contentType=text">📖</a> 
+        <a href="edit/${name}">✏️</a> 
+        <span onclick="deleteFile('${name}')">❌</span> 
+        &nbsp;
+        &#x1f4c4;
+        <input type="text" name="filename" onfocus="this.oldValue = this.value;"
+               onchange="filenameChanged(this);this.oldValue = this.value;" size="64" value="${elem}" class="nothing"/>
+      </li>`
+    })
+    $("#root").html(items.join(''))
+  });
+}
+
+function deleteFile(name) {
+  if (confirm('Are you sure you want to delete "' + decodeURIComponent(name) + '" ?')) {
+    $.ajax({
+      url: '/deleteFile/'+name,
+      type: 'DELETE',
+      success: function(result) {
+          // Do something with the result
+      }
+    });
+  }
+}
+
 function filenameChanged(args) {
   $.post('http://localhost:3000/renameFile', {oldName: args.value, newName: args.oldValue}, function(data) {
     console.log('Filename changed')
