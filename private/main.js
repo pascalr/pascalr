@@ -1,22 +1,54 @@
-function loadFiles() {
+/*function printFiles(data) {
+  const items = data.map(function(elem) {
+    const name = encodeURIComponent(elem)
+    return `
+    <li>
+      <a href="../data/${name}">🔎</a>
+      <a href="../data/${name}?contentType=text">📖</a> 
+      <a href="edit/${name}">✏️</a> 
+      <span onclick="deleteFile('${name}')">❌</span> 
+      &nbsp;
+      &#x1f4c4;
+      <input type="text" name="filename" onfocus="this.oldValue = this.value;"
+             onchange="filenameChanged(this);this.oldValue = this.value;" size="64" value="${elem}" class="nothing"/>
+    </li>`
+  })
+  $("#root").html(items.join(''))
+  if (!window.selectedItem)
+    window.selectedItem = 0
+  $('li')[window.selectedItem].setAttribute("selected", "true")
+}*/
+
+/*function loadFiles() {
   console.log('loading files')
   $.getJSON('http://localhost:3000/files', function(data) {
-    const items = data.map(function(elem) {
-      const name = encodeURIComponent(elem)
-      return `
-      <li>
-        <a href="../data/${name}">🔎</a>
-        <a href="../data/${name}?contentType=text">📖</a> 
-        <a href="edit/${name}">✏️</a> 
-        <span onclick="deleteFile('${name}')">❌</span> 
-        &nbsp;
-        &#x1f4c4;
-        <input type="text" name="filename" onfocus="this.oldValue = this.value;"
-               onchange="filenameChanged(this);this.oldValue = this.value;" size="64" value="${elem}" class="nothing"/>
-      </li>`
-    })
-    $("#root").html(items.join(''))
+    printFiles(data)
   });
+}*/
+
+function searchKeyDown(key) {
+  if (key === 'Enter') {
+    if (getFilterList().length === $('li').length) {
+      const filterVal = $("#filterVal")[0].value
+      window.location.href = filterVal;
+    }
+  } else if (key === 'ArrowDown') {
+    console.log('ArrowDown')
+    const nbItems = $('li').length - getFilterList().length
+    window.selectedItem = window.selectedItem + 1
+    if (window.selectedItem >= nbItems) {
+      window.selectedItem = nbItems
+    }
+  } else if (key === 'ArrowUp') {
+    console.log('ArrowUp')
+    const nbItems = getFilterList().length
+    window.selectedItem = window.selectedItem > 0 ? window.selectedItem - 1 : 0
+  } else {
+    console.log('key = ' + key)
+    filter()
+    const filterVal = $("#filterVal")[0].value
+    $('#suggestSearch').html('Search google for: ' + filterVal)
+  }
 }
 
 function deleteFile(name) {
@@ -58,7 +90,7 @@ function clearFilter() {
   $("#filterVal").focus()
 }
 
-function filter() {
+function getFilterList() {
   console.log('filtering')
   const list = $("li")
   const filterVal = $("#filterVal")[0].value
@@ -73,10 +105,14 @@ function filter() {
   const filters = [...filterVals, ...filterTags]
 
   list.css("display", "block")
-  list.filter(function( index ) {
+  return list.filter(function( index ) {
     return shouldFilter(list[index].children[4].value, filters) // FIXME: children[4]
     //return !ciIncludes(list[index].innerText,filterVal);
-  }).css("display", "none")
+  })
+}
+
+function filter() {
+  return getFilterList().css("display", "none")
 }
 
 function ciEquals(a, b) {

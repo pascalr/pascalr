@@ -18,6 +18,10 @@ body {
   background-color: #555555;
   filter: brightness(75%);
 }
+[isselected~="true"] {
+  background-color: #CCCCCC;
+  filter: brightness(90%);
+}
 #filterVal {
   width: 600px;
 }

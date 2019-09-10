@@ -6,6 +6,9 @@
        <meta charset="utf-8"/>
      </head>
      <body>
+      <script src="../common/react.development.js" crossorigin></script>
+      <script src="../common/react-dom.development.js" crossorigin></script>
+      <script src="./app.js" defer></script>
       <script src="../common/jquery.min.js"></script>
       <script src="./main.js"></script>
       <div id="sideMenu">
@@ -18,7 +21,7 @@
         <img src="../common/penguin.png" alt="Recette" onClick="toggleSelected(this)" class="filterTag">
         <img src="../common/mic.png" alt="Karaoke" onClick="toggleSelected(this)" class="filterTag">
       </div>
-      <div id="filterValDiv"><span onclick="clearFilter()">❌</span> &nbsp<input id="filterVal" type="text" onchange="filter()" autofocus></div>
+      <div id="filterValDiv"><span onclick="clearFilter()">❌</span> &nbsp<input id="filterVal" type="text" onkeydown="searchKeyDown(event.key)" autofocus></div>
       <div class="content">
       <iframe width="0" height="0" border="0" style="display: none;" name="dummyframe" id="dummyframe"></iframe>
 
@@ -32,10 +35,12 @@
       <form action="/newFile" method="post" target="dummyframe" onsubmit="loadFiles();filter();">
         <input type="submit" value="New File">
       </form>
-       <div id="root"></div>
+      <div id="app"></div>
+      <div id="root"></div>
+      <div id="suggestSearch"></div>
   </div>
   <script defer>
-    loadFiles()
+    //loadFiles()
   </script>
  </body>
 </html>
