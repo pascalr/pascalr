@@ -29,6 +29,13 @@ body {
   width: 64px;
   height: 64px;
 }
+.clickable {
+  cursor: pointer;
+}
+.clickable:hover {
+  background-color: #BBBBBB;
+  filter: brightness(90%);
+}
 /*
 body {
     margin: 20px;

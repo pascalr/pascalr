@@ -68,6 +68,9 @@ class SideMenu extends React.Component {
   }
 }
 
+class WitchItemList extends React.Component {
+}
+
 class ItemList extends React.Component {
   constructor(props) {
     super(props);
@@ -80,13 +83,13 @@ class ItemList extends React.Component {
     });
   }
 
-  render() {
+  render = () => {
     const {filter, selectedFilterTags, selectedItem} = this.props
     const {data} = this.state
 
     if (!data) return null
 
-    const items = data.map(function(elem,i) {
+    const items = data.map((elem,i) => {
       const filterVals = filter.split(' ')
       const filters = [...filterVals, ..._.keys(selectedFilterTags)]
 
@@ -106,13 +109,17 @@ class ItemList extends React.Component {
 }
 
 const SuggestSearch = (props) => {
-  return props.filter ? 'Search google for: ' + props.filter : null
+  if (!props.filter) return null
+
+  const url = `https://www.google.com/search?q=${props.filter}`
+
+  return e('div', {onClick: (event) => {window.location.href = url}, className: 'clickable'}, 'Search google for: ' + props.filter)
 }
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {filter: '', selectedFilterTags: {}, selectedItem: 0}
+    this.state = {filter: '', selectedFilterTags: {}, selectedItem: 0, nbItems: 0}
   }
 
   onKeyDown = (event) => {
