@@ -26,7 +26,7 @@
   });
 }*/
 
-function searchKeyDown(key) {
+/*function searchKeyDown(key) {
   if (key === 'Enter') {
     if (getFilterList().length === $('li').length) {
       const filterVal = $("#filterVal")[0].value
@@ -49,7 +49,7 @@ function searchKeyDown(key) {
     const filterVal = $("#filterVal")[0].value
     $('#suggestSearch').html('Search google for: ' + filterVal)
   }
-}
+}*/
 
 function deleteFile(name) {
   if (confirm('Are you sure you want to delete "' + decodeURIComponent(name) + '" ?')) {
@@ -63,11 +63,11 @@ function deleteFile(name) {
   }
 }
 
-function filenameChanged(args) {
+/*function filenameChanged(args) {
   $.post('http://localhost:3000/renameFile', {oldName: args.value, newName: args.oldValue}, function(data) {
     console.log('Filename changed')
   });
-}
+}*/
 
 function shouldFilter(value, filters) {
   return !filters.map(f => {
@@ -90,7 +90,7 @@ function clearFilter() {
   $("#filterVal").focus()
 }
 
-function getFilterList() {
+/*function getFilterList() {
   console.log('filtering')
   const list = $("li")
   const filterVal = $("#filterVal")[0].value
@@ -113,7 +113,7 @@ function getFilterList() {
 
 function filter() {
   return getFilterList().css("display", "none")
-}
+}*/
 
 function ciEquals(a, b) {
   return typeof a === 'string' && typeof b === 'string'

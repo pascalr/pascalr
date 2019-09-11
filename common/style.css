@@ -14,7 +14,7 @@ body {
 #filterValDiv {
   text-align: center;
 }
-[selected~="true"] {
+[tagselected~="true"] {
   background-color: #555555;
   filter: brightness(75%);
 }

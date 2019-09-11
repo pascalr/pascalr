@@ -18,7 +18,7 @@ app.use(function(req, res, next) {
 app.post('/renameFile', function(req, res) {
   console.log('works!!!!!!! ' + req.path)
   console.log(req.body)
-  fs.rename("data/"+req.body.newName, "data/"+req.body.oldName, function (err) {
+  fs.rename("data/"+req.body.oldName, "data/"+req.body.newName, function (err) {
     if (err) throw err;
     console.log('renamed complete');
   })
