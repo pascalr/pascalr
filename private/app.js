@@ -2,8 +2,6 @@
 
 const e = React.createElement
 
-//React.createElement(component, props, ...children)
-
 class Item extends React.Component {
   constructor(props) {
     super(props)
@@ -23,13 +21,13 @@ class Item extends React.Component {
 
     return e(
       'div', {isselected: selected.toString()}, 
-        e('a', {href: "../data/${name}"}, '🔎'),
-        e('a', {href: "../data/${name}?contentType=text"}, '📖'),
-        e('a', {href: "edit/${name}"}, '✏️'),
+        e('a', {href: `../data/${name}`}, '🔎'),
+        e('a', {href: `../data/${name}?contentType=text`}, '📖'),
+        e('a', {href: `edit/${name}`}, '✏️'),
         e('span', {onClick: () => deleteFile(name)}, '❌'),
         e('input', {type: 'text', name:'filename', size: 64, value: elem, className: 'nothing',
           onChange: this.onNameChange}
-    )
+    ))
       //&nbsp;
       //&#x1f4c4;
       //<input type="text" name="filename" onfocus="this.oldValue = this.value;"
@@ -64,7 +62,7 @@ class SideMenu extends React.Component {
     const {filterTags, selectedFilterTags, filterTagClick} = this.props
 
     return e('div', {id: 'sideMenu'}, filterTags.map((a,i) => {
-      const selected = selectedFilterTags[a.name]
+      const selected = selectedFilterTags ? selectedFilterTags[a.name] : false
       return e(FilterTag, {src: a.src, name: a.name, onClick: filterTagClick, key: `filterTag${i}`, selected})
     }))
   }
@@ -83,16 +81,14 @@ class ItemList extends React.Component {
   }
 
   render() {
-    const {filter} = this.props
+    const {filter, selectedFilterTags, selectedItem} = this.props
     const {data} = this.state
 
     if (!data) return null
 
-    const selectedItem = 3
-
     const items = data.map(function(elem,i) {
       const filterVals = filter.split(' ')
-      const filters = [...filterVals, ...getFilters()]
+      const filters = [...filterVals, ..._.keys(selectedFilterTags)]
 
       if (shouldFilter(elem, filters)) return null
 
@@ -109,48 +105,47 @@ class ItemList extends React.Component {
   }
 }
 
+const SuggestSearch = (props) => {
+  return props.filter ? 'Search google for: ' + props.filter : null
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {filter: '', selectedFilterTags: {}}
+    this.state = {filter: '', selectedFilterTags: {}, selectedItem: 0}
   }
 
   onKeyDown = (event) => {
     const key = event.key
     if (key === 'Enter') {
-      if (getFilterList().length === $('li').length) {
-        const filterVal = $("#filterVal")[0].value
-        window.location.href = filterVal;
-      }
+      //window.location.href = filterVal;
     } else if (key === 'ArrowDown') {
       console.log('ArrowDown')
-      const nbItems = $('li').length - getFilterList().length
-      window.selectedItem = window.selectedItem + 1
-      if (window.selectedItem >= nbItems) {
-        window.selectedItem = nbItems
-      }
+      this.setState({selectedItem: this.state.selectedItem + 1})
     } else if (key === 'ArrowUp') {
       console.log('ArrowUp')
-      const nbItems = getFilterList().length
-      window.selectedItem = window.selectedItem > 0 ? window.selectedItem - 1 : 0
+      this.setState({selectedItem: this.state.selectedItem - 1})
     } else {
       console.log('key = ' + key)
-      //filter()
-      const filterVal = $("#filterVal")[0].value
+      const filterVal = event.target.value + key
       this.setState({filter: filterVal})
-      $('#suggestSearch').html('Search google for: ' + filterVal)
     }
   }
 
   filterTagClick = (event) => {
-    const selectedFilterTags = {...this.state.selectedFilterTags}
-    selectedFilterTags[event.target.name] = !selectedFilterTags[event.target.name]
+    console.log('filterTagClick')
+    let selectedFilterTags = {...this.state.selectedFilterTags}
+    if (selectedFilterTags[event.target.alt]) {
+      selectedFilterTags = _.omit(selectedFilterTags, event.target.alt)
+    } else {
+      selectedFilterTags[event.target.alt] = true
+    }
     this.setState({selectedFilterTags})
   }
 
   render() {
 
-    const {selectedFilterTags} = this.state
+    const {selectedFilterTags, filter, selectedItem} = this.state
 
     const filterTags = [
       {src: '../common/checklist.png', name: 'TODO'},
@@ -165,7 +160,7 @@ class App extends React.Component {
 
     return e(
       'div', null, 
-        e(SideMenu, {filterTags, filterTagClick: this.filterTagClick}, selectedFilterTags),
+        e(SideMenu, {filterTags, filterTagClick: this.filterTagClick, selectedFilterTags}),
         e('div', {id: 'filterValDiv'},
           e('span', {onClick: clearFilter}, '❌'),
           ' ',
@@ -186,7 +181,9 @@ class App extends React.Component {
             e('input', {type: 'submit', value: 'New File'})
           ),
           
-          e(ItemList, {filter: this.state.filter})
+          e(SuggestSearch, {filter}),
+          
+          e(ItemList, {filter, selectedFilterTags, selectedItem})
         )
       )
   }
