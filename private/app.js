@@ -68,7 +68,36 @@ class SideMenu extends React.Component {
   }
 }
 
-class WitchItemList extends React.Component {
+const withItemList = (Comp) => {
+  class WithItemList extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {data: null}
+    }
+  
+    componentDidMount = () => {
+      $.getJSON('http://localhost:3000/files', (data) => {
+        this.setState({data})
+      });
+    }
+  
+    render = () => {
+      const {filter, selectedFilterTags, selectedItem} = this.props
+      const {data} = this.state
+  
+      if (!data) return null
+        
+      const filterVals = (filter || '').split(' ')
+      const filters = [...filterVals, ..._.keys(selectedFilterTags)]
+  
+      const items = data.filter((elem,i) => !shouldFilter(elem, filters))
+
+      console.log(items)
+  
+      return e(Comp, this.props)
+    }
+  }
+  return WithItemList
 }
 
 class ItemList extends React.Component {
@@ -196,7 +225,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(e(App), document.querySelector('#app'));
+ReactDOM.render(e(withItemList(App)), document.querySelector('#app'));
 
 /*class App extends React.Component {
   constructor(props) {
