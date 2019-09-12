@@ -68,104 +68,69 @@ class SideMenu extends React.Component {
   }
 }
 
-const withItemList = (Comp) => {
-  class WithItemList extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {data: null}
-    }
-  
-    componentDidMount = () => {
-      $.getJSON('http://localhost:3000/files', (data) => {
-        this.setState({data})
-      });
-    }
-  
-    render = () => {
-      const {filter, selectedFilterTags, selectedItem} = this.props
-      const {data} = this.state
-  
-      if (!data) return null
-        
-      const filterVals = (filter || '').split(' ')
-      const filters = [...filterVals, ..._.keys(selectedFilterTags)]
-  
-      const items = data.filter((elem,i) => !shouldFilter(elem, filters))
-
-      console.log(items)
-  
-      return e(Comp, this.props)
-    }
-  }
-  return WithItemList
-}
-
-class ItemList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { liked: false };
-  }
-
-  componentDidMount = () => {
-    $.getJSON('http://localhost:3000/files', (data) => {
-      this.setState({data})
-    });
-  }
-
-  render = () => {
-    const {filter, selectedFilterTags, selectedItem} = this.props
-    const {data} = this.state
-
-    if (!data) return null
-
-    const items = data.map((elem,i) => {
-      const filterVals = filter.split(' ')
-      const filters = [...filterVals, ..._.keys(selectedFilterTags)]
-
-      if (shouldFilter(elem, filters)) return null
-
-      const selected = selectedItem === i
-      return e('li', {key: i}, e(Item, {elem, selected}))
-    })
-
-    return e('div',null,items)
-  /*$("#root").html(items.join(''))
-  if (!window.selectedItem)
-    window.selectedItem = 0
-  $('li')[window.selectedItem].setAttribute("selected", "true")*/
-
-  }
-}
-
 const SuggestSearch = (props) => {
   if (!props.filter) return null
 
   const url = `https://www.google.com/search?q=${props.filter}`
 
-  return e('div', {onClick: (event) => {window.location.href = url}, className: 'clickable'}, 'Search google for: ' + props.filter)
+  return e('div', {onClick: (event) => {window.location.href = url}, className: 'clickable',
+    isselected: props.selected.toString()}, 'Search google for: ' + props.filter)
 }
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {filter: '', selectedFilterTags: {}, selectedItem: 0, nbItems: 0}
+    this.state = {filter: '', selectedFilterTags: {}, selectedItem: 1, nbItems: 0}
+  }
+
+  componentDidMount = () => {
+    $.getJSON('http://localhost:3000/files', (data) => {
+      this.setState({data}, this.updateFilteredItems)
+    });
+  }
+
+  redirectToSearch(query) {
+    const url = `https://www.google.com/search?q=${query}`
+    window.location.href = url
   }
 
   onKeyDown = (event) => {
     const key = event.key
     if (key === 'Enter') {
-      //window.location.href = filterVal;
+      if (this.state.selectedItem === 0) {
+        this.redirectToSearch(this.state.filter)
+      }
     } else if (key === 'ArrowDown') {
       console.log('ArrowDown')
-      this.setState({selectedItem: this.state.selectedItem + 1})
+      if (this.state.selectedItem < this.state.filteredItems.length)
+        this.setState({selectedItem: this.state.selectedItem + 1})
     } else if (key === 'ArrowUp') {
       console.log('ArrowUp')
-      this.setState({selectedItem: this.state.selectedItem - 1})
+      if (this.state.selectedItem > 0)
+        this.setState({selectedItem: this.state.selectedItem - 1})
     } else {
       console.log('key = ' + key)
       const filterVal = event.target.value + key
-      this.setState({filter: filterVal})
+      this.setState({filter: filterVal}, this.updateFilteredItems)
     }
+  }
+
+  updateFilteredItems = () => {
+    let {data, filter, selectedFilterTags, selectedItem} = this.state
+    if (!data) return
+    
+    const filteredItems = data.filter(elem => {
+      const filterVals = filter.split(' ')
+      const filters = [...filterVals, ..._.keys(selectedFilterTags)]
+
+      return !shouldFilter(elem, filters)
+    })
+
+    if (selectedItem >= filteredItems.length) {
+      selectedItem = filteredItems.length
+    }
+
+    this.setState({filteredItems, selectedItem})
   }
 
   filterTagClick = (event) => {
@@ -176,12 +141,12 @@ class App extends React.Component {
     } else {
       selectedFilterTags[event.target.alt] = true
     }
-    this.setState({selectedFilterTags})
+    this.setState({selectedFilterTags}, this.updateFilteredItems)
   }
 
   render() {
 
-    const {selectedFilterTags, filter, selectedItem} = this.state
+    const {selectedFilterTags, filter, selectedItem, data, filteredItems} = this.state
 
     const filterTags = [
       {src: '../common/checklist.png', name: 'TODO'},
@@ -193,6 +158,16 @@ class App extends React.Component {
       {src: '../common/penguin.png', name: 'Recette'},
       {src: '../common/mic.png', name: 'Karaoke'},
     ]
+
+    let itemList = null
+    if (filteredItems) {
+      const items = filteredItems.map((elem,i) => {
+        const selected = selectedItem === i+1
+        return e('li', {key: 'item'+i+elem}, e(Item, {elem, selected}))
+      })
+
+      itemList = e('div',null,items)
+    }
 
     return e(
       'div', null, 
@@ -217,15 +192,15 @@ class App extends React.Component {
             e('input', {type: 'submit', value: 'New File'})
           ),
           
-          e(SuggestSearch, {filter}),
+          e(SuggestSearch, {filter, selected: selectedItem === 0}),
           
-          e(ItemList, {filter, selectedFilterTags, selectedItem})
+          itemList
         )
       )
   }
 }
 
-ReactDOM.render(e(withItemList(App)), document.querySelector('#app'));
+ReactDOM.render(e(App), document.querySelector('#app'));
 
 /*class App extends React.Component {
   constructor(props) {
