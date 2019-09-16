@@ -2,6 +2,20 @@
 
 const e = React.createElement
 
+function deleteFile(name, reloadFiles) {
+  if (confirm('Are you sure you want to delete "' + decodeURIComponent(name) + '" ?')) {
+    $.ajax({
+      url: '/deleteFile',
+      type: 'DELETE',
+      data: {filename: name},
+      success: function(result) {
+          // Do something with the result
+        reloadFiles()
+      }
+    });
+  }
+}
+
 class Item extends React.Component {
   constructor(props) {
     super(props)
@@ -14,17 +28,32 @@ class Item extends React.Component {
       console.log('Filename changed')
     });
   }
+  itemClicked = () => {
+    if (this.props.selected) {
+      const href = `../data/${encodeURIComponent(this.state.elem)}`
+      window.location.href = href
+    } else {
+      this.props.setSelectedItem(this.props.itemNb)
+    }
+  }
   render() {
-    const {selected} = this.props
+    const {selected, reloadFiles} = this.props
     const {elem} = this.state
     const name = encodeURIComponent(elem)
 
+    const regex = /#[A-Za-z]+/;
+    let tag = elem.match(regex);
+    if (tag) tag = tag[0].substring(1)
+    console.log(tag)
+
     return e(
-      'div', {isselected: selected.toString()}, 
-        e('a', {href: `../data/${name}`}, '🔎'),
-        e('a', {href: `../data/${name}?contentType=text`}, '📖'),
+      'div', {isselected: selected.toString(), onClick: this.itemClicked}, 
+        /*e('a', {href: `../data/${name}`}, '🔎'),*/
         e('a', {href: `edit/${name}`}, '✏️'),
-        e('span', {onClick: () => deleteFile(name)}, '❌'),
+        e('span', {className: 'clickable', onClick: () => deleteFile(elem, reloadFiles)}, '❌'),
+        ' ',
+        tag ? e('img', {src: `../common/${tag}.png`, alt: "📄", className: 'filterTagIcon'}) : '📄',
+        ' ',
         e('input', {type: 'text', name:'filename', size: 64, value: elem, className: 'nothing',
           onChange: this.onNameChange}
     ))
@@ -99,6 +128,11 @@ class App extends React.Component {
   }
 
   componentDidMount = () => {
+    this.reloadFiles()
+  }
+
+  reloadFiles = () => {
+    console.log('Reloading files')
     $.getJSON('http://localhost:3000/files', (data) => {
       this.setState({data}, this.updateFilteredItems)
     });
@@ -114,6 +148,10 @@ class App extends React.Component {
     if (key === 'Enter') {
       if (this.state.selectedItem === 0) {
         this.redirectToSearch(this.state.filter)
+      } else {
+        const item = this.state.filteredItems[this.state.selectedItem-1]
+        const href = `../data/${encodeURIComponent(item)}`
+        window.location.href = href
       }
     } else if (key === 'ArrowDown') {
       console.log('ArrowDown')
@@ -123,11 +161,18 @@ class App extends React.Component {
       console.log('ArrowUp')
       if (this.state.selectedItem > 0)
         this.setState({selectedItem: this.state.selectedItem - 1})
+    } else if (key === 'Delete') {
+      const item = this.state.filteredItems[this.state.selectedItem-1]
+      console.log('Would delete:')
+      console.log(item)
     }
   }
 
   onKeyPress = (event) => {
     const key = event.key
+
+    if (key === 'Enter') return
+
     console.log('key = ' + key)
     const filterVal = event.target.value + key
     this.setState({filter: filterVal}, this.updateFilteredItems)
@@ -149,6 +194,10 @@ class App extends React.Component {
     }
 
     this.setState({filteredItems, selectedItem})
+  }
+
+  setSelectedItem = (selectedItem) => {
+    this.setState({selectedItem})
   }
 
   filterTagClick = (event) => {
@@ -175,25 +224,26 @@ class App extends React.Component {
       {src: '../common/film.png', name: 'Film'},
       {src: '../common/penguin.png', name: 'Recette'},
       {src: '../common/mic.png', name: 'Karaoke'},
+      {src: '../common/heart.png', name: 'love'},
     ]
 
     let itemList = null
     if (filteredItems) {
       const items = filteredItems.map((elem,i) => {
         const selected = selectedItem === i+1
-        return e('li', {key: 'item'+i+elem}, e(Item, {elem, selected}))
+        return e('li', {key: 'item'+i+elem}, e(Item, {elem, selected, reloadFiles: this.reloadFiles, itemNb: i+1, setSelectedItem: this.setSelectedItem}))
       })
 
       itemList = e('div',null,items)
     }
 
     return e(
-      'div', null, 
+      'div', {onKeyDown: this.onKeyDown}, 
         e(SideMenu, {filterTags, filterTagClick: this.filterTagClick, selectedFilterTags}),
         e('div', {id: 'filterValDiv'},
           e('span', {onClick: clearFilter}, '❌'),
           ' ',
-          e('input', {id: 'filterVal', type: 'text', onKeyPress: this.onKeyPress, onKeyDown: this.onKeyDown, autoFocus: true})
+          e('input', {id: 'filterVal', type: 'text', onKeyPress: this.onKeyPress, autoFocus: true})
         ),
         e('div', {className: 'content'},
           e('iframe', {width: 0, height: 0, border: 0, style: {display: 'none'}, name: 'dummyframe', id: 'dummyframe'}),

@@ -24,6 +24,15 @@ body {
 }*/
 [isselected~="true"] {
   border-bottom: solid 2px black;
+  /*-webkit-box-shadow:inset 0px 0px 0px 2px #000000;
+  -moz-box-shadow:inset 0px 0px 0px 2px #000000;
+  box-shadow:inset 0px 0px 0px 2px #000000;*/
+}
+[isselected~="false"] {
+  border-bottom: solid 2px white;
+  /*-webkit-box-shadow:inset 0px 0px 0px 2px #000000;
+  -moz-box-shadow:inset 0px 0px 0px 2px #000000;
+  box-shadow:inset 0px 0px 0px 2px #000000;*/
 }
 #filterVal {
   width: 600px;
@@ -31,6 +40,10 @@ body {
 .filterTag {
   width: 64px;
   height: 64px;
+}
+.filterTagIcon {
+  width: 16px;
+  height: 16px;
 }
 .clickable {
   cursor: pointer;

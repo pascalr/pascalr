@@ -44,8 +44,13 @@ app.post('/newFile', function(req, res) {
 })
 
 app.delete('/deleteFile', function(req,res) {
-  console.log('/deleteFile')
-  //fs.unlink()
+  console.log('/deleteFile: ' + req.body.filename)
+  fs.unlink('data/'+req.body.filename, (err) => {
+    if (err) throw err;
+    console.log(`path/${req.body.filename} was deleted`);
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('The file has been deleted!', 'utf-8');
+  });
 })
 
 app.post('/save', function(req, res) {
@@ -199,30 +204,14 @@ app.get('*',function (req, res) {
   if (req.query.contentType && req.query.contentType == 'text')
     contentType = 'text/plain'
 
-    fs.readFile(filePath, function(error, content) {
-        if (error) {
-            if(error.code == 'ENOENT'){
-                console.log('error ENOENT... filepath: ' + filePath);
-                fs.readFile('./404.html', function(error, content) {
-                    res.writeHead(200, { 'Content-Type': contentType });
-                    res.end(content, 'utf-8');
-                });
-            }
-            else {
-                console.log('error...');
-                res.writeHead(500);
-                res.end('Sorry, check with the site admin for error: '+error.code+' ..\n');
-                res.end(); 
-            }
-        }
-        else {
-            console.log('no error...');
-            res.writeHead(200, { 'Content-Type': contentType });
-            res.end(content, 'utf-8');
-        }
+    const stream = fs.createReadStream(filePath);
+
+    stream.on('error', function(error) {
+      res.writeHead(404, 'Not Found');
+      res.end();
     });
 
-
+    stream.pipe(res)
 });
 
 var port = 3000
