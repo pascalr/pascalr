@@ -18,9 +18,12 @@ body {
   background-color: #555555;
   filter: brightness(75%);
 }
-[isselected~="true"] {
+/*[isselected~="true"] {
   background-color: #CCCCCC;
   filter: brightness(90%);
+}*/
+[isselected~="true"] {
+  border-bottom: solid 2px black;
 }
 #filterVal {
   width: 600px;

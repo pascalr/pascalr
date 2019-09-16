@@ -16,17 +16,22 @@ app.use(function(req, res, next) {
 });
 
 app.post('/renameFile', function(req, res) {
+
+  if (!req.body.newName) return null
+
   console.log('works!!!!!!! ' + req.path)
   console.log(req.body)
   fs.rename("data/"+req.body.oldName, "data/"+req.body.newName, function (err) {
     if (err) throw err;
     console.log('renamed complete');
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('The file has been saved!', 'utf-8');
   })
 })
 
 app.post('/newFile', function(req, res) {
   console.log('Creating new file.')
-  const filename = ' untitled_'+Date.now()
+  const filename = req.body.newFilename || ' untitled_'+Date.now()
 
   fs.writeFile('data/'+filename, null, { flag: 'wx' }, (err) => {
     if (err) throw err;

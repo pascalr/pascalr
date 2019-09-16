@@ -9,8 +9,8 @@ class Item extends React.Component {
   }
   onNameChange = (event) => {
     const args = {oldName: this.state.elem, newName: event.target.value}
-    this.setState({elem: event.target.value})
-    $.post('http://localhost:3000/renameFile', args, function(data) {
+    $.post('http://localhost:3000/renameFile', args, data => {
+      this.setState({elem: args.newName})
       console.log('Filename changed')
     });
   }
@@ -68,13 +68,28 @@ class SideMenu extends React.Component {
   }
 }
 
+const SuggestCreate = (props) => {
+  if (!props.filter) return null
+
+  return e('form', {action: '/newFile', method: 'post', target: 'dummyframe', style: {display: 'inline'}},
+            e('input', {type: "hidden", id: "newFilename", name: "newFilename", value: props.filter}),
+            e('input', {type: 'submit', value: 'New File', style: {float: 'right', marginRight: '200px'}})
+          )
+}
+
 const SuggestSearch = (props) => {
   if (!props.filter) return null
 
   const url = `https://www.google.com/search?q=${props.filter}`
 
-  return e('div', {onClick: (event) => {window.location.href = url}, className: 'clickable',
+  return e('span', {onClick: (event) => {window.location.href = url}, className: 'clickable',
     isselected: props.selected.toString()}, 'Search google for: ' + props.filter)
+}
+
+const Suggest = (props) => {
+  if (!props.filter) return null
+
+  return e('div', null, e(SuggestSearch, props), e(SuggestCreate, props))
 }
 
 class App extends React.Component {
@@ -108,11 +123,14 @@ class App extends React.Component {
       console.log('ArrowUp')
       if (this.state.selectedItem > 0)
         this.setState({selectedItem: this.state.selectedItem - 1})
-    } else {
-      console.log('key = ' + key)
-      const filterVal = event.target.value + key
-      this.setState({filter: filterVal}, this.updateFilteredItems)
     }
+  }
+
+  onKeyPress = (event) => {
+    const key = event.key
+    console.log('key = ' + key)
+    const filterVal = event.target.value + key
+    this.setState({filter: filterVal}, this.updateFilteredItems)
   }
 
   updateFilteredItems = () => {
@@ -175,7 +193,7 @@ class App extends React.Component {
         e('div', {id: 'filterValDiv'},
           e('span', {onClick: clearFilter}, '❌'),
           ' ',
-          e('input', {id: 'filterVal', type: 'text', onKeyDown: this.onKeyDown, autoFocus: true})
+          e('input', {id: 'filterVal', type: 'text', onKeyPress: this.onKeyPress, onKeyDown: this.onKeyDown, autoFocus: true})
         ),
         e('div', {className: 'content'},
           e('iframe', {width: 0, height: 0, border: 0, style: {display: 'none'}, name: 'dummyframe', id: 'dummyframe'}),
@@ -188,11 +206,11 @@ class App extends React.Component {
             e('input', {type: 'submit', value: 'Bookmark'})
           ),
 
-          e('form', {action: '/newFile', method: 'post', target: 'dummyframe'},
+          /*e('form', {action: '/newFile', method: 'post', target: 'dummyframe'},
             e('input', {type: 'submit', value: 'New File'})
-          ),
+          ),*/
           
-          e(SuggestSearch, {filter, selected: selectedItem === 0}),
+          e(Suggest, {filter, selected: selectedItem === 0}),
           
           itemList
         )
@@ -201,22 +219,3 @@ class App extends React.Component {
 }
 
 ReactDOM.render(e(App), document.querySelector('#app'));
-
-/*class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { liked: false };
-  }
-
-  render() {
-    if (this.state.liked) {
-      return 'You liked this.';
-    }
-
-    return e(
-      'button',
-      { onClick: () => this.setState({ liked: true }) },
-      'Like'
-    );
-  }
-}*/
