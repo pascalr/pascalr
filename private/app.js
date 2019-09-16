@@ -16,23 +16,39 @@ function deleteFile(name, reloadFiles) {
   }
 }
 
+function parseTag(elem) {
+  const regex = /#[A-Za-z]+/;
+  let tag = elem.match(regex);
+  return tag ? tag[0].substring(1) : null
+}
+
 class Item extends React.Component {
   constructor(props) {
     super(props)
     this.state = {elem: props.elem}
   }
   onNameChange = (event) => {
-    const args = {oldName: this.state.elem, newName: event.target.value}
+    this.setState({elem: event.target.value})
+  }
+  onNameSubmit = (event) => {
+    const args = {oldName: this.props.elem, newName: event.target.value}
     $.post('http://localhost:3000/renameFile', args, data => {
       this.setState({elem: args.newName})
       console.log('Filename changed')
     });
   }
-  itemClicked = () => {
+  itemClicked = (event) => {
     if (this.props.selected) {
       const href = `../data/${encodeURIComponent(this.state.elem)}`
       window.location.href = href
     } else {
+      this.props.setSelectedItem(this.props.itemNb)
+    }
+  }
+  itemNameClicked = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    if (!this.props.selected) {
       this.props.setSelectedItem(this.props.itemNb)
     }
   }
@@ -44,55 +60,47 @@ class Item extends React.Component {
     const regex = /#[A-Za-z]+/;
     let tag = elem.match(regex);
     if (tag) tag = tag[0].substring(1)
-    console.log(tag)
 
     return e(
       'div', {isselected: selected.toString(), onClick: this.itemClicked}, 
         /*e('a', {href: `../data/${name}`}, '🔎'),*/
         e('a', {href: `edit/${name}`}, '✏️'),
-        e('span', {className: 'clickable', onClick: () => deleteFile(elem, reloadFiles)}, '❌'),
-        ' ',
+        /*e('span', {className: 'clickable', onClick: () => deleteFile(elem, reloadFiles)}, '❌'),*/
+        '\u00A0\u00A0',
         tag ? e('img', {src: `../common/${tag}.png`, alt: "📄", className: 'filterTagIcon'}) : '📄',
         ' ',
         e('input', {type: 'text', name:'filename', size: 64, value: elem, className: 'nothing',
-          onChange: this.onNameChange}
+          onBlur: this.onNameSubmit, onChange: this.onNameChange, onClick: this.itemNameClicked}
     ))
-      //&nbsp;
-      //&#x1f4c4;
-      //<input type="text" name="filename" onfocus="this.oldValue = this.value;"
-      //       onchange="filenameChanged(this);this.oldValue = this.value;" size="64" value="${elem}" class="nothing"/>
   }
 }
 
 class FilterTag extends React.Component {
   render() {
-    const {src, name, onClick, selected} = this.props
+    const {src, name, onClick, selected, filteredItems} = this.props
 
-    return e('img', {src, alt: name, className: 'filterTag', tagselected: (selected || false).toString(), onClick})
-  }
-}
-
-function getFilters() {
-  /*console.log('filters')
-  let filterTags = $(".filterTag")
-  filterTags = $.makeArray( filterTags )
-  filterTags = $.map( filterTags, function( val, i ) {
-    if (val.getAttribute("selected")) {
-      return val.alt
+    let count = 0
+    if (filteredItems) {
+      filteredItems.map(item => {
+        if (ciEquals(parseTag(item), name))
+          count = count + 1
+      })
     }
-  });
-  return filterTags*/
-  //return filterTags.map(a => a.props.name)
-  return ''
+
+    return e('div', null,
+      e('img', {src, alt: name, className: 'filterTag', tagselected: (selected || false).toString(), onClick}),
+      e('span', {style: {fontSize: '12px'}}, `(${count})`)
+    )
+  }
 }
 
 class SideMenu extends React.Component {
   render() {
-    const {filterTags, selectedFilterTags, filterTagClick} = this.props
+    const {filterTags, selectedFilterTags, filterTagClick, filteredItems} = this.props
 
     return e('div', {id: 'sideMenu'}, filterTags.map((a,i) => {
       const selected = selectedFilterTags ? selectedFilterTags[a.name] : false
-      return e(FilterTag, {src: a.src, name: a.name, onClick: filterTagClick, key: `filterTag${i}`, selected})
+      return e(FilterTag, {src: a.src, name: a.name, filteredItems, onClick: filterTagClick, key: `filterTag${i}`, selected})
     }))
   }
 }
@@ -163,8 +171,7 @@ class App extends React.Component {
         this.setState({selectedItem: this.state.selectedItem - 1})
     } else if (key === 'Delete') {
       const item = this.state.filteredItems[this.state.selectedItem-1]
-      console.log('Would delete:')
-      console.log(item)
+      deleteFile(item, this.reloadFiles)
     }
   }
 
@@ -239,7 +246,7 @@ class App extends React.Component {
 
     return e(
       'div', {onKeyDown: this.onKeyDown}, 
-        e(SideMenu, {filterTags, filterTagClick: this.filterTagClick, selectedFilterTags}),
+        e(SideMenu, {filterTags, filterTagClick: this.filterTagClick, selectedFilterTags, filteredItems}),
         e('div', {id: 'filterValDiv'},
           e('span', {onClick: clearFilter}, '❌'),
           ' ',

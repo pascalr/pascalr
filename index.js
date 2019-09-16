@@ -204,14 +204,17 @@ app.get('*',function (req, res) {
   if (req.query.contentType && req.query.contentType == 'text')
     contentType = 'text/plain'
 
-    const stream = fs.createReadStream(filePath);
+  //res.set({ 'content-type': 'text/plain; charset=utf-8' });
+  res.set({ 'content-type': 'charset=utf-8' });
 
-    stream.on('error', function(error) {
-      res.writeHead(404, 'Not Found');
-      res.end();
-    });
+  const stream = fs.createReadStream(filePath, {encoding: 'utf-8'});
 
-    stream.pipe(res)
+  stream.on('error', function(error) {
+    res.writeHead(404, 'Not Found');
+    res.end();
+  });
+
+  stream.pipe(res)
 });
 
 var port = 3000
