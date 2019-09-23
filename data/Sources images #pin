@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+      <html>
+         <body>
+            <script type="text/javascript">
+              window.location.href = "https://pixabay.com/vectors/";
+            </script>
+         </body>
+      </html>

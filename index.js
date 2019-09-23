@@ -4,7 +4,56 @@ var bodyParser = require('body-parser')
 const fs = require('fs');
 const path = require('path');
 var _ = require('./common/lodash.min.js')
-var he = require('he')
+var he = require('he') // unused I think
+var elasticlunr = require('./common/elasticlunr.js')
+
+// CONSTANTS
+
+const DATA_PATH = path.join(__dirname, 'data');
+
+// FUNCTIONS
+
+function parseTitleTags(str) {
+  return str.split('#').slice(1)
+}
+
+function parseTitleName(str) {
+  return str.split('#')[0]
+}
+
+// Search index
+
+console.log('Generating elasticlunr index...')
+
+const index = elasticlunr(function () {
+    this.addField('title');
+    this.addField('tags');
+    this.setRef('id');
+})
+// this.addField('content');
+
+fs.readdir(DATA_PATH, function (err, files) {
+  if (err) {console.log('Unable to read data directory: ' + err); throw err}
+
+  files.forEach(function (file) {
+
+    let doc = {}
+
+    fs.readFile(path.join(DATA_PATH, file), function(error, content) {
+      if (error) {console.log('Unable to read data file: ' + error); throw error}
+
+      // TODO: Add the content of all human readable files to the content field of the index.
+      doc.title = parseTitleName(file);
+      doc.tags = parseTitleTags(file);
+      doc.id = file
+      
+      //console.log(`Adding file ${file} to the index. Title = ${doc.title}, tags = ${doc.tags}, id = ${doc.id}`)
+      index.addDoc(doc)
+    });
+  });
+})
+
+console.log('Done generating elasticlunr index!')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -89,6 +138,31 @@ app.post('/bookmark', function(req, res) {
   });
 
   //console.log(html)
+})
+
+app.get('/search/:query?', function(req, res) {
+  const query = decodeURIComponent(req.params.query)
+  console.log('Searching for query = ' + query)
+
+  if (query && query !== 'undefined') {
+
+    const results = index.search(query, {
+      fields: {
+          title: {boost: 2},
+          tags: {boost: 1}
+      },
+      bool: "OR",
+      expand: true
+    });
+
+    res.send(results.map(e => e.ref))
+
+  } else {
+    fs.readdir(__dirname + '/data', function (err, files) {
+      if (err) {return console.log('Unable to scan directory: ' + err); throw err;} 
+      res.send(files);
+    });
+  }
 })
 
 app.get('/getFile/edit/:filename', function(req, res) {

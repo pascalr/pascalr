@@ -141,7 +141,9 @@ class App extends React.Component {
 
   reloadFiles = () => {
     console.log('Reloading files')
-    $.getJSON('http://localhost:3000/files', (data) => {
+    const query = encodeURIComponent(this.state.filter)
+    console.log('query = ' + query)
+    $.getJSON(`http://localhost:3000/search/${query}`, (data) => {
       this.setState({data}, this.updateFilteredItems)
     });
   }
@@ -183,6 +185,7 @@ class App extends React.Component {
     console.log('key = ' + key)
     const filterVal = event.target.value + key
     this.setState({filter: filterVal}, this.updateFilteredItems)
+    this.reloadFiles()
   }
 
   updateFilteredItems = () => {
@@ -232,11 +235,12 @@ class App extends React.Component {
       {src: '../common/penguin.png', name: 'Recette'},
       {src: '../common/mic.png', name: 'Karaoke'},
       {src: '../common/heart.png', name: 'love'},
+      {src: '../common/danse.png', name: 'danse'},
     ]
 
     let itemList = null
-    if (filteredItems) {
-      const items = filteredItems.map((elem,i) => {
+    if (data) {
+      const items = data.map((elem,i) => {
         const selected = selectedItem === i+1
         return e('li', {key: 'item'+i+elem}, e(Item, {elem, selected, reloadFiles: this.reloadFiles, itemNb: i+1, setSelectedItem: this.setSelectedItem}))
       })
