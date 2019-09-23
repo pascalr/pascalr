@@ -16,7 +16,7 @@ function deleteFile(name, reloadFiles) {
   }
 }
 
-function parseTag(elem) {
+function parseMainTag(elem) {
   const regex = /#[A-Za-z]+/;
   let tag = elem.match(regex);
   return tag ? tag[0].substring(1) : null
@@ -77,12 +77,12 @@ class Item extends React.Component {
 
 class FilterTag extends React.Component {
   render() {
-    const {src, name, onClick, selected, filteredItems} = this.props
+    const {src, name, onClick, selected, data} = this.props
 
     let count = 0
-    if (filteredItems) {
-      filteredItems.map(item => {
-        if (ciEquals(parseTag(item), name))
+    if (data) {
+      data.map(item => {
+        if (ciEquals(parseMainTag(item), name))
           count = count + 1
       })
     }
@@ -96,11 +96,11 @@ class FilterTag extends React.Component {
 
 class SideMenu extends React.Component {
   render() {
-    const {filterTags, selectedFilterTags, filterTagClick, filteredItems} = this.props
+    const {filterTags, selectedFilterTags, filterTagClick, data} = this.props
 
     return e('div', {id: 'sideMenu'}, filterTags.map((a,i) => {
       const selected = selectedFilterTags ? selectedFilterTags[a.name] : false
-      return e(FilterTag, {src: a.src, name: a.name, filteredItems, onClick: filterTagClick, key: `filterTag${i}`, selected})
+      return e(FilterTag, {src: a.src, name: a.name, data, onClick: filterTagClick, key: `filterTag${i}`, selected})
     }))
   }
 }
@@ -140,11 +140,23 @@ class App extends React.Component {
   }
 
   reloadFiles = () => {
+    const {data, filter, selectedItem} = this.state
+
     console.log('Reloading files')
+
     const query = encodeURIComponent(this.state.filter)
+
     console.log('query = ' + query)
+
     $.getJSON(`http://localhost:3000/search/${query}`, (data) => {
-      this.setState({data}, this.updateFilteredItems)
+
+      if (!data) return
+      
+      if (selectedItem >= data.length) {
+        this.setState({data, selectedItem: data.length})
+      } else {
+        this.setState({data})
+      }
     });
   }
 
@@ -159,20 +171,20 @@ class App extends React.Component {
       if (this.state.selectedItem === 0) {
         this.redirectToSearch(this.state.filter)
       } else {
-        const item = this.state.filteredItems[this.state.selectedItem-1]
+        const item = this.state.data[this.state.selectedItem-1]
         const href = `../data/${encodeURIComponent(item)}`
         window.location.href = href
       }
     } else if (key === 'ArrowDown') {
       console.log('ArrowDown')
-      if (this.state.selectedItem < this.state.filteredItems.length)
+      if (this.state.selectedItem < this.state.data.length)
         this.setState({selectedItem: this.state.selectedItem + 1})
     } else if (key === 'ArrowUp') {
       console.log('ArrowUp')
       if (this.state.selectedItem > 0)
         this.setState({selectedItem: this.state.selectedItem - 1})
     } else if (key === 'Delete') {
-      const item = this.state.filteredItems[this.state.selectedItem-1]
+      const item = this.state.data[this.state.selectedItem-1]
       deleteFile(item, this.reloadFiles)
     }
   }
@@ -184,21 +196,13 @@ class App extends React.Component {
 
     console.log('key = ' + key)
     const filterVal = event.target.value + key
-    this.setState({filter: filterVal}, this.updateFilteredItems)
-    this.reloadFiles()
+    this.setState({filter: filterVal}, this.reloadFiles)
   }
 
   updateFilteredItems = () => {
     let {data, filter, selectedFilterTags, selectedItem} = this.state
     if (!data) return
     
-    const filteredItems = data.filter(elem => {
-      const filterVals = filter.split(' ')
-      const filters = [...filterVals, ..._.keys(selectedFilterTags)]
-
-      return !shouldFilter(elem, filters)
-    })
-
     if (selectedItem >= filteredItems.length) {
       selectedItem = filteredItems.length
     }
@@ -250,7 +254,7 @@ class App extends React.Component {
 
     return e(
       'div', {onKeyDown: this.onKeyDown}, 
-        e(SideMenu, {filterTags, filterTagClick: this.filterTagClick, selectedFilterTags, filteredItems}),
+        e(SideMenu, {filterTags, filterTagClick: this.filterTagClick, selectedFilterTags, data}),
         e('div', {id: 'filterValDiv'},
           e('span', {onClick: clearFilter}, '❌'),
           ' ',
