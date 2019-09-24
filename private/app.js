@@ -190,16 +190,6 @@ class App extends React.Component {
     }
   }
 
-  onKeyPress = (event) => {
-    const key = event.key
-
-    if (key === 'Enter') return
-
-    console.log('key = ' + key)
-    const filterVal = event.target.value + key
-    this.setState({filter: filterVal}, this.reloadFiles)
-  }
-
   updateFilteredItems = () => {
     let {data, filter, selectedFilterTags, selectedItem} = this.state
     if (!data) return
@@ -270,7 +260,7 @@ class App extends React.Component {
         e('div', {id: 'filterValDiv'},
           e('span', {onClick: clearFilter}, '❌'),
           ' ',
-          e('input', {id: 'filterVal', type: 'text', onKeyPress: this.onKeyPress, autoFocus: true})
+          e('input', {id: 'filterVal', type: 'text', value: filter, onChange: ({target}) => {this.setState({filter: target.value}, this.reloadFiles)}, autoFocus: true})
         ),
         e('div', {className: 'content'},
           e('iframe', {width: 0, height: 0, border: 0, style: {display: 'none'}, name: 'dummyframe', id: 'dummyframe'}),
