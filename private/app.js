@@ -31,6 +31,7 @@ class Item extends React.Component {
     this.setState({elem: event.target.value})
   }
   onNameSubmit = (event) => {
+    // TODO: Make a controlled input for the name, on focus lost save the name
     const args = {oldName: this.props.elem, newName: event.target.value}
     $.post('http://localhost:3000/renameFile', args, data => {
       this.setState({elem: args.newName})
@@ -132,7 +133,7 @@ const Suggest = (props) => {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {filter: '', selectedFilterTags: {}, selectedItem: 1, nbItems: 0}
+    this.state = {filter: '', selectedFilterTags: {}, selectedItem: 1, nbItems: 0, bookmarkLink: '', bookmarkName: ''}
   }
 
   componentDidMount = () => {
@@ -225,12 +226,20 @@ class App extends React.Component {
     this.setState({selectedFilterTags}, this.updateFilteredItems)
   }
 
-  onBookmark = () => {
+  onBookmark = (event) => {
+    const {bookmarkLink, bookmarkName} = this.state
+    console.log(event)
+    event.preventDefault()
+    $.post('http://localhost:3000/bookmark', {link: bookmarkLink, name: bookmarkName}, response => {
+      this.reloadFiles()
+      this.setState({bookmarkLink: '', bookmarkName: ''})
+      console.log('Bookmarked!')
+    });
   }
 
   render() {
 
-    const {selectedFilterTags, filter, selectedItem, data, filteredItems} = this.state
+    const {selectedFilterTags, filter, selectedItem, data, filteredItems, bookmarkLink, bookmarkName} = this.state
 
     const filterTags = [
       {src: '../common/checklist.png', name: 'TODO'},
@@ -266,11 +275,11 @@ class App extends React.Component {
         e('div', {className: 'content'},
           e('iframe', {width: 0, height: 0, border: 0, style: {display: 'none'}, name: 'dummyframe', id: 'dummyframe'}),
 
-          e('form', {action: '/bookmark', method: 'post', target: 'dummyframe'},
+          e('form', {onSubmit: this.onBookmark},
             'Link:',
-            e('input', {type: 'text', name: 'link'}),
+            e('input', {type: 'text', value: bookmarkLink, onChange: ({target}) => {this.setState({bookmarkLink: target.value})}}),
             'Name:',
-            e('input', {type: 'text', name: 'name'}),
+            e('input', {type: 'text', value: bookmarkName, onChange: ({target}) => {this.setState({bookmarkName: target.value})}}),
             e('input', {type: 'submit', value: 'Bookmark'})
           ),
 

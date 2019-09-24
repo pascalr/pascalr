@@ -54,6 +54,16 @@ function addToIndex(filename) {
   index.addDoc(doc)
 }
 
+function removeFromIndex(filename) {
+
+  let doc = {}
+  doc.title = removeAccents(parseTitleName(filename));
+  doc.tags = removeAccents(parseTitleTags(filename));
+  doc.id = filename
+
+  index.removeDoc(doc)
+}
+
 fs.readdir(DATA_PATH, function (err, files) {
   if (err) {console.log('Unable to read data directory: ' + err); throw err}
 
@@ -85,6 +95,8 @@ app.post('/renameFile', function(req, res) {
   console.log(req.body)
   fs.rename("data/"+req.body.oldName, "data/"+req.body.newName, function (err) {
     if (err) throw err;
+    removeFromIndex(req.body.oldName)
+    addToIndex(req.body.newName)
     console.log('renamed complete');
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end('The file has been saved!', 'utf-8');
