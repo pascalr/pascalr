@@ -21,7 +21,18 @@ function parseTitleName(str) {
   return str.split('#')[0]
 }
 
+function removeAccents(obj) {
+  if (typeof obj === 'string') {
+    return obj.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+  } else if (obj) {
+    return obj.map(str => str.normalize('NFD').replace(/[\u0300-\u036f]/g, ""))
+  }
+  return obj
+}
+
 // Search index
+
+ elasticlunr.clearStopWords();
 
 console.log('Generating elasticlunr index...')
 
@@ -43,17 +54,16 @@ fs.readdir(DATA_PATH, function (err, files) {
       if (error) {console.log('Unable to read data file: ' + error); throw error}
 
       // TODO: Add the content of all human readable files to the content field of the index.
-      doc.title = parseTitleName(file);
-      doc.tags = parseTitleTags(file);
+      doc.title = removeAccents(parseTitleName(file));
+      doc.tags = removeAccents(parseTitleTags(file));
       doc.id = file
       
       //console.log(`Adding file ${file} to the index. Title = ${doc.title}, tags = ${doc.tags}, id = ${doc.id}`)
       index.addDoc(doc)
     });
   });
-})
 
-console.log('Done generating elasticlunr index!')
+})
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -141,7 +151,7 @@ app.post('/bookmark', function(req, res) {
 })
 
 app.get('/search/:query?', function(req, res) {
-  const query = decodeURIComponent(req.params.query)
+  const query = removeAccents(decodeURIComponent(req.params.query))
   console.log('Searching for query = ' + query)
 
   if (query && query !== 'undefined') {
@@ -151,9 +161,10 @@ app.get('/search/:query?', function(req, res) {
           title: {boost: 2},
           tags: {boost: 1}
       },
-      bool: "OR",
+      //bool: "OR",
       expand: true
     });
+    //const results = index.search(query)
 
     res.send(results.map(e => e.ref))
 
