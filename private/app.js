@@ -225,6 +225,9 @@ class App extends React.Component {
     this.setState({selectedFilterTags}, this.updateFilteredItems)
   }
 
+  onBookmark = () => {
+  }
+
   render() {
 
     const {selectedFilterTags, filter, selectedItem, data, filteredItems} = this.state

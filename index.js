@@ -43,23 +43,26 @@ const index = elasticlunr(function () {
 })
 // this.addField('content');
 
+function addToIndex(filename) {
+  // TODO: Add the content of all human readable files to the content field of the index.
+  let doc = {}
+  doc.title = removeAccents(parseTitleName(filename));
+  doc.tags = removeAccents(parseTitleTags(filename));
+  doc.id = filename
+      
+  //console.log(`Adding file ${file} to the index. Title = ${doc.title}, tags = ${doc.tags}, id = ${doc.id}`)
+  index.addDoc(doc)
+}
+
 fs.readdir(DATA_PATH, function (err, files) {
   if (err) {console.log('Unable to read data directory: ' + err); throw err}
 
   files.forEach(function (file) {
 
-    let doc = {}
-
     fs.readFile(path.join(DATA_PATH, file), function(error, content) {
       if (error) {console.log('Unable to read data file: ' + error); throw error}
 
-      // TODO: Add the content of all human readable files to the content field of the index.
-      doc.title = removeAccents(parseTitleName(file));
-      doc.tags = removeAccents(parseTitleTags(file));
-      doc.id = file
-      
-      //console.log(`Adding file ${file} to the index. Title = ${doc.title}, tags = ${doc.tags}, id = ${doc.id}`)
-      index.addDoc(doc)
+      addToIndex(file)
     });
   });
 
@@ -142,6 +145,7 @@ app.post('/bookmark', function(req, res) {
 
   fs.writeFile('data/'+filename, html, { flag: 'wx' }, (err) => {
     if (err) throw err;
+    addToIndex(filename)
     console.log('The file has been saved!');
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end('The file has been saved!', 'utf-8');
