@@ -1,63 +1,50 @@
-//import QuillBetterTable from 'quill-better-table'
+'use strict'
 
-$.get('http://localhost:3000/getFile'+window.location.pathname.slice(5), function(data) {
-  console.log(data)
-  $("#editTextArea").val(data)
-  //$("#editor").html(data)
-  $("#filename").html(decodeURIComponent(window.location.pathname.substring(6)))
-});
+const e = React.createElement
 
-$("#hiddenInputFilename").attr('value', decodeURIComponent(window.location.pathname.substring(6)))
+class EditPage extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {content: ''}
+  }
 
-/*Quill.register({
-  'modules/better-table': quillBetterTable
-}, true)
+  componentDidMount() {
+    const {filename} = this.props
+    $.get('http://localhost:3000/getFile/'+encodeURIComponent(filename), (content) => {
+      this.setState({content})
+    });
+  }
 
-window.onload = () => {
-  const quill = new Quill('#editor', {
-    theme: 'snow',
-    modules: {
-      table: false,
-      'better-table': {
-        operationMenu: {
-          items: {
-            unmergeCells: {
-              text: 'Another unmerge cells name'
-            }
-          },
-          color: {
-            colors: ['green', 'red', 'yellow', 'blue', 'white'],
-            text: 'Background Colors:'
-          }
-        }
-      },
-      keyboard: {
-        bindings: quillBetterTable.keyboardBindings
-      }
-    }
-  })
+  saveClicked = (event) => {
+    const {content} = this.state
+    const {filename} = this.props
+    $.post('http://localhost:3000/save', {content, filename}, data => {
+      console.log('Document saved')
+    });
+  }
 
-  let tableModule = quill.getModule('better-table')
-  document.body.querySelector('#insert-table')
-    .onclick = () => {
-      tableModule.insertTable(3, 3)
-    }
-
-  document.body.querySelector('#get-table')
-    .onclick = () => {
-      console.log(tableModule.getTable())
-    }
-
-  document.body.querySelector('#get-contents')
-    .onclick = () => {
-      updateDeltaView(quill)
-    }
-}
-
-function updateDeltaView (quill) {
-  document.body.querySelector('#delta-view')
-    .innerHTML = JSON.stringify(
-      quill.getContents()
+  render() {
+    const {content} = this.state
+    const {filename} = this.props
+    return e('div', null,
+      e('a', {href: 'http://localhost:3000/'}, 'Home'),
+      e('span', null, 'Raw'),
+      e('span', null, 'Chordify'),
+      e('span', null, 'Remove \n'),
+      e('span', null, 'Remove markup'),
+      e('div', {className: 'content'},
+        e('h1',{id: 'filename'},
+          e('span', {style: {marginLeft: '50px'}}, filename),
+          e('span', {style: {marginLeft: '50px'}},
+            e('button', {onClick: this.saveClicked}, 'Save')
+          )
+        ),
+        e('textarea', {value: content, rows: '40', cols: '180', onChange: ({target}) => {this.setState({content: target.value})}})
+      )
     )
+  }
 }
-*/
+
+const filename = decodeURIComponent(window.location.pathname.slice(6))
+
+ReactDOM.render(e(EditPage, {filename}), document.querySelector('#editRoot'));
