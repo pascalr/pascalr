@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+      <html>
+         <body>
+            <script type="text/javascript">
+              window.location.href = "https://en.wikipedia.org/wiki/Witold_Pilecki";
+            </script>
+         </body>
+      </html>

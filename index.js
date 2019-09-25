@@ -6,6 +6,29 @@ const path = require('path');
 var _ = require('./common/lodash.min.js')
 var he = require('he') // unused I think
 var elasticlunr = require('./common/elasticlunr.js')
+const { Transform } = require('stream');
+
+// CLASSES
+
+class Upper extends Transform {
+  constructor(options) {
+    super(options);
+  }
+  _transform(data, encoding, callback) {
+    this.push(data.toString().toUpperCase());
+    callback();
+  }
+}
+
+class HtmlSpacer extends Transform {
+  constructor(options) {
+    super(options);
+  }
+  _transform(data, encoding, callback) {
+    this.push(data.toString().replace(/\n/g, '<br>'));
+    callback();
+  }
+}
 
 // CONSTANTS
 
@@ -109,6 +132,7 @@ app.post('/newFile', function(req, res) {
 
   fs.writeFile('data/'+filename, null, { flag: 'wx' }, (err) => {
     if (err) throw err;
+    addToIndex(filename)
     console.log('The file has been saved!');
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end('The file has been saved!', 'utf-8');
@@ -121,6 +145,7 @@ app.delete('/deleteFile', function(req,res) {
   console.log('/deleteFile: ' + req.body.filename)
   fs.unlink('data/'+req.body.filename, (err) => {
     if (err) throw err;
+    removeFromIndex(req.body.filename)
     console.log(`path/${req.body.filename} was deleted`);
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end('The file has been deleted!', 'utf-8');
@@ -274,6 +299,12 @@ app.get('/common/*',function (req, res) {
   res.sendFile(path.join(__dirname, req.path));
 })
 
+app.get('/private/*',function (req, res) {
+  res.sendFile(path.join(__dirname, req.path));
+})
+
+//app.use('/scripts', express.static(__dirname + '/node_modules/quill-better-table/dist/'));
+
 // https://stackoverflow.com/questions/16333790/node-js-quick-file-server-static-files-over-http
 app.get('*',function (req, res) {
 
@@ -305,8 +336,8 @@ app.get('*',function (req, res) {
   if (req.query.contentType && req.query.contentType == 'text')
     contentType = 'text/plain'
 
-  //res.set({ 'content-type': 'text/plain; charset=utf-8' });
-  res.set({ 'content-type': 'charset=utf-8' });
+  res.set({ 'content-type': 'text/html; charset=utf-8' });
+  //res.set({ 'content-type': 'charset=utf-8' });
 
   const stream = fs.createReadStream(filePath, {encoding: 'utf-8'});
 
@@ -315,7 +346,7 @@ app.get('*',function (req, res) {
     res.end();
   });
 
-  stream.pipe(res)
+  stream.pipe(new HtmlSpacer()).pipe(res)
 });
 
 var port = 3000
