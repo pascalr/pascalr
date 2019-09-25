@@ -217,7 +217,7 @@ app.get('/search/:query?', function(req, res) {
   }
 })
 
-app.get('/getFile/edit/:filename', function(req, res) {
+app.get('/getFile/:filename', function(req, res) {
 
   console.log('/getFile')
 
@@ -243,6 +243,10 @@ app.get('/getFile/edit/:filename', function(req, res) {
       res.end(content, 'utf-8');
     }
   })
+})
+
+app.get('/show/:filename', function(req, res) {
+  res.sendFile(path.join(__dirname, 'private/show.html'));
 })
 
 app.get('/edit/:filename', function(req, res) {
@@ -346,7 +350,8 @@ app.get('*',function (req, res) {
     res.end();
   });
 
-  stream.pipe(new HtmlSpacer()).pipe(res)
+  //stream.pipe(new HtmlSpacer()).pipe(res)
+  stream.pipe(res)
 });
 
 var port = 3000

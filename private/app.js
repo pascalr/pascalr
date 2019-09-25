@@ -40,7 +40,7 @@ class Item extends React.Component {
   }
   itemClicked = (event) => {
     if (this.props.selected) {
-      const href = `../data/${encodeURIComponent(this.state.elem)}`
+      const href = `/show/${encodeURIComponent(this.state.elem)}`
       window.location.href = href
     } else {
       this.props.setSelectedItem(this.props.itemNb)

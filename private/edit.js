@@ -1,6 +1,6 @@
 //import QuillBetterTable from 'quill-better-table'
 
-$.get('http://localhost:3000/getFile'+window.location.pathname, function(data) {
+$.get('http://localhost:3000/getFile'+window.location.pathname.slice(5), function(data) {
   console.log(data)
   $("#editTextArea").val(data)
   //$("#editor").html(data)
