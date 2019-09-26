@@ -1,3 +1,4 @@
+<pre>
 Someone Like You chords by Adele
 Tuning: E A D G B E
 Capo: 2nd fret
@@ -107,3 +108,8 @@ Sometimes it lasts in love but sometimes it hurts instead
 
 [Outro]
 G
+</pre>
+
+<script>
+$('pre').css('column-count', '3')
+</script>

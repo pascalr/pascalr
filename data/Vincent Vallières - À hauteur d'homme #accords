@@ -1,3 +1,4 @@
+<pre>
 À HAUTEUR D'HOMME - Vincent Vallières  menu
 
  Em Moi j'viens du moulin, j'viens de la min C  e
@@ -64,3 +65,7 @@ Je viens d'une  D  grande histoire d'amour
  G J'habite une ville, j'habite une  B7 vie à hauteur d'h Em  omme
 T'es ma  C blonde, j'suis ton  G  chum
 Ensemble on  B7 doit rien à pers Em  onne
+</pre>
+<script>
+$('pre').css('column-count', '3')
+</script>

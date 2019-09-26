@@ -23,14 +23,24 @@ class EditPage extends React.Component {
     });
   }
 
+  chordifyClicked = (event) => {
+    const content = '<pre>\n' + this.state.content + `</pre>\n<script>\n$('pre').css('column-count', '3')\n</script>`
+    this.setState({content})
+  }
+
+  removeNewlinesClicked = (event) => {
+    const content = this.state.content.replace(/^\s*\n/gm, '')
+    this.setState({content})
+  }
+
   render() {
     const {content} = this.state
     const {filename} = this.props
     return e('div', null,
       e('a', {href: 'http://localhost:3000/'}, 'Home'),
       e('span', null, 'Raw'),
-      e('span', null, 'Chordify'),
-      e('span', null, 'Remove \n'),
+      e('span', {onClick: this.chordifyClicked}, 'Chordify'),
+      e('span', {onClick: this.removeNewlinesClicked}, 'Remove newlines'),
       e('span', null, 'Remove markup'),
       e('div', {className: 'content'},
         e('h1',{id: 'filename'},
