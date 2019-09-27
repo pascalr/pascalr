@@ -1,8 +1,6 @@
-/*var quill = new Quill('#editor', {
-  theme: 'snow'
-});
+'use strict'
 
-console.log(quill.getContents())*/
+const e = React.createElement
 
 console.log('show.js')
 $.get('http://localhost:3000/getFile'+window.location.pathname.slice(5), function(data) {
@@ -11,3 +9,8 @@ $.get('http://localhost:3000/getFile'+window.location.pathname.slice(5), functio
 
   document.getElementsByTagName("body")[0].style.display = "block";
 });
+
+const htmlFilename = window.location.pathname.slice(6)
+const filename = decodeURIComponent(htmlFilename)
+
+ReactDOM.render(e('a', {href: `http://localhost:3000/edit/${htmlFilename}`}, 'edit'), document.querySelector('#editLink'));

@@ -30,6 +30,16 @@ class HtmlSpacer extends Transform {
   }
 }
 
+/*class AccentRemover extends Transform {
+  constructor(options) {
+    super(options);
+  }
+  _transform(data, encoding, callback) {
+    this.push(data.toString().replace(/\n/g, '<br>'));
+    callback();
+  }
+}*/
+
 // CONSTANTS
 
 const DATA_PATH = path.join(__dirname, 'data');
@@ -62,15 +72,17 @@ console.log('Generating elasticlunr index...')
 const index = elasticlunr(function () {
     this.addField('title');
     this.addField('tags');
+    this.addField('content');
     this.setRef('id');
 })
 // this.addField('content');
 
-function addToIndex(filename) {
+function addToIndex(filename, content) {
   // TODO: Add the content of all human readable files to the content field of the index.
   let doc = {}
   doc.title = removeAccents(parseTitleName(filename));
   doc.tags = removeAccents(parseTitleTags(filename));
+  doc.content = removeAccents(content.toString());
   doc.id = filename
       
   //console.log(`Adding file ${file} to the index. Title = ${doc.title}, tags = ${doc.tags}, id = ${doc.id}`)
@@ -95,7 +107,7 @@ fs.readdir(DATA_PATH, function (err, files) {
     fs.readFile(path.join(DATA_PATH, file), function(error, content) {
       if (error) {console.log('Unable to read data file: ' + error); throw error}
 
-      addToIndex(file)
+      addToIndex(file, content)
     });
   });
 
@@ -199,6 +211,7 @@ app.get('/search/:query?', function(req, res) {
 
     const results = index.search(query, {
       fields: {
+          content: {boost: 0.5},
           title: {boost: 2},
           tags: {boost: 1}
       },

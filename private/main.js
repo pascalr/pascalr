@@ -84,12 +84,6 @@ function toggleSelected(elem) {
   filter()
 }
 
-function clearFilter() {
-  $("#filterVal").val('')
-  filter()
-  $("#filterVal").focus()
-}
-
 /*function getFilterList() {
   console.log('filtering')
   const list = $("li")

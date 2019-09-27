@@ -99,7 +99,9 @@ class SideMenu extends React.Component {
   render() {
     const {filterTags, selectedFilterTags, filterTagClick, data} = this.props
 
-    return e('div', {id: 'sideMenu'}, filterTags.map((a,i) => {
+    return e('div', {id: 'sideMenu'},
+      e('div', null, 'Explore'),
+      filterTags.map((a,i) => {
       const selected = selectedFilterTags ? selectedFilterTags[a.name] : false
       return e(FilterTag, {src: a.src, name: a.name, data, onClick: filterTagClick, key: `filterTag${i}`, selected})
     }))
@@ -173,7 +175,7 @@ class App extends React.Component {
         this.redirectToSearch(this.state.filter)
       } else {
         const item = this.state.data[this.state.selectedItem-1]
-        const href = `../data/${encodeURIComponent(item)}`
+        const href = `/show/${encodeURIComponent(item)}`
         window.location.href = href
       }
     } else if (key === 'ArrowDown') {
@@ -258,7 +260,7 @@ class App extends React.Component {
       'div', {onKeyDown: this.onKeyDown}, 
         e(SideMenu, {filterTags, filterTagClick: this.filterTagClick, selectedFilterTags, data}),
         e('div', {id: 'filterValDiv'},
-          e('span', {onClick: clearFilter}, '❌'),
+          e('span', {onClick: () => {this.setState({filter: ''}, this.reloadFiles)}}, '❌'),
           ' ',
           e('input', {id: 'filterVal', type: 'text', value: filter, onChange: ({target}) => {this.setState({filter: target.value}, this.reloadFiles)}, autoFocus: true})
         ),
