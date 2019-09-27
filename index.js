@@ -210,11 +210,23 @@ app.get('/search/:query?', function(req, res) {
     res.send(results.map(e => e.ref))
 
   } else {
+    // List all files with pinned one at the top
+    fs.readdir(__dirname + '/data', function (err, files) {
+      if (err) {return console.log('Unable to scan directory: ' + err); throw err;} 
+
+      const filesWithPins = files.map(f => ({name: f, isPinned: !f.includes('#pin')}))
+      const sortedFiles = _.sortBy(filesWithPins, ['isPinned', 'name']).map(f => f.name)
+
+      res.send(sortedFiles);
+    });
+  }
+
+  /*} else {
     fs.readdir(__dirname + '/data', function (err, files) {
       if (err) {return console.log('Unable to scan directory: ' + err); throw err;} 
       res.send(files);
     });
-  }
+  }*/
 })
 
 app.get('/getFile/:filename', function(req, res) {
