@@ -82,7 +82,7 @@ function addToIndex(filename, content) {
   let doc = {}
   doc.title = removeAccents(parseTitleName(filename));
   doc.tags = removeAccents(parseTitleTags(filename));
-  doc.content = removeAccents(content.toString());
+  if (content) {doc.content = removeAccents(content.toString());}
   doc.id = filename
       
   //console.log(`Adding file ${file} to the index. Title = ${doc.title}, tags = ${doc.tags}, id = ${doc.id}`)

@@ -6,6 +6,7 @@ class EditPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {content: ''}
+    this.contentRef = React.createRef();
   }
 
   componentDidMount() {
@@ -33,6 +34,19 @@ class EditPage extends React.Component {
     this.setState({content})
   }
 
+  insertText = (text, offset) => {
+    let {content, selectionStart, selectionEnd} = this.state
+    content = content.slice(0, selectionStart) + text + content.slice(selectionEnd)
+    this.setState({content}, () => {
+      this.contentRef.current.focus()
+      this.contentRef.current.selectionStart = this.contentRef.current.selectionEnd = selectionStart + offset
+    })
+  }
+
+  handleChange = (event) => {
+    this.setState({content: event.target.value, selectionStart: event.target.selectionStart, selectionEnd: event.target.selectionEnd})
+  }
+
   render() {
     const {content} = this.state
     const {filename} = this.props
@@ -44,6 +58,19 @@ class EditPage extends React.Component {
       e('div', {className: 'toolbarMenu'},
         e('span', {onClick: this.chordifyClicked}, 'Chordify'),
         e('span', {onClick: this.removeNewlinesClicked}, 'Remove newlines'),
+        e('span', {onClick: () => this.insertText('<pre>\n\n</pre>\n', 6) }, '<pre>'),
+        e('span', {onClick: () => this.insertText('<script>\n\n</script>\n', 9) }, '<script>'),
+        e('span', {onClick: () => this.insertText(`<!DOCTYPE html>
+<html>
+  <body>
+    <script type="text/javascript">
+      window.location.href = "";
+    </script>
+  </body>
+</html>
+          `, 98) }, 'redirect'
+        ),
+
       ),
       e('div', {className: 'content'},
         e('h1',{id: 'filename'},
@@ -52,7 +79,7 @@ class EditPage extends React.Component {
             e('button', {onClick: this.saveClicked}, 'Save')
           )
         ),
-        e('textarea', {value: content, rows: '40', cols: '180', onChange: ({target}) => {this.setState({content: target.value})}})
+        e('textarea', {ref: this.contentRef, value: content, rows: '40', cols: '180', onChange: this.handleChange})
       )
     )
   }
