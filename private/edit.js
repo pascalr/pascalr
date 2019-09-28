@@ -35,8 +35,15 @@ class EditPage extends React.Component {
   }
 
   insertText = (text, offset) => {
-    let {content, selectionStart, selectionEnd} = this.state
-    content = content.slice(0, selectionStart) + text + content.slice(selectionEnd)
+    let {content} = this.state
+    const selectionStart = this.contentRef.current.selectionStart
+    const selectionEnd = this.contentRef.current.selectionEnd
+    console.log(content)
+    console.log(this.contentRef.current.selectionStart)
+    console.log(this.contentRef.current.selectionEnd)
+    console.log(text)
+    console.log(window.getSelection().toString())
+    content = content.slice(0, selectionStart) + text.slice(0, offset) + content.slice(selectionStart, selectionEnd) + text.slice(offset) + content.slice(selectionEnd)
     this.setState({content}, () => {
       this.contentRef.current.focus()
       this.contentRef.current.selectionStart = this.contentRef.current.selectionEnd = selectionStart + offset
@@ -44,8 +51,21 @@ class EditPage extends React.Component {
   }
 
   handleChange = (event) => {
-    this.setState({content: event.target.value, selectionStart: event.target.selectionStart, selectionEnd: event.target.selectionEnd})
+    this.setState({content: event.target.value})
   }
+
+/*
+    <b> - Bold text
+    <strong> - Important text
+    <i> - Italic text
+    <em> - Emphasized text
+    <mark> - Marked text
+    <small> - Small text
+    <del> - Deleted text
+    <ins> - Inserted text
+    <sub> - Subscript text
+    <sup> - Superscript text
+*/
 
   render() {
     const {content} = this.state
@@ -56,9 +76,17 @@ class EditPage extends React.Component {
         e('a', {href: `http://localhost:3000/show/${encodeURIComponent(filename)}`}, 'Show'),
       ),
       e('div', {className: 'toolbarMenu'},
+        e('span', null, 'Side preview'),
         e('span', {onClick: this.chordifyClicked}, 'Chordify'),
         e('span', {onClick: this.removeNewlinesClicked}, 'Remove newlines'),
-        e('span', {onClick: () => this.insertText('<pre>\n\n</pre>\n', 6) }, '<pre>'),
+        e('span', null, 'Remove <tags>'),
+        e('span', {onClick: () => this.insertText('<pre>\n\n</pre>', 6) }, '<pre>'),
+        e('span', {onClick: () => this.insertText('<ol>\n\n</ol>', 5) }, '<ol>'),
+        e('span', {onClick: () => this.insertText('<ul style="list-style-type:disc;">\n\n</ul>', 35) }, '<ul>'),
+        e('span', {onClick: () => this.insertText('<li></li>', 4) }, '<li>'),
+        e('span', {onClick: () => this.insertText('<b></b>', 3) }, '<b>'),
+        e('span', {onClick: () => this.insertText('<i></i>', 3) }, '<i>'),
+        e('span', {onClick: () => this.insertText('<sub></sub>', 5) }, '<sub>'),
         e('span', {onClick: () => this.insertText('<script>\n\n</script>\n', 9) }, '<script>'),
         e('span', {onClick: () => this.insertText(`<!DOCTYPE html>
 <html>

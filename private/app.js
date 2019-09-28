@@ -111,10 +111,18 @@ class SideMenu extends React.Component {
 const SuggestCreate = (props) => {
   if (!props.filter) return null
 
-  return e('form', {action: '/newFile', method: 'post', target: 'dummyframe', style: {display: 'inline'}},
+  return e('span', {style: {float: 'right', marginRight: '200px'}, onClick: () => {
+    $.post('http://localhost:3000/newFile', {newFilename: props.filter}, data => {
+      const href = `/edit/${encodeURIComponent(props.filter)}`
+      window.location.href = href
+    });
+  }}, 'New file')
+
+
+/*  return e('form', {action: '/newFile', method: 'post', target: 'dummyframe', style: {display: 'inline'}},
             e('input', {type: "hidden", id: "newFilename", name: "newFilename", value: props.filter}),
             e('input', {type: 'submit', value: 'New File', style: {float: 'right', marginRight: '200px'}})
-          )
+          )*/
 }
 
 const SuggestSearch = (props) => {
@@ -218,7 +226,7 @@ class App extends React.Component {
     this.setState({selectedFilterTags}, this.updateFilteredItems)
   }
 
-  onBookmark = (event) => {
+  /*onBookmark = (event) => {
     const {bookmarkLink, bookmarkName} = this.state
     console.log(event)
     event.preventDefault()
@@ -227,11 +235,11 @@ class App extends React.Component {
       this.setState({bookmarkLink: '', bookmarkName: ''})
       console.log('Bookmarked!')
     });
-  }
+  }*/
 
   render() {
 
-    const {selectedFilterTags, filter, selectedItem, data, filteredItems, bookmarkLink, bookmarkName} = this.state
+    const {selectedFilterTags, filter, selectedItem, data, filteredItems} = this.state
 
     const filterTags = [
       {src: '../common/checklist.png', name: 'TODO'},
@@ -267,13 +275,13 @@ class App extends React.Component {
         e('div', {className: 'content'},
           e('iframe', {width: 0, height: 0, border: 0, style: {display: 'none'}, name: 'dummyframe', id: 'dummyframe'}),
 
-          e('form', {onSubmit: this.onBookmark},
+          /*e('form', {onSubmit: this.onBookmark},
             'Link:',
             e('input', {type: 'text', value: bookmarkLink, onChange: ({target}) => {this.setState({bookmarkLink: target.value})}}),
             'Name:',
             e('input', {type: 'text', value: bookmarkName, onChange: ({target}) => {this.setState({bookmarkName: target.value})}}),
             e('input', {type: 'submit', value: 'Bookmark'})
-          ),
+          ),*/
 
           /*e('form', {action: '/newFile', method: 'post', target: 'dummyframe'},
             e('input', {type: 'submit', value: 'New File'})

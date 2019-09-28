@@ -1,9 +1,19 @@
-<!DOCTYPE html>
-<html>
-  <body>
-    <script type="text/javascript">
-      window.location.href = "https://stackoverflow.com/questions/22410767/insert-at-cursor-in-react";
-    </script>
-  </body>
-</html>
+1
+2
+3
+
+<color-RED>This will be red</color-RED>
+
+<red-/>
+
+<script>
+class MyComponent extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `<h1>Hello world</h1>`;
+  }
+}
+    
+customElements.define('red-', MyComponent);
+</script>
+
           
