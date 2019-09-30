@@ -1,19 +1,9 @@
+<pre>
 1
 2
 3
+1234
+Il y a 3 petits chats.
+Il y a 4 chats.        
 
-<color-RED>This will be red</color-RED>
-
-<red-/>
-
-<script>
-class MyComponent extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = `<h1>Hello world</h1>`;
-  }
-}
-    
-customElements.define('red-', MyComponent);
-</script>
-
-          
+</pre>

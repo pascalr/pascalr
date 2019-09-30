@@ -1,3 +1,4 @@
+<pre>
 Ingrédients:
 
 - 3 c. à thé de levure à pain
@@ -13,3 +14,5 @@ Recette:
 
 Mettre les ingrédients dans la machine à pain
 dans l'ordre donné plus haut. Démarrer. Manger.
+
+</pre>

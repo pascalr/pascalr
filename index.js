@@ -211,7 +211,7 @@ app.get('/search/:query?', function(req, res) {
 
     const results = index.search(query, {
       fields: {
-          content: {boost: 0.5},
+          content: {boost: 0.1},
           title: {boost: 2},
           tags: {boost: 1}
       },
@@ -325,6 +325,10 @@ app.use(express.static("private"));
 // https://blog.soshace.com/en/programming-en/node-lessons-safe-way-to-file/
 
 app.get('/common/*',function (req, res) {
+  res.sendFile(path.join(__dirname, req.path));
+})
+
+app.get('/icon/*',function (req, res) {
   res.sendFile(path.join(__dirname, req.path));
 })
 
