@@ -1,3 +1,10 @@
+<h1>Titre 1</h1>
+<h2>Titre 2</h2>
+<h3>Titre 3</h3>
+<h4>Titre 4</h4>
+<h5>Titre 5</h5>
+<h6>Titre 6</h6>
+
 <h2>Ordered list</h2>
 
 <ol>
@@ -6,6 +13,11 @@
 <li>Item 3</li>
 </ol>
 
-<p><b>Bold text</b></p>
+<pre>
+<b>Bold text</b>
+<i>Italic text</i>
+<u>Underlined text</u>
+<s>Strike-through text</s>
+</pre>
 
-<p><i>Italic text</i></p>
+2 H<sub>2</sub> + 1 O<sub>2</sub> <=> 2 H<sub>2</sub>O

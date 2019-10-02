@@ -14,7 +14,7 @@ function icon(filename) {
 class EditPage extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {content: '', showSidePreview: false, showActionDropdown: false}
+    this.state = {content: '', showSidePreview: true, showActionDropdown: false}
     this.contentRef = React.createRef();
   }
 
@@ -75,42 +75,13 @@ class EditPage extends React.Component {
     this.setState({content: event.target.value})
   }
 
-/*
-    <b> - Bold text
-    <strong> - Important text
-    <i> - Italic text
-    <em> - Emphasized text
-    <mark> - Marked text
-    <small> - Small text
-    <del> - Deleted text
-    <ins> - Inserted text
-    <sub> - Subscript text
-    <sup> - Superscript text
-*/
-
-   /*<div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-  <div id="myDropdown" class="dropdown-content">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
-  </div>
-</div>*/
-
-  /*<div class="navbar">
-  <a href="#home">Home</a>
-  <a href="#news">News</a>
-  <div class="dropdown">
-  <button class="dropbtn" onclick="myFunction()">Dropdown
-    <i class="fa fa-caret-down"></i>
-  </button>
-  <div class="dropdown-content" id="myDropdown">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
-  </div>
-  </div> 
-</div>*/
+  onKeyDown = (event) => {
+    const key = event.key
+    if (key === 'Enter') {
+      const href = `/?q=${encodeURIComponent(this.state.query)}`
+      window.location.href = href
+    }
+  }
 
   render() {
     const {content, showSidePreview, showActionDropdown} = this.state
@@ -125,18 +96,16 @@ class EditPage extends React.Component {
         e('a', {href: 'http://localhost:3000/'}, 'Home'),
         e('a', {href: `http://localhost:3000/show/${encodeURIComponent(filename)}`}, 'Show'),
         e('div', {className: 'dropdown'},
-          e('button', {className: 'dropbtn', onClick: () => {this.setState({showActionDropdown: !showActionDropdown})}}, 'Dropdown', e('i', {className: 'fa fa-caret-down'})),
+          e('button', {className: 'dropbtn', onClick: () => {this.setState({showActionDropdown: !showActionDropdown})}}, 'Actions', e('i', {className: 'fa fa-caret-down'})),
           showActionDropdown ? e('div', {id: 'myDropdown', className: 'dropdown-content'},
-            e('div', null, '1'),
-            e('div', null, '2'),
-            e('div', null, '3'),
+            e('div', {onClick: this.chordifyClicked}, 'Chordify'),
+            e('div', {onClick: this.removeNewlinesClicked}, 'Remove newlines'),
           ) : null,
         ),
+        e('input', {id: 'filterVal2', onKeyDown: this.onKeyDown, type: 'text', value: this.state.query, onChange: ({target}) => {this.setState({query: target.value})}}),
       ),
       e('div', {className: 'toolbarMenu'},
-        e('span', {onClick: () => {this.setState({showSidePreview: !showSidePreview})}}, 'Side preview'),
-        e('span', {onClick: this.chordifyClicked}, 'Chordify'),
-        e('span', {onClick: this.removeNewlinesClicked}, 'Remove newlines'),
+        //e('span', {onClick: () => {this.setState({showSidePreview: !showSidePreview})}}, 'Side preview'),
         e('span', {onClick: this.removeHtml}, icon('format_clear-24px.svg')),
         e('span', {onClick: () => this.insertText('<pre>\n\n</pre>', 6) }, icon('subject-24px.svg')),
         e('span', {onClick: () => this.insertText('<p>\n\n</p>', 4) }, icon('short_text-24px.svg')),
@@ -146,12 +115,14 @@ class EditPage extends React.Component {
         e('span', {onClick: () => this.insertText('<b></b>', 3) }, icon('format_bold-24px.svg')),
         e('span', {onClick: () => this.insertText('<s></s>', 3) }, icon('format_strikethrough-24px.svg')),
         e('span', {onClick: () => this.insertText('<i></i>', 3) }, icon('format_italic-24px.svg')),
+        e('span', {onClick: () => this.insertText('<u></u>', 3) }, icon('format_underlined-24px.svg')),
         e('span', {onClick: () => this.insertText(`
 <span id="answer_${id}"/>
 <script>
   $('#answer_${id}').html()
 </script>`, 78) }, icon('equals.svg')),
         e('span', {onClick: () => this.insertText('<sub></sub>', 5) }, icon('subscript.svg')),
+        e('span', {onClick: () => this.insertText('<sup></sup>', 5) }, icon('exponent.svg')),
         e('span', {onClick: () => this.insertText('<script>\n\n</script>\n', 9) }, icon('settings_ethernet-24px.svg')),
         e('span', {onClick: () => this.insertText(`<!DOCTYPE html>
 <html>
@@ -176,7 +147,7 @@ class EditPage extends React.Component {
         e('textarea', {ref: this.contentRef, value: content, rows: '40', cols: '65', onChange: this.handleChange})
       ), showSidePreview ?
       e('div', {className: 'showContent'},
-        e('div', {dangerouslySetInnerHTML: {__html: content}})
+        e('div', {contentEditable: true, dangerouslySetInnerHTML: {__html: content}})
       ) : null,
       )
     )

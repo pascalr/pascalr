@@ -1,0 +1,24 @@
+<style>
+#livreImg {
+  float: left;
+  margin-right: 20px;
+}
+</style>
+
+<img id="livreImg" src="/images/hitchhikersGuideToTheGalaxy.jpg" alt="Hitchhikers" width="200">
+
+<h1>The Hitchhiker's Guide To The Galaxy</h1>
+
+by Douglas Adams
+
+<div id="rating">⭐⭐⭐⭐⭐</div>
+
+<h5>Description:</h5>
+<p>
+Un livre de science fiction vraiment drôle.
+</p>
+
+<h5>Ce que j'ai aimé:</h5>
+<p>
+C'est un livre intelligent. C'est un livre drôle.
+</p>

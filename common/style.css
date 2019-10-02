@@ -58,6 +58,12 @@ body {
 #filterVal {
   width: 600px;
 }
+#filterVal2 {
+  width: 400px;
+  margin-top: 2.5px;
+  float: right;
+  margin-right: 20px;
+}
 .filterTag {
   width: 64px;
   height: 64px;

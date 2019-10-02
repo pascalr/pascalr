@@ -336,6 +336,10 @@ app.get('/private/*',function (req, res) {
   res.sendFile(path.join(__dirname, req.path));
 })
 
+app.get('/images/*',function (req, res) {
+  res.sendFile(path.join(__dirname, req.path));
+})
+
 //app.use('/scripts', express.static(__dirname + '/node_modules/quill-better-table/dist/'));
 
 // https://stackoverflow.com/questions/16333790/node-js-quick-file-server-static-files-over-http

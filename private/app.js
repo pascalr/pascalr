@@ -2,6 +2,10 @@
 
 const e = React.createElement
 
+function parseTitleTags(str) {
+  return str.split('#').slice(1)
+}
+
 function deleteFile(name, reloadFiles) {
   if (confirm('Are you sure you want to delete "' + decodeURIComponent(name) + '" ?')) {
     $.ajax({
@@ -143,7 +147,7 @@ const Suggest = (props) => {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {filter: '', selectedFilterTags: {}, selectedItem: 1, nbItems: 0, bookmarkLink: '', bookmarkName: ''}
+    this.state = {filter: props.query || '', selectedFilterTags: props.filterTags || {}, selectedItem: 1, nbItems: 0, bookmarkLink: '', bookmarkName: ''}
   }
 
   componentDidMount = () => {
@@ -204,11 +208,9 @@ class App extends React.Component {
     let {data, filter, selectedFilterTags, selectedItem} = this.state
     if (!data) return
     
-    if (selectedItem >= filteredItems.length) {
-      selectedItem = filteredItems.length
+    if (selectedItem >= data.length) {
+      this.setState({selectedItem: data.length})
     }
-
-    this.setState({filteredItems, selectedItem})
   }
 
   setSelectedItem = (selectedItem) => {
@@ -242,21 +244,26 @@ class App extends React.Component {
     const {selectedFilterTags, filter, selectedItem, data, filteredItems} = this.state
 
     const filterTags = [
-      {src: '../common/checklist.png', name: 'TODO'},
-      {src: '../common/pin.png', name: 'pin'},
-      {src: '../common/headphone.png', name: 'Music'},
-      {src: '../common/accords.jpg', name: 'Accords'},
-      {src: '../common/guitar.png', name: 'Guitar'},
-      {src: '../common/film.png', name: 'Film'},
-      {src: '../common/penguin.png', name: 'Recette'},
-      {src: '../common/mic.png', name: 'Karaoke'},
-      {src: '../common/heart.png', name: 'love'},
-      {src: '../common/danse.png', name: 'danse'},
+      {src: '../common/checklist.png', name: 'todo'},
+      //{src: '../common/pin.png', name: 'pin'},
+      {src: '../common/headphone.png', name: 'music'},
+      {src: '../common/accords.jpg', name: 'accords'},
+      //{src: '../common/guitar.png', name: 'Guitar'},
+      //{src: '../common/film.png', name: 'Film'},
+      {src: '../common/penguin.png', name: 'recette'},
+      {src: '../common/mic.png', name: 'karaoke'},
+      //{src: '../common/heart.png', name: 'love'},
+      //{src: '../common/danse.png', name: 'danse'},
     ]
 
     let itemList = null
     if (data) {
       const items = data.map((elem,i) => {
+        console.log(elem)
+        const dontContainTag = _.keys(selectedFilterTags).reduce((acc, tag) => {
+          return acc || !parseTitleTags(elem).includes(tag)
+        }, false)
+        if (dontContainTag) return null
         const selected = selectedItem === i+1
         return e('li', {key: 'item'+i+elem}, e(Item, {elem, selected, reloadFiles: this.reloadFiles, itemNb: i+1, setSelectedItem: this.setSelectedItem}))
       })
@@ -295,4 +302,12 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(e(App), document.querySelector('#app'));
+const urlParams = new URLSearchParams(window.location.search);
+const query = urlParams.get('q');
+const filterTagsStr = urlParams.get('f');
+const filterTags = filterTagsStr ? filterTagsStr.split(',').reduce((acc, curr) => {
+  acc[curr] = true
+  return acc
+}, {}) : null
+
+ReactDOM.render(e(App, {query, filterTags}), document.querySelector('#app'));
