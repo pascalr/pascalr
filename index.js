@@ -3,10 +3,24 @@ var app = express();
 var bodyParser = require('body-parser')
 const fs = require('fs');
 const path = require('path');
+const multer = require('multer')
 var _ = require('./common/lodash.min.js')
 var he = require('he') // unused I think
 var elasticlunr = require('./common/elasticlunr.js')
 const { Transform } = require('stream');
+
+// SET STORAGE
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'images')
+  },
+  filename: function (req, file, cb) {
+    console.log(file)
+    cb(null, Date.now() + '_' + file.originalname)
+  }
+})
+
+var upload = multer({ storage: storage })
 
 // CLASSES
 
@@ -113,7 +127,8 @@ fs.readdir(DATA_PATH, function (err, files) {
 
 })
 
-app.use(bodyParser.urlencoded({ extended: false }))
+//app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -121,6 +136,35 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   next();
 });
+
+app.post('/saveImage', upload.single('blob'), function(req, res, next) {
+
+  const file = req.file
+  if (!file) {
+    const error = new Error('Please upload a file')
+    error.httpStatusCode = 400
+    return next(error)
+  }
+  console.log(file)
+  res.send(file.filename)
+
+  /*console.log(req.data)
+  console.log(req.body.data)
+  console.log(req.body)
+  console.log(req.body.get('id'))
+  const blob = req.body.blob
+  //const id = req.body.id
+  const id = `${Date.now()}_${blob.name}`*/
+
+  /*fs.writeFile('images/'+filename, null, { flag: 'wx' }, (err) => {
+    if (err) throw err;
+    addToIndex(filename)
+    console.log('The file has been saved!');
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('The file has been saved!', 'utf-8');
+  });*/
+
+})
 
 app.post('/renameFile', function(req, res) {
 
