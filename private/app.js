@@ -3,7 +3,7 @@
 const e = React.createElement
 
 function parseTitleTags(str) {
-  return str.split('#').slice(1)
+  return str.split('#').slice(1).map(s => s.trim())
 }
 
 function deleteFile(name, reloadFiles) {
@@ -260,16 +260,10 @@ class App extends React.Component {
     let itemList = null
     if (data) {
       const items = data.map((elem,i) => {
-        console.log(elem)
-        const dontContainTag = _.keys(selectedFilterTags).reduce((acc, tag) => {
-          /*return acc || !parseTitleTags(elem).includes(tag)
-          console.log('-----------')
-          console.log(tag)
-          console.log(elem)
-          console.log(parseTitleTags(elem))*/
-          return acc || !parseTitleTags(elem).includes(tag)
+        const containsTag = _.isEmpty(selectedFilterTags) || _.keys(selectedFilterTags).reduce((acc, tag) => {
+          return acc || parseTitleTags(elem).includes(tag)
         }, false)
-        if (dontContainTag) return null
+        if (!containsTag) return null
         const selected = selectedItem === i+1
         return e('li', {key: 'item'+i+elem}, e(Item, {elem, selected, reloadFiles: this.reloadFiles, itemNb: i+1, setSelectedItem: this.setSelectedItem}))
       })
