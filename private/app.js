@@ -163,11 +163,13 @@ class App extends React.Component {
 
     console.log('query = ' + query)
 
-    $.getJSON(`http://localhost:3000/search/${query}`, (data) => {
+    $.getJSON(`http://localhost:3000/search/${query}`, ({data, shouldUseSearchEngine}) => {
 
       if (!data) return
       
-      if (selectedItem >= data.length) {
+      if (shouldUseSearchEngine) {
+        this.setState({data, selectedItem: 0})
+      } else if (selectedItem >= data.length) {
         this.setState({data, selectedItem: data.length})
       } else {
         this.setState({data})

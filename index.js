@@ -252,6 +252,18 @@ app.get('/search/:query?', function(req, res) {
   console.log('Searching for query = ' + query)
 
   if (query && query !== 'undefined') {
+    
+    const withoutContentResults = index.search(query, {
+      fields: {
+          content: {boost: 0},
+          title: {boost: 2},
+          tags: {boost: 1}
+      },
+      //bool: "OR",
+      expand: true
+    });
+
+    const shouldUseSearchEngine = _.isEmpty(withoutContentResults)
 
     const results = index.search(query, {
       fields: {
@@ -264,7 +276,7 @@ app.get('/search/:query?', function(req, res) {
     });
     //const results = index.search(query)
 
-    res.send(results.map(e => e.ref))
+    res.send({data: results.map(e => e.ref), shouldUseSearchEngine})
 
   } else {
     // List all files with pinned one at the top
@@ -274,7 +286,7 @@ app.get('/search/:query?', function(req, res) {
       const filesWithPins = files.map(f => ({name: f, isPinned: !f.includes('#pin')}))
       const sortedFiles = _.sortBy(filesWithPins, ['isPinned', 'name']).map(f => f.name)
 
-      res.send(sortedFiles);
+      res.send({data: sortedFiles});
     });
   }
 
