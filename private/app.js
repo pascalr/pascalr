@@ -247,6 +247,7 @@ class App extends React.Component {
       {src: '../common/checklist.png', name: 'todo'},
       //{src: '../common/pin.png', name: 'pin'},
       {src: '../common/headphone.png', name: 'music'},
+      {src: '../common/livre.svg', name: 'livre'},
       {src: '../common/accords.jpg', name: 'accords'},
       //{src: '../common/guitar.png', name: 'Guitar'},
       //{src: '../common/film.png', name: 'Film'},
@@ -261,6 +262,11 @@ class App extends React.Component {
       const items = data.map((elem,i) => {
         console.log(elem)
         const dontContainTag = _.keys(selectedFilterTags).reduce((acc, tag) => {
+          /*return acc || !parseTitleTags(elem).includes(tag)
+          console.log('-----------')
+          console.log(tag)
+          console.log(elem)
+          console.log(parseTitleTags(elem))*/
           return acc || !parseTitleTags(elem).includes(tag)
         }, false)
         if (dontContainTag) return null
