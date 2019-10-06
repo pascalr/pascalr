@@ -178,6 +178,7 @@ class EditPage extends React.Component {
         //e('span', {onClick: () => {this.setState({showSidePreview: !showSidePreview})}}, 'Side preview'),
         e('span', {onClick: this.removeHtml}, icon('format_clear-24px.svg')),
         e('span', {onClick: () => this.insertText('<pre>\n\n</pre>', 6) }, icon('subject-24px.svg')),
+        e('span', {onClick: () => this.insertText('<blockquote>\n\n</blockquote>\n<cite>\n\n</cite>', 13) }, icon('format_quote-24px.svg')),
         e('span', {onClick: () => this.insertText('<p>\n\n</p>', 4) }, icon('short_text-24px.svg')),
         e('span', {onClick: () => this.insertText('<ol>\n\n</ol>', 5) }, icon('format_list_numbered-24px.svg')),
         e('span', {onClick: () => this.insertText('<ul style="list-style-type:disc;">\n\n</ul>', 35) }, icon('list-24px.svg')),
