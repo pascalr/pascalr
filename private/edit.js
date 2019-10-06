@@ -11,6 +11,9 @@ function icon(filename) {
   return e('img', {src: `/icon/${filename}`, alt: filename, height: 24, width: 24})
 }
 
+const LIVRE_TEMPLATE = `
+`
+
 class EditPage extends React.Component {
   constructor(props) {
     super(props)
@@ -142,7 +145,7 @@ class EditPage extends React.Component {
   }
 
   render() {
-    const {content, showSidePreview, showActionDropdown, showEmojiDropdown, showTitleDropdown} = this.state
+    const {content, showSidePreview, showActionDropdown, showEmojiDropdown, showTitleDropdown, showTemplateDropdown} = this.state
     const {filename} = this.props
 
     const id = Date.now()
@@ -158,6 +161,15 @@ class EditPage extends React.Component {
           showActionDropdown ? e('div', {id: 'myDropdown', className: 'dropdown-content'},
             e('div', {onClick: this.chordifyClicked}, 'Chordify'),
             e('div', {onClick: this.removeNewlinesClicked}, 'Remove newlines'),
+          ) : null,
+        ),
+        e('div', {className: 'dropdown'},
+          e('button', {className: 'dropbtn', onClick: () => {this.setState({showTemplateDropdown: !showTemplateDropdown})}}, 'Templates', e('i', {className: 'fa fa-caret-down'})),
+          showTemplateDropdown ? e('div', {id: 'myDropdown', className: 'dropdown-content'},
+            e('div', {onClick: () => this.insertText('')}, 'Recette'),
+            e('div', {onClick: () => this.insertText(LIVRE_TEMPLATE)}, 'Livre'),
+            e('div', {onClick: () => this.insertText('')}, 'Film'),
+            e('div', {onClick: () => this.insertText('')}, 'Jeu'),
           ) : null,
         ),
         e('input', {id: 'filterVal2', onKeyDown: this.onKeyDown, type: 'text', value: this.state.query, onChange: ({target}) => {this.setState({query: target.value})}}),

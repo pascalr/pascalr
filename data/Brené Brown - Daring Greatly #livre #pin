@@ -3,12 +3,17 @@
   float: left;
   margin-right: 20px;
 }
+#subtitle {
+  font-style: italic;
+}
 </style>
 
 <img class="book_image" src="/images/1570205298181_image.png" width="200">
 
-<h1>Daring greatly</h1>
-<h2>How the Courage to Be Vulnerable Transforms the Way We Live, Love, Parent and Lead</h2>
+<header>
+  <h1 id='title'>Daring greatly</h1>
+  <div id='subtitle'>How the Courage to Be Vulnerable Transforms the Way We Live, Love, Parent and Lead</div>
+</header>
 
 <h2>Description</h2>
 
@@ -19,6 +24,15 @@ Le livre explique plusieurs paradox. On voit être vulnérable comme une faibles
 <h2>Critique</h2>
 <p>
 J'aime le message. Toutefois c'est beaucoup de répétitions. Beaucoup de blahblah. Peu de contenu. Peu d'exemples.
+</p>
+<p>
+Je trouvais ça moyen jusqu'à ce que le livre parle de la honte masculine. Ensuite, j'ai lu le reste du livre les yeux pleins d'eau. Elle a réussi à mettre des mots sur les émotions que je ressentais souvent, mais que je ne savais pas identifié.
+</p>
+<p>
+Bizarrement, je ne me sentais pas tant pareil aux exemples. J'ai vécu des expériences assez différentes de honte. Toutefois elle communiquait bien les émotions et je réussissais bien à empathiser avec les personnels.
+</p>
+<p>
+Comme elle dis elle même, la honte est une expérience assez différente pour les hommes et pour les femmes. Je ne me sentais pas tant interpeller qu'une femme se sente honteuse pour son apparence physique. Dans mon esprit d'homme c'est vraiment absurde. Toutefois, je comprends maintenant ce qu'elles ressentent et je vais tenter de le respecter.
 </p>
 
 <p>

@@ -137,12 +137,16 @@ li {
     float: right;
     color: gray;
 }
-h1 {
+h1{
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+/*h1 {
     padding: 10px;
     margin: 15px;
     font-size:13pt;
     border-bottom: 1px solid lightgray;
-}
+}*/
 a {
     font-weight: 500;
     perspective: 600px;

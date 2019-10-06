@@ -3,12 +3,15 @@
   float: left;
   margin-right: 20px;
 }
+#subtitle {
+  font-style: italic;
+}
 </style>
 
 <img class="book_image" src="/images/1570202817042_image.png" width="200">
 
 <h1>Everything is fucked</h1>
-<h2>A book about hope</h2>
+<div id='subtitle'>A book about hope</div>
 
 ⭐⭐⭐⭐
 
