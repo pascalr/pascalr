@@ -1,0 +1,25 @@
+<style>
+.main_image {
+  float: left;
+  margin-right: 20px;
+}
+</style>
+
+<img class="main_image" src="/images/1570386661389_image.png" width="200">
+
+<h1>La Quête d'Ewilan</h1>
+<div id='subtitle'>D'un monde à l'autre</div>
+<div id='rating'>⭐⭐⭐⭐⭐</div>
+<div id='authour'>Pierre Bottero</div>
+
+<h2>Résumé</h2>
+
+<p>
+Un livre fantatisque.
+</p>
+
+<h2>Critique</h2>
+
+<p>
+Un maudit bon livre de ma jeunesse.
+</p>

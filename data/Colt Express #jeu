@@ -1,0 +1,22 @@
+<style>
+.main_image {
+  float: left;
+  margin-right: 20px;
+}
+</style>
+
+<img class="main_image" src="/images/1570389411073_image.png" width="200">
+
+<h1>Colt Express</h1>
+<div id='rating'>⭐⭐⭐⭐⭐</div>
+<div id='nb_player'>6 joueurs</div>
+
+<h2>Description</h2>
+
+<p>
+</p>
+
+<h2>Règles</h2>
+
+<p>
+</p>

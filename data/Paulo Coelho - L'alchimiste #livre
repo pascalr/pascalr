@@ -1,0 +1,25 @@
+<style>
+.main_image {
+  float: left;
+  margin-right: 20px;
+}
+</style>
+
+<img class="main_image" src="/images/1570386870613_image.png" width="200">
+
+<h1>L'Alchimiste</h1>
+
+<div id='authour'>Paulo Coelho</div>
+<div id='rating'>⭐⭐⭐⭐⭐</div>
+
+<h2>Résumé</h2>
+
+<p>
+Un maudit bon livre avec de belles leçons de vies.
+</p>
+
+<h2>Critique</h2>
+
+<p>
+Un maudit bon livre.
+</p>

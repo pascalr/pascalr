@@ -11,7 +11,29 @@ function icon(filename) {
   return e('img', {src: `/icon/${filename}`, alt: filename, height: 24, width: 24})
 }
 
-const LIVRE_TEMPLATE = `
+const LIVRE_TEMPLATE = `<style>
+.main_image {
+  float: left;
+  margin-right: 20px;
+}
+</style>
+
+<img class="main_image" src="/images/1570202817042_image.png" width="200">
+
+<h1>Title</h1>
+<div id='subtitle'>Subtitle</div>
+<div id='rating'>⭐⭐⭐⭐⭐</div>
+<div id='authour'>Author</div>
+
+<h2>Résumé</h2>
+
+<p>
+</p>
+
+<h2>Critique</h2>
+
+<p>
+</p>
 `
 
 class EditPage extends React.Component {
