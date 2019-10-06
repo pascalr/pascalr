@@ -1,3 +1,4 @@
+<pre>
 Album
  Tu M'aimes-Tu	Tu M'aimes-Tu 
 Richard Desjardins 
@@ -41,3 +42,7 @@ J'veux chan A/C# ger d'personn D  age
 T'es tellement, tellement, tellement  G  belle
 J'vas bénir la  D rue, j'vas brûler l'hô A tel, coudonc,   A tu   Bm m'aimes- D  tu ?
  A tu m Bm 'aimes-t D  u ?
+</pre>
+<script>
+$('pre').css('column-count', '2')
+</script>

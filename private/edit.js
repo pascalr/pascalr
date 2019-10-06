@@ -142,7 +142,7 @@ class EditPage extends React.Component {
   }
 
   render() {
-    const {content, showSidePreview, showActionDropdown, showEmojiDropdown} = this.state
+    const {content, showSidePreview, showActionDropdown, showEmojiDropdown, showTitleDropdown} = this.state
     const {filename} = this.props
 
     const id = Date.now()
@@ -176,9 +176,20 @@ class EditPage extends React.Component {
         e('span', {onClick: () => this.insertText('<u></u>', 3) }, icon('format_underlined-24px.svg')),
         e('div', {className: 'dropdown'},
           e('button', {className: 'dropbtn', onClick: () => {this.setState({showEmojiDropdown: !showEmojiDropdown})}}, '😊'),
-          showEmojiDropdown ? e('div', {id: 'myDropdown', className: 'dropdown-content'},
+          showEmojiDropdown ? e('div', {className: 'dropdown-content'},
             e('div', null, this.mapEmojis('😊⭐😂❤😍')),
             e('div', null, this.mapEmojis('👍🤔💪🐱🚀')),
+          ) : null
+        ),
+        e('div', {className: 'dropdown'},
+          e('button', {className: 'dropbtn', onClick: () => {this.setState({showTitleDropdown: !showTitleDropdown})}}, icon('title-24px.svg')),
+          showTitleDropdown ? e('div', {className: 'dropdown-content'},
+            e('div', {className: 'clickable', onClick: () => this.insertText('<h1></h1>', 4) }, 'Title 1'),
+            e('div', {className: 'clickable', onClick: () => this.insertText('<h2></h2>', 4) }, 'Title 2'),
+            e('div', {className: 'clickable', onClick: () => this.insertText('<h3></h3>', 4) }, 'Title 3'),
+            e('div', {className: 'clickable', onClick: () => this.insertText('<h4></h4>', 4) }, 'Title 4'),
+            e('div', {className: 'clickable', onClick: () => this.insertText('<h5></h5>', 4) }, 'Title 5'),
+            e('div', {className: 'clickable', onClick: () => this.insertText('<h6></h6>', 4) }, 'Title 6'),
           ) : null
         ),
         e('span', {onClick: () => this.insertText(`
