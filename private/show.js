@@ -2,6 +2,10 @@
 
 const e = React.createElement
 
+function rIcon(filename) {
+  return e('img', {src: `/icon/${filename}`, className: 'clickable', style: {filter: 'invert(1)'}, alt: filename, height: 24, width: 24})
+}
+
 console.log('show.js')
 $.get('http://localhost:3000/getFile'+window.location.pathname.slice(5), function(data) {
   console.log('Got file: ' + window.location.pathname)
@@ -16,11 +20,11 @@ const filename = decodeURIComponent(htmlFilename)
 class ShowNav extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {showActionDropdown: false}
+    this.state = {showActionDropdown: false, marginWidth: '15%'}
   }
 
   render() {
-    const {showActionDropdown} = this.state
+    const {showActionDropdown, marginWidth} = this.state
    
     return e('div', {className: 'navbar'},
       e('a', {href: 'http://localhost:3000/'}, 'Home'),
@@ -32,6 +36,17 @@ class ShowNav extends React.Component {
           e('div', null, 'Show 2'),
         ) : null,
       ),
+      e('span', {onClick: () => {
+        if (marginWidth === '0%') {
+          $('#root').css('margin-left', '15%')
+          $('#root').css('margin-right', '15%')
+          this.setState({marginWidth: '15%'})
+        } else if (marginWidth === '15%') {
+          $('#root').css('margin-left', '0%')
+          $('#root').css('margin-right', '0%')
+          this.setState({marginWidth: '0%'})
+        }
+      }}, rIcon('aspect_ratio-24px.svg')),
       e('input', {id: 'filterVal2', onKeyDown: this.onKeyDown, type: 'text', value: this.state.query, onChange: ({target}) => {this.setState({query: target.value})}}),
     )
   }

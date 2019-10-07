@@ -283,8 +283,8 @@ app.get('/search/:query?', function(req, res) {
     fs.readdir(__dirname + '/data', function (err, files) {
       if (err) {return console.log('Unable to scan directory: ' + err); throw err;} 
 
-      const filesWithPins = files.map(f => ({name: f, isPinned: !f.includes('#pin')}))
-      const sortedFiles = _.sortBy(filesWithPins, ['isPinned', 'name']).map(f => f.name)
+      const filesWithPins = files.map(f => ({name: f, tagVal: f.includes('#evt') ? 1 : f.includes('#pin') ? 2 : 3}))
+      const sortedFiles = _.sortBy(filesWithPins, ['tagVal', 'name']).map(f => f.name)
 
       res.send({data: sortedFiles});
     });
