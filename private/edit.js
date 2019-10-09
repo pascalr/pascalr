@@ -203,7 +203,7 @@ class EditPage extends React.Component {
         e('span', {onClick: () => this.insertText('<blockquote>\n\n</blockquote>\n<cite>\n\n</cite>', 13) }, icon('format_quote-24px.svg')),
         e('span', {onClick: () => this.insertText('<p>\n\n</p>', 4) }, icon('short_text-24px.svg')),
         e('span', {onClick: () => this.insertText('<ol>\n\n</ol>', 5) }, icon('format_list_numbered-24px.svg')),
-        e('span', {onClick: () => this.insertText('<ul style="list-style-type:disc;">\n\n</ul>', 35) }, icon('list-24px.svg')),
+        e('span', {onClick: () => this.insertText('<ul>\n\n</ul>', 5) }, icon('list-24px.svg')),
         e('span', {onClick: () => this.insertText('<li></li>', 4) }, icon('list-item-24px.svg')),
         e('span', {onClick: () => this.insertText('<b></b>', 3) }, icon('format_bold-24px.svg')),
         e('span', {onClick: () => this.insertText('<s></s>', 3) }, icon('format_strikethrough-24px.svg')),

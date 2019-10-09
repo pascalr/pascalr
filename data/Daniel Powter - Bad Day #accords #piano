@@ -1,3 +1,4 @@
+<pre>
 Tuning: E A D G B E
 Capo: 1st fret
 Artist: Daniel Powter
@@ -142,3 +143,7 @@ And how does it feel for one more time
 You had a bad day
               D  G  Em A  x4 (fade out)
 had a bad day
+</pre>
+<script>
+$('pre').css('column-count', '3')
+</script>

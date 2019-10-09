@@ -3,7 +3,7 @@
 const e = React.createElement
 
 function rIcon(filename) {
-  return e('img', {src: `/icon/${filename}`, className: 'clickable', style: {filter: 'invert(1)'}, alt: filename, height: 24, width: 24})
+  return e('img', {src: `/icon/${filename}`, className: 'clickable', style: {filter: 'invert(1)', marginTop: '4px'}, alt: filename, height: 24, width: 24})
 }
 
 console.log('show.js')

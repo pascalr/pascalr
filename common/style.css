@@ -1,3 +1,6 @@
+li {
+  margin-left: 20px;
+}
 body {
     background: #f4f4f4;
     margin: 0px;
@@ -114,17 +117,6 @@ body {
     min-height: 100%;
 }
 */
-li {
-    font-family: sans-serif;
-    font-size: 12pt;
-    line-height: 14pt;
-    list-style:none;
-    list-style-type:none;
-    padding: 3px 10px;
-    margin: 3px 15px;
-    display: block;
-    clear:both;
-}
 .content {
     margin-left: 112px; /*86*/
     background-color: white;
