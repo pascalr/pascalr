@@ -1,3 +1,4 @@
+<pre>
 Say Something chords by A Great Big World feat. Christina Aguilera
 Tuning: E A D G B E
 Capo: 2nd fret
@@ -72,3 +73,7 @@ Am                F                    C     Gsus4
    Say something, I'm giving up on you.
 Am               F        C
    Say something
+</pre>
+<script>
+$('pre').css('column-count', '3')
+</script>

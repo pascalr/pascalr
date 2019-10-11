@@ -10,6 +10,9 @@ body {
   margin-right: 20%;
   margin-left: 20%;
 }
+.item {
+  margin-bottom: 2px;
+}
 #subtitle {
   font-style: italic;
 }
@@ -198,6 +201,12 @@ a::after {
 .dropdown {
   float: left;
   overflow: hidden;
+}
+
+.tooldropbtn {
+  cursor: pointer;
+  border: none;
+  outline: none;
 }
 
 .dropdown .dropbtn {

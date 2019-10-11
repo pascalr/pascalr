@@ -1,3 +1,4 @@
+<pre>
 Mad World chords by Gary Jules
 Tuning: E A D G B E
 Capo: 1st fret
@@ -74,3 +75,7 @@ Em              A
    Enlarge your world
 Em     A
    Mad world
+</pre>
+<script>
+$('pre').css('column-count', '3')
+</script>

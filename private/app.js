@@ -67,11 +67,11 @@ class Item extends React.Component {
     if (tag) tag = tag[0].substring(1)
 
     return e(
-      'div', {isselected: selected.toString(), onClick: this.itemClicked}, 
+      'div', {isselected: selected.toString(), onClick: this.itemClicked, className: 'item'}, 
         /*e('a', {href: `../data/${name}`}, '🔎'),*/
-        e('a', {href: `edit/${name}`}, '✏️'),
+        /*e('a', {href: `edit/${name}`}, '✏️'),*/
         /*e('span', {className: 'clickable', onClick: () => deleteFile(elem, reloadFiles)}, '❌'),*/
-        '\u00A0\u00A0',
+        /*'\u00A0\u00A0',*/
         tag ? e('img', {src: `../common/${tag}.png`, alt: "📄", className: 'filterTagIcon'}) : '📄',
         ' ',
         e('input', {type: 'text', name:'filename', size: 64, value: elem, className: 'nothing',
@@ -115,7 +115,7 @@ class SideMenu extends React.Component {
 const SuggestCreate = (props) => {
   if (!props.filter) return null
 
-  return e('span', {style: {float: 'right', marginRight: '200px'}, onClick: () => {
+  return e('button', {style: {float: 'right', marginRight: '200px'}, onClick: () => {
     $.post('http://localhost:3000/newFile', {newFilename: props.filter}, data => {
       const href = `/edit/${encodeURIComponent(props.filter)}`
       window.location.href = href
@@ -267,7 +267,7 @@ class App extends React.Component {
         }, false)
         if (!containsTag) return null
         const selected = selectedItem === i+1
-        return e('li', {key: 'item'+i+elem}, e(Item, {elem, selected, reloadFiles: this.reloadFiles, itemNb: i+1, setSelectedItem: this.setSelectedItem}))
+        return e('span', {key: 'item'+i+elem}, e(Item, {elem, selected, reloadFiles: this.reloadFiles, itemNb: i+1, setSelectedItem: this.setSelectedItem}))
       })
 
       itemList = e('div',null,items)

@@ -1,3 +1,4 @@
+<pre>
  Am   Em   F6   Em  (3x)
 Aujou Am rd'hui la fumée d'incendie a jaunis le  Em  ciel et rougis le soleil
 Les é F6 toiles du nord nous rappelle la mort et tu m'ap Em  pelles encore
@@ -24,4 +25,7 @@ Jamais je n' Am oublierai les é Em toiles sur la  F6  route de Toronto
 et ce j Em our sur cette plage du lac Ontari F  o
  
 million C naire, amou E reux zilliar Am  daire
-Vaga F bond, million C naire, amou E  reux
+Vaga F bond, million C naire, amou E  reux</pre>
+<script>
+$('pre').css('column-count', '2')
+</script>

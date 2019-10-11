@@ -1,3 +1,4 @@
+<pre>
 Save Tonight - Eagle-Eye Cherry
 [Intro]
 | Am  F  | C  G  | x2
@@ -93,3 +94,7 @@ Save tonight
 Save tonight
        Am     F  C  G
 Save tonight
+</pre>
+<script>
+$('pre').css('column-count', '3')
+</script>

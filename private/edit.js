@@ -163,7 +163,13 @@ class EditPage extends React.Component {
   }
 
   mapEmojis = (emojis) => {
-    return [...emojis].map(emo => { return e('span', {key: `emoji_${emo}`, className: 'clickable', onClick: () => this.insertText(emo, 2)}, emo)})
+    return [...emojis].map(emo => {
+      return e('span', {key: `emoji_${emo}`, className: 'clickable',
+        onClick: () => {
+          this.insertText(emo, 2)
+          //this.setState({showEmojiDropdown: false})
+        }}, emo)
+    })
   }
 
   render() {
@@ -210,21 +216,21 @@ class EditPage extends React.Component {
         e('span', {onClick: () => this.insertText('<i></i>', 3) }, icon('format_italic-24px.svg')),
         e('span', {onClick: () => this.insertText('<u></u>', 3) }, icon('format_underlined-24px.svg')),
         e('div', {className: 'dropdown'},
-          e('button', {className: 'dropbtn', onClick: () => {this.setState({showEmojiDropdown: !showEmojiDropdown})}}, '😊'),
+          e('div', {className: 'tooldropbtn', onClick: () => {this.setState({showEmojiDropdown: !showEmojiDropdown})}}, '😊'),
           showEmojiDropdown ? e('div', {className: 'dropdown-content'},
             e('div', null, this.mapEmojis('😊⭐😂❤😍')),
             e('div', null, this.mapEmojis('👍🤔💪🐱🚀')),
           ) : null
         ),
         e('div', {className: 'dropdown'},
-          e('button', {className: 'dropbtn', onClick: () => {this.setState({showTitleDropdown: !showTitleDropdown})}}, icon('title-24px.svg')),
+          e('div', {className: 'tooldropbtn', onClick: () => {this.setState({showTitleDropdown: !showTitleDropdown})}}, icon('title-24px.svg')),
           showTitleDropdown ? e('div', {className: 'dropdown-content'},
-            e('div', {className: 'clickable', onClick: () => this.insertText('<h1></h1>', 4) }, 'Title 1'),
-            e('div', {className: 'clickable', onClick: () => this.insertText('<h2></h2>', 4) }, 'Title 2'),
-            e('div', {className: 'clickable', onClick: () => this.insertText('<h3></h3>', 4) }, 'Title 3'),
-            e('div', {className: 'clickable', onClick: () => this.insertText('<h4></h4>', 4) }, 'Title 4'),
-            e('div', {className: 'clickable', onClick: () => this.insertText('<h5></h5>', 4) }, 'Title 5'),
-            e('div', {className: 'clickable', onClick: () => this.insertText('<h6></h6>', 4) }, 'Title 6'),
+            e('div', {className: 'clickable', onClick: () => {this.insertText('<h1></h1>', 4), this.setState({showTitleDropdown: false})}}, 'Title 1'),
+            e('div', {className: 'clickable', onClick: () => {this.insertText('<h2></h2>', 4), this.setState({showTitleDropdown: false})}}, 'Title 2'),
+            e('div', {className: 'clickable', onClick: () => {this.insertText('<h3></h3>', 4), this.setState({showTitleDropdown: false})}}, 'Title 3'),
+            e('div', {className: 'clickable', onClick: () => {this.insertText('<h4></h4>', 4), this.setState({showTitleDropdown: false})}}, 'Title 4'),
+            e('div', {className: 'clickable', onClick: () => {this.insertText('<h5></h5>', 4), this.setState({showTitleDropdown: false})}}, 'Title 5'),
+            e('div', {className: 'clickable', onClick: () => {this.insertText('<h6></h6>', 4), this.setState({showTitleDropdown: false})}}, 'Title 6'),
           ) : null
         ),
         e('span', {onClick: () => this.insertText(`
