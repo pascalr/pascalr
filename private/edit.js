@@ -220,6 +220,7 @@ class EditPage extends React.Component {
           showEmojiDropdown ? e('div', {className: 'dropdown-content'},
             e('div', null, this.mapEmojis('😊⭐😂❤😍')),
             e('div', null, this.mapEmojis('👍🤔💪🐱🚀')),
+            e('div', null, this.mapEmojis('🤦')),
           ) : null
         ),
         e('div', {className: 'dropdown'},
