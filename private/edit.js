@@ -36,6 +36,32 @@ const LIVRE_TEMPLATE = `<style>
 </p>
 `
 
+const RECETTE_TEMPLATE = `<style>
+.imgRecette {
+  float: left;
+  margin-right: 20px;
+}
+</style>
+
+<div><small>Recette originale de: <a href=""><b>Lien</b></a></small></div>
+<hr/>
+
+<img class='imgRecette' src="/images/zzz1570399748285_image.png" width='200px'>
+
+<h1>Nom recette</h1>
+
+<pre>
+    Préparation :   ? minutes
+    Cuisson :       ? minutes
+    ? portions
+    ⭐⭐⭐⭐⭐
+</pre>
+
+<h2>Ingrédients</h2>
+
+<h2>Préparation</h2>
+`
+
 class EditPage extends React.Component {
   constructor(props) {
     super(props)
@@ -194,7 +220,7 @@ class EditPage extends React.Component {
         e('div', {className: 'dropdown'},
           e('button', {className: 'dropbtn', onClick: () => {this.setState({showTemplateDropdown: !showTemplateDropdown})}}, 'Templates', e('i', {className: 'fa fa-caret-down'})),
           showTemplateDropdown ? e('div', {id: 'myDropdown', className: 'dropdown-content'},
-            e('div', {onClick: () => this.insertText('')}, 'Recette'),
+            e('div', {onClick: () => this.insertText(RECETTE_TEMPLATE)}, 'Recette'),
             e('div', {onClick: () => this.insertText(LIVRE_TEMPLATE)}, 'Livre'),
             e('div', {onClick: () => this.insertText('')}, 'Film'),
             e('div', {onClick: () => this.insertText('')}, 'Jeu'),

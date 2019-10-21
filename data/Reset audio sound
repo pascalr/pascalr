@@ -1,0 +1,6 @@
+pulseaudio -k && sudo alsa force-reload
+
+<br/>
+<br/>
+
+<button onclick="$.get('/run/resetSound', (res) => {console.log(res)})">Reset audio</button>

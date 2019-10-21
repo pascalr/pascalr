@@ -9,6 +9,23 @@ var he = require('he') // unused I think
 var elasticlunr = require('./common/elasticlunr.js')
 const { Transform } = require('stream');
 
+var sys = require('util')
+var exec = require('child_process').exec;
+
+COMMANDS = {
+  ls: {cmd: "ls -la"},
+  firefox: {cmd: "firefox"},
+  resetSound: {cmd: "pulseaudio -k && sudo alsa force-reload"},
+  dota2: {cmd: "steam steam://rungameid/570"},
+  civ6: {cmd: "steam steam://rungameid/289070"},
+  csgo: {cmd: "steam steam://rungameid/730"},
+  chromium: {cmd: "chromium-browser"},
+  freecad: {cmd: "freecad"},
+  marioKart: {cmd: "dolphin-emu --exec='/home/pascalr/games/Mario Kart Wii.wbfs'"},
+}
+
+function puts(error, stdout, stderr) { sys.puts(stdout) } // Is that necessary?
+
 // SET STORAGE
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -394,6 +411,22 @@ app.get('/private/*',function (req, res) {
 
 app.get('/images/*',function (req, res) {
   res.sendFile(path.join(__dirname, req.path));
+})
+
+app.get('/run/:command',function (req, res) {
+  console.log('About to run command: ' + req.params.command)
+  const cmd = COMMANDS[req.params.command]
+  if (!cmd) {
+    console.log('Unkown command ' + req.params.command)
+    return
+  }
+  exec(cmd.cmd, function(err, stdout, stderr) {
+    console.log(err)
+    console.log(stderr)
+    console.log(stdout);
+    res.set({ 'content-type': 'text/plain; charset=utf-8' });
+    res.send(stdout)
+  });
 })
 
 //app.use('/scripts', express.static(__dirname + '/node_modules/quill-better-table/dist/'));

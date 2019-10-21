@@ -2,6 +2,17 @@
 
 const e = React.createElement
 
+function deleteFile(name, callback) {
+  if (confirm('Are you sure you want to delete "' + name + '" ?')) {
+    $.ajax({
+      url: '/deleteFile',
+      type: 'DELETE',
+      data: {filename: name},
+      success: callback
+    });
+  }
+}
+
 function rIcon(filename) {
   return e('img', {src: `/icon/${filename}`, className: 'clickable', style: {filter: 'invert(1)', marginTop: '4px'}, alt: filename, height: 24, width: 24})
 }
@@ -29,6 +40,8 @@ class ShowNav extends React.Component {
     return e('div', {className: 'navbar'},
       e('a', {href: 'http://localhost:3000/'}, 'Home'),
       e('a', {href: `http://localhost:3000/edit/${encodeURIComponent(filename)}`}, 'Edit'),
+      e('div', {className: 'clickable', onClick: () => deleteFile(filename, () => {window.location.href = "/"})}, 'Delete'),
+      e('a', {href: `http://localhost:3000/publish/${encodeURIComponent(filename)}`}, 'Publish'),
       e('div', {className: 'dropdown'},
         e('button', {className: 'dropbtn', onClick: () => {this.setState({showActionDropdown: !showActionDropdown})}}, 'Actions', e('i', {className: 'fa fa-caret-down'})),
         showActionDropdown ? e('div', {id: 'myDropdown', className: 'dropdown-content'},

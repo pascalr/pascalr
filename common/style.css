@@ -189,7 +189,7 @@ a::after {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.navbar a {
+.navbar a, .navbar div {
   float: left;
   font-size: 16px;
   color: white;
@@ -215,13 +215,13 @@ a::after {
   border: none;
   outline: none;
   color: white;
-  padding: 6px 16px;
+  /*padding: 6px 16px;*/
   background-color: inherit;
   font-family: inherit;
   margin: 0;
 }
 
-.navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+.navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus, .navbar div:hover {
   background-color: red;
 }
 
