@@ -28,7 +28,19 @@ Bienvenue sur le dashboard ubuntu custom!!!
 <img class="icon" src="/images/1571667094543_image.png" onclick="$.get('/run/csgo')" height="64">
 
 <br/>
+
+<h1>Son</h1>
+
+https://askubuntu.com/questions/14077/how-can-i-change-the-default-audio-device-from-command-line
+
+<br/>
 <br/>
 
+Volume: <input type="range" min="1" max="65536" value="32768" class="slider" id="myRange" onchange="$.get('/run/setVolume?volume=' + this.value)">
+
+<br/>
+<br/>
 
 <button onclick="$.get('/run/resetSound', (res) => {console.log(res)})">Reset audio</button>
+
+<button onclick="$.get('/run/setVolume?volume=65536', (res) => {console.log(res)})">Set volume high</button>

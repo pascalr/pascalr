@@ -1,0 +1,9 @@
+<p>
+Faire un lien vers toutes les recettes. Automatique?
+</p>
+<p>
+Je fais publish et là je choisi de publier comme une recette, fak ça va dans /publish/recette
+</p>
+<p>
+Là faudrait que je fasse de quoi qui parse toutes les recettes et qui va chercher les images, les titres, et qui fais un index. /publish/recette/index.html
+</p>

@@ -22,7 +22,14 @@ COMMANDS = {
   chromium: {cmd: "chromium-browser"},
   freecad: {cmd: "freecad"},
   marioKart: {cmd: "dolphin-emu --exec='/home/pascalr/games/Mario Kart Wii.wbfs'"},
+  // FIXME: SANITIZE INPUT
+  setVolume: {fn: (query) => (`for SINK in \`pacmd list-sinks | grep 'index:' | cut -b12-\`
+do
+  pacmd set-sink-volume $SINK ${query.volume}
+done`)},
 }
+
+//65536
 
 function puts(error, stdout, stderr) { sys.puts(stdout) } // Is that necessary?
 
@@ -414,13 +421,15 @@ app.get('/images/*',function (req, res) {
 })
 
 app.get('/run/:command',function (req, res) {
+
   console.log('About to run command: ' + req.params.command)
   const cmd = COMMANDS[req.params.command]
   if (!cmd) {
     console.log('Unkown command ' + req.params.command)
     return
   }
-  exec(cmd.cmd, function(err, stdout, stderr) {
+  const toExe = (cmd.fn) ? cmd.fn(req.query) : cmd.cmd
+  exec(toExe, function(err, stdout, stderr) {
     console.log(err)
     console.log(stderr)
     console.log(stdout);

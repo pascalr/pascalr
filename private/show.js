@@ -14,7 +14,7 @@ function deleteFile(name, callback) {
 }
 
 function rIcon(filename) {
-  return e('img', {src: `/icon/${filename}`, className: 'clickable', style: {filter: 'invert(1)', marginTop: '4px'}, alt: filename, height: 24, width: 24})
+  return e('img', {src: `/icon/${filename}`, className: 'clickable', style: {filter: 'invert(1)'}, alt: filename, height: 24, width: 24})
 }
 
 console.log('show.js')
@@ -40,9 +40,9 @@ class ShowNav extends React.Component {
     return e('div', {className: 'navbar'},
       e('a', {href: 'http://localhost:3000/'}, 'Home'),
       e('a', {href: `http://localhost:3000/edit/${encodeURIComponent(filename)}`}, 'Edit'),
-      e('div', {className: 'clickable', onClick: () => deleteFile(filename, () => {window.location.href = "/"})}, 'Delete'),
+      e('span', {className: 'menubtn', onClick: () => deleteFile(filename, () => {window.location.href = "/"})}, 'Delete'),
       e('a', {href: `http://localhost:3000/publish/${encodeURIComponent(filename)}`}, 'Publish'),
-      e('div', {className: 'dropdown'},
+      e('span', {className: 'dropdown'},
         e('button', {className: 'dropbtn', onClick: () => {this.setState({showActionDropdown: !showActionDropdown})}}, 'Actions', e('i', {className: 'fa fa-caret-down'})),
         showActionDropdown ? e('div', {id: 'myDropdown', className: 'dropdown-content'},
           e('div', null, 'Show 1'),
