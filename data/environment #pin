@@ -85,18 +85,6 @@ function createLink(href, innerHTML) {
   return a;
 }
 
-function getHeadingOl(h) {
-  console.log(h.children)
-  console.log(h.children.length)
-  if (h.children.length === 1) {
-    console.log('here')
-    return h.appendChild(document.createElement("ol"))
-  } else {
-    console.log('there')
-    return h.lastChild
-  }
-}
-
 function generateTOC() {
   console.log('Generating TOC')
   var toc = document.getElementById('toc')
@@ -104,47 +92,34 @@ function generateTOC() {
 
   toc.appendChild(document.createElement("h1")).innerHTML = "Table des matières"
 
-  var lastH1 = toc.appendChild(document.createElement("ol"))
-  var lastH2 = null
-  var lastH3 = null
-  var lastH4 = null
-
   var previous = null
+  var counts = {}
 
   for (var i = 0; i < headings.length; i++) {
     var h = headings[i]
     h.setAttribute('id', "section_" + i);
 
     var depth = parseInt(h.localName.slice(1)) - 1
+    counts[depth] = (counts[depth] || 0) + 1
     var ol = toc
     
     if (h.localName === previous) {
-      // Add only a li
-      console.log(depth)
-      console.log(ol)
-      for (var j = 0; j < depth; j++) {console.log('here...'); ol = ol.lastChild}
-      console.log(ol)
-      ol.appendChild(document.createElement("li"))
-        .appendChild(createLink("#section_" + i, h.innerHTML));
+      for (var j = 0; j < depth; j++) {ol = ol.lastChild}
     } else {
-      // Add an ol and a li
       for (var j = 0; j < depth - 1; j++) {ol = ol.lastChild}
-      ol = ol.appendChild(document.createElement("ol"))
-      ol.appendChild(document.createElement("li"))
-        .appendChild(createLink("#section_" + i, h.innerHTML));
+      ol = ol.appendChild(document.createElement("ul"))
+      ol.style.listStyleType = "none"
     }
 
-    
-    console.log(depth)
+    var section = ""
+    for (var j = 0; j < depth; j++) {
+      section = section + counts[j+1] + "."
+    }
+    section = section + " "
 
-    /*if (h.localName === 'h2') {
-      // TODO: Add section id to every header so the link works!
-      lastH2 = lastH1.appendChild(document.createElement("li"))
-        .appendChild(createLink("#section_" + i, h.innerHTML));
-    } else if (h.localName === 'h3') {
-      lastH3 = getHeadingOl(lastH2).appendChild(document.createElement("li"))
-        .appendChild(createLink("#section_" + i, h.innerHTML));
-    }*/
+    ol.appendChild(document.createElement("li"))
+      .appendChild(createLink("#section_" + i, section + h.innerHTML));
+
     previous = h.localName
   }
 }
