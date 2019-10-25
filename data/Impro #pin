@@ -1,0 +1,489 @@
+musique dans les interludes, mpg123
+
+<h1>Générateur d'improvisations</h1>
+
+<div>
+<pre>
+Catégorie: <span id="categorie"/>
+Thème: <span id="theme"/>
+Durée: <span id="duree"/>
+
+<button onclick="
+
+var durees = [30,60,120,180,240,300];
+window.duree = durees[Math.floor(Math.random() * durees.length)];
+var minutes = Math.floor(duree/60);
+var seconds = Math.floor(duree%60);
+var str = minutes + ' m ' + seconds + ' s'
+$('#duree').html(str)
+
+var categories = ['fusillade', 'champs lexical', 'taxi', 'chanté']
+var categorie = categories[Math.floor(Math.random() * categories.length)];
+$('#categorie').html(categorie)
+
+var nbThemeParCategorie = {
+  taxi: 0,
+  fusillade: 10,
+}
+
+var themes = ['amour', 'guerre', 'colère', 'mort', 'automne', 'école', 'badminton', 'drummondville']
+
+var theme = ''
+var nbTheme = nbThemeParCategorie[categorie]
+if (nbTheme === 0) {
+  theme = 'N/A'
+} else if (nbTheme !== undefined) {
+  for (var i = 0; i < nbTheme; i++) {
+    theme = theme + themes[Math.floor(Math.random() * themes.length)] + ', ';
+  }
+  //theme = theme.slice(0,-2)
+} else {
+  theme = themes[Math.floor(Math.random() * themes.length)];
+}
+
+$('#theme').html(theme)
+
+">Nouvelle improvisation</button>
+
+<button onclick="
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  //var duree = parseInt($('#duree').text()) - 1
+  window.duree = duree - 1
+  var minutes = Math.floor(duree/60);
+  var seconds = Math.floor(duree%60);
+  var str = minutes + ' m ' + seconds + ' s'
+  $('#duree').html(str)
+
+  if (duree <= 0) {
+    clearInterval(x);
+  }
+}, 1000);
+
+">Démarrer</button>
+
+</pre>
+</div>
+<pre>
+
+Style de chanson:
+
+Country (12 bar blues: I I I I IV IV I I V V I I)
+Rock and roll (12 bar blues comme Johnny B. Goode)
+Blues (comme the Big Bad Wolf serait nice)
+Jazz (Am7 et Dm7 comme Van Morisson)
+Populaire (I IV vi V)
+Western (The good the bad and the ugly)
+Berceuse (piano 029)
+Apprendre la toune de jaws
+
+Tones de mon clavier:
+007 (Strings et Piano): Sonne vraiment nice
+017: Son intéressant
+029: (Vibes, vibraphone) Berceuse
+033: (Marimba) 
+043: (Orgue): Religieu!
+111 (Synth Strings): Sonne comme de la musique d'église, un peu épic
+175: (sine) Ca fais un beat de club! Alterner accord base avec note haute! Pout-chi Pout-cha
+241,254: Etchic
+
+Thèmes:
+
+Amour
+Colère
+Mort
+Guerre
+Automne
+Musique
+École
+Bar
+Badminton
+Drummondville
+Trucs:
+
+Donner un nom à mon personnage.
+une voix,
+une caractéristique,
+la 1ere chose différente l'exagéré,
+if this is true than what else is true
+
+Catégories style cabaret:
+
+Taxi
+Jingle
+Champs lexical (plein de jeux de mots)
+
+Catégories:
+
+Accessoire imposé
+
+Un accessoire donné est imposé aux équipes et elles doivent obligatoirement en tenir compte pour l’écriture de l’improvisation. L’accessoire doit être utilisé dans son sens propre à moins d’un avis contraire du maître de jeu.
+
+A la manière de…
+C’est une catégorie classique utilisée à la L.N.I. et ailleurs mais que la L.I.M. emploie également. Ça consiste à respecter le style d’une oeuvre ou d’un auteur, soit par le niveau de langage, le sujet, l’ambiance ou le propos.
+
+Auditive
+C’est une improvisation strictement sonore sans soutien électroacoustique. Les improvisateurs sont assis sur une chaise, les mains sur les genoux et le regard vers l’horizon. Il est interdit d’utiliser volontairement le langage du corps dans le but d’influencer l’écriture de l’impro. (Une idée de François Gagné)
+
+Aveugle
+Les improvisateurs doivent jouer ici les yeux bandés. (Une idée de François Gagné)
+
+Bibliothèque
+Cette catégorie est dans le même esprit que la catégorie À la manière de… Ici le maître de jeu donne à deux lecteurs un extrait à deux personnages d’une oeuvre tirée généralement du répertoire théâtral ( classique ou contemporain ). Mais cela peut aussi bien être un extrait tiré d’un scénario, d’une bédé ou autre. Les deux
+improvisateurs y vont d’une lecture publique et quand le maître de jeu enlève le livre les improvisateurs doivent continuer en respectant le style, le niveau de langage, l’ambiance, les éléments d’écriture et les personnages imposés par l’oeuvre choisie. (Une idée de François Gagné)
+
+Bibliothèque avec réplique
+Un improvisateur par équipe est invité sur la scène. L’un des comédiens se voit remettre l’extrait d’une pièce à deux personnages et doit faire la lecture des répliques d’un personnage donné pendant que l’autre comédien doit improviser ses répliques. Une fois l’impro complétée, les deux improvisateurs inversent les rôles. (Une idée de Roberto Sierra)
+
+Black out
+C’est une improvisation jouée avec le soutien d’un éclairage autre que l’éclairage de scène habituel: à la chandelle, lampe de poche, lampe à l’huile, etc… Cette catégorie jouée à la L.I.M.O.N..A.D.E. depuis 1996 a été rebaptisée par les responsables de la L.I.M en souvenir de la panne électrique survenue lors du premier spectacle de la saison 98-99. (Une idée de François Gagné)
+
+Bouche voilée
+Une improvisation où en aucun temps on ne doit voir la bouche des improvisateurs quand ils parlent. (Une idée de Frédéric Barbusci)
+
+Bruiteur
+C’est une improvisation où un improvisateur doit faire tous les bruits qui se produisent dans l’action à l’aide d’un microphone. (Une idée de Frédéric Barbusci et François Gagné)
+
+Cadavre exquis
+Le maître de jeu pige au hasard un lieu, des personnages et une action et les improvisateurs doivent composer avec ces éléments pour écrire une improvisation cohérente. Ex: Dans salon funéraire, un astronaute et une coiffeuse doivent faire une partie de bras de fer. (Une idée de Stéphane E. Roy)
+
+caucus interchangé
+C’est une improvisation comparée où les équipes s’échangent leurs caucus.(Une idée de Roberto Sierra)
+
+Carte blanche
+Le maître de jeu désigne au hasard un improvisateur. Ce dernièr aura carte blanche pour la prochaine improvisation. Il décide des contraintes ainsi que des improvisateurs qui la joueront. Le joueur qui a la carte blanche ne peut jouer au cours de cette improvisation. (Une idée de la P.L.A.I.E.)
+
+Changement de directeur
+Pour la prochaine consultation et la prochaine improvisation, les équipes doivent échanger leur directeur respectif. (Une idée de François Gagné)
+
+Chantée avec soutien musical
+C’est une improvisation chantée où l’improvisateur doit obligatoirement composer sa mélodie dans le cadre musical que lui impose le musicien. (Une idée de Gaétan Laporte, Eric Desranleau et de François Gagné)
+
+Commedia dell’arte
+Des personnages de la commedia ainsi qu’une situation sont imposés par le maître de jeu et les improvisateurs doivent ensuite s’exécuter en respectant le plus possible le style de cette célèbre forme théâtrale italienne. (Une idée d’Éric Proulx et de François Gagné)
+
+Composition de personnage
+Un improvisateur par équipe est envoyé en coulisse où il doit, à l’aide d’élémenst de costumes, composer un personnage qu’il nous présentera une improvisation plus tard dans une performance solo.
+
+Contact
+C’est une improvisation où l’improvisateur doit être continuellement en contact physique avec au moins un autre improvisateur. (Une idée de François Gagné)
+Costume ou élément de costume imposé (Voir Témoignage)
+Un costume est imposé et l’improvisateur doit l’enfiler et écrire une improvisation inspirée par le personnage composé à partir du costume imposé. L’équipe n’a que la durée du caucus pour se préparer.
+
+Courrier de Solange
+Le maître de jeu fait la lecture d’un courrier du coeur envoyé à Solange. Le contenu de cette lecture servira d’inspiration à l’écriture de l’improvisation. (Une idée de François Gagné)
+
+Décors
+Le maître de jeu donne un thème par équipe avant le match ou à l’entracte et les équipes ont 15 minutes pour bâtir une improvisation ( Histoire, distribution des rôles, recherche de costumes et d’accessoires, conception de décors et d’éclairage, préparation d’une trame sonore, etc.). Aucune limite n’est imposée. Cette catégorie peut occasionnellement se jouer en mixte. Le maître de jeu donne alors un thème et les deux équipes doivent collaborer dans la préparation de l’improvisation.(Une idée de Stéphane E. Roy)
+
+Défi ou défi du public
+Les équipes s’échangent un défi et doivent tenter de le relever. Le défi peut être également lancé par un membre du public. (Une idée de François Gagné)
+
+Déjà vu
+L’improvisation débute comme une libre, puis le maître de jeu demande aux improvisateurs de recommencer la même improvisation en changeant soit le style, l’ambiance, un élément de l’histoire, en modifiant les personnages, en imposant des handicaps ou autres. (Une idée de François Gagné)
+
+Dictionnaire
+Le thème est un mot choisi dans le dictionnaire. Si le coeur de l’impro correspond à la définition du mot, l’équipe gagne un citron-boni. (Une idée de François Gagné)
+
+Dictionnaire des noms propres
+Le thème est le nom d’une personnalité du dictionnaire. Si le coeur de l’impro correspond à ce qu’a été le personnage choisi, l’équipe gagne un citron-boni. (Une idée de François Gagné)
+
+Doublage
+Les voix des personnages de l’improvisation sont jouées par d’autres improvisateurs à l’aide de microphone.
+
+Éclairage imposé
+On impose sur scène un éclairage bien précis avec lequel l’improvisateur doit composer pour écrire son improvisation. (Une idée de François Gagné)
+
+Éclairage en zone
+On éclaire des zones qui correspondront à des ambiances bien précises et l’improvisateur devra obligatoirement en tenir compte pour l’écriture de son improvisation lorsqu’il se trouvera dans l’une de ces zones. (Une idée de François Gagné)
+
+Éditorial
+Il est question ici d’un exercice de rhétorique. Chaque équipe devra prendre position face à un sujet imposé par le maître de jeu: Pour ou contre. Ex: L’avortement…les Jaunes sont pour et les Noirs sont contre.
+
+Énigme
+Le maître de jeu donne une énigme. Si le coeur de l’improvisation jouée par la troupe correspond à la bonne réponse, la troupe se mérite un citron-boni. (Une idée de François Gagné)
+
+Extrait radio
+Un extrait de radio est choisi au hasard et servira d’inspiration pour l’écriture de la prochaine improvisation.
+
+Extrait télé
+Un extrait télé est choisi au hasard et servira d’inspiration pour l’écriture de la prochaine improvisation.
+
+Fantôme
+Un improvisateur joue dans l’improvisation de la troupe adverse sans que les personnages de l’histoire ne voient ou n’entendent ce dernier. (Une idée de François Vigneault)
+
+Feuilleton
+C’est une improvisation impliquant les joueurs de toutes les équipes et qui dure toute la saison. En début de saison le maître de jeu donne un thème ou une situation générale et impose à chaque joueur un personnage (nom, âge, état, métier, caractéristiques physiques et psychologiques ). Pour les deux premiers épisodes le feuilleton se joue avec le chandail et se vote. Par la suite l’improvisateur a comme devoir de composer son personnage avec costumes et accessoires et l’improvisation n’est plus soumise au vote populaire.
+
+Fusillade ( Classique )
+Par alternance, chaque improvisateur se présente devant le maître de jeu pour recevoir un thème qu’il aura à jouer sur le champs sans préparation aucune. L’improvisation de chaque comédien dure en temps normal 30 secondes mais c’est toujours à la discrétion du maître de jeu. (Une idée de Roberto Sierra)
+
+Fusillade avec contrainte imposée
+Une contrainte est imposée et doit être respectée dans chaque fusillade.
+
+Fusillade avec un seul thème
+Le premier improvisateur à se présenter devant le maître de jeu reçoit un thème qui sera le même pour tous les autres. ( Une idée de Roberto Sierra et de François Gagné )
+
+Fusillade défi
+Le thème que l’improvisateur reçoit est donné par l’improvisateur de l’autre équipe
+
+Fusillade duel
+Il est question ici d’une fusillade jouée en mixte à un contre un. Le temps de l’improvisation ne doit pas aller en dessous des 60 secondes. (Une idée de Roberto Sierra et François Gagné)
+
+Fusillade groupée
+A tour de rôle chaque équipe se présente au complet sur scène. Le maître de jeu donne un thème et sans préparation aucune, les improvisateurs doivent y aller d’une improvisation de 30 secondes ou plus.
+
+Fusillade inspirée de…
+A la place du thème, le maître de jeu donne à l’improvisateur un autre élément duquel le comédien devra s’inspirer pour écrire son improvisation fusillade. Ex: Un son, une image, un article de journal, un extrait de chanson, etc… (Une idée de Roberto Sierra et François Gagné)
+
+Fusillade solo
+C’est une fusillade comparée classique à l’exemption qu’ici, un seul improvisateur jouera les six thème donnés à son équipe. ( Une idée de Roberto Sierra et de François Gagné )
+
+Fusillade soutien musical
+Ici l’improvisateur ne reçoit aucun thème mais une trame sonore l’accompagnera et il devra en tenir compte pour l’écriture de son improvisation (Une idée de Roberto Sierra et de Jean Daniel Nicholl )
+
+Génie en herbe
+Une question sur des connaissances générales est donnée aux équipes. Si le coeur de l’improvisation est la réponse à la question l’équipe gagne un citron-boni. (Une idée de François Gagné)
+
+Guerre des mots
+Les improvisateurs n’ont le droit d’utiliser qu’un seul mot à la fois et ce mot doit être en réaction au mot lancé par l’autre improvisateur. Cette impro peut se jouer avec ou sans thème.
+
+Handicap
+Chaque personnage à se présenter sur scène se voit imposer un handicap par le maître de jeu. L’improvisateur devra obligatoirement s’en servir pour la composition de son
+personnage. (Une idée de François Gagné)
+
+Handicap voilé
+Les handicaps imposés à une troupe doivent être devinés par l’autre troupe. Si la réponse est exacte, la troupe qui a trouvé les handicaps gagne un citron-boni. (Une idée de François Gagné)
+Handicap voilé au public
+Si les handicaps sont trouvés par le public l’équipe se mérite un citron-boni. (Une idée de François Gagné)
+
+Histoire du monde
+Un passage de l’histoire du monde servira de synopsis à l’improvisation suivante.
+
+Horoscope
+Le maître de jeu fera la lecture de l’horoscope du signe astrologique d’un spectateur choisi au hasard. Les éléments contenus dans la lecture de cet horoscope serviront à l’écriture de l’improvisation.
+
+Huit clos
+C’est une improvisation sans caucus. Les improvisateurs incarnent des personnages qui se connaissent et qui sont réunis dans un lieu clos pour régler un problème qu’ils ont en commun. Les improvisateurs ne peuvent utiliser à outrance des accessoires imaginaires. Ils peuvent le faire seulement si c’est pertinent et que cela appuie leur écriture. L’improvisateur ne doit pas imposer le problème mais bel et bien collaborer avec l’autre pour le trouver afin que tout soit cohérent. L’improvisation se terminera quand le problème sera solutionné. ( Une idée de Martin Félip et de François Gagné )
+
+Humeurs en cinq temps
+Cinq humeurs sont imposées par le maître de jeu. L’improvisateur devra en incarner une première et à chaque fois qu’il entendra la cloche il devra passer à une autre sans que l’on sente la coupure. Il doit faire l’effort de justifier le changement en le rendant cohérent. (Une idée de François Gagné)
+
+Humeurs imposées
+Des humeurs sont imposées par le maître de jeu. Les improvisateurs qui jouent doivent en tout temps être habités par l’une ou l’autre des humeurs et doivent se servir de celles-ci pour l’écriture de leur improvisation. Jamais les humeurs ne doivent se chevaucher (une seule humeur à la fois ). L’improvisateur peut changer d’humeur à sa guise en autant que ce soit pertinent et que l’on peut les distinguer.
+Humeurs imposées par le maître de jeu
+Ici les changements d’humeur sont imposés par le maître de jeu à l’aide d’un petit carton présenté à l’improvisateur. (Une idée de François Gagné)
+
+Humeurs imposées par zones
+Ici des zones sont représentées par des humeurs. Lorsque l’improvisateur se présente dans une zone il doit se laisser habiter par l’humeur qui s’y trouve et s’en servir de façon cohérent pour l’écriture de l’improvisation. (Une idée de Bertrand Rainville Pitt)
+
+Immobile
+Une improvisation où l’improvisateur doit être immobile du début jusqu’à la fin.
+
+Inspirée de…
+Les improvisateurs doivent s’inspirer d’un élément qui leur est proposé par le maître de jeu. Ex: Une photo, une toile, une chanson, un poème, une sculpture ou toute autre chose pouvant aider l’improvisateur à écrire sont improvisation. Il n’y a pas ici de thème à respecter puisqu’il est difficile de juger de quelle façon l’improvisateur a été inspiré par l’élément proposé. Par contre si le maître de jeu ne perçoit pas le lien entre l’élément proposé et l’improvisation, il pourra sévir ou tout au moins exiger des explications aux directeurs des équipes concernées.(Une idée de Guy Levesque)
+
+Interactive
+Le maître de jeu donne au public un choix de direction que l’improvisation pourrait prendre et ce dernier donne sa réponse à l’aide des carton de vote. Une couleur représente Oui et l’autre Non.
+
+Interventions
+Le maître de jeu peut à sa guise intervenir dans l’improvisation en cours en imposant une piste d’écriture, une épreuve, un éclairage, une trame sonore, une réflexion, la répétition d’une performance déficiente, le remplacement des improvisateurs en présence, une nouvelle consultation ou tout autre chose pouvant aider ou déstabiliser l’improvisateur. ( Une idée d’Yves Richard, Gaetan Laporte et de François Gagné )
+
+Intervention de l’autre équipe
+Le directeur adverse est appelé à intervenir s’il y a lieu dans l’improvisation de l’autre équipe.
+
+Jam
+Des instruments de musique sont remis aux improvisateurs et ceux-ci, dans une improvisation strictement musicale et sans paroles doit tenter de respecter le thème imposé par le maître de jeu.
+
+Juke box
+C’est une improvisation chantée qui se fait obligatoirement sur l’air d’une chanson connue joué par le musicien. Un choix de trois est donné aux troupes. (Une idée de Jean-Daniel Nicholl)
+
+Langue étrangère
+L’improvisation doit se faire dans une langue autre que le français et imposée par le maître de jeu
+
+Lieu imposé
+Le lieu où se déroule l’improvisation est imposé par le maître de jeu. (Une idée de Martin Félip)
+
+Maquillage
+Une trousse de maquillage est remis à l’équipe qui a la durée de la consultation pour maquiller un ou des improvisateurs pour l’improvisation suivante. Si l’improvisation est sans thème c’est à partir des personnages créés à l’aide du maquillage que les improvisateurs écriront leur improvisation. Chaque joueur qui embarque sur scène doit être maquillé. (Une idée de François Gagné)
+
+Marionnettes
+C’est une improvisation avec une ou des marionnettes et où le manipulateur ne peut en aucun temps devenir comédien. On peut avoir un ou plusieurs manipulateurs. En plus du manipulateur le maître de jeu peut imposer un ou plusieurs improvisateurs. Ceux-ci doivent incarner un personnage mais ne peuvent pas devenir manipulateurs. Des castelets sont proposés aux manipulateurs mais ne sont que facultatifs, en autant que le public puisse croire au personnage de la marionnette. (Une idée de François Gagné)
+
+Marionnettes-décors
+Semblable à la catégorie décors mais avec des marionnettes imposées par le maître de jeu.
+
+Masque
+Les improvisateurs doivent jouer avec les masques imposés par le Maître de jeu. Il peut s’agir de masque neutre, demi-masque, masque de commedia ou tout autre genre de masque. Les joueurs doivent se servir du masque qui leur est imposé pour composer leur personnage et écrire leur improvisation
+
+Mimée
+Une improvisation où aucun son volontaire n’est permis.
+
+Mot caché
+Un mot est dévoilé au public mais caché aux improvisateur. Lorsque le mot est prononçé sur scène, le public réagi d’une façon imposée par le maître de jeu. Si l’équipe devine le mot elle gagne un citron-boni.
+
+Narration avec participation du public
+C’est une narration où l’action est jouée par un membre du public.
+
+Narration voilée
+C’est une narration où le narrateur ne voit pas l’action qui se déroule sur scène.
+
+Ombres chinoises
+C’est une improvisation où la technique de l’ombre chinoise est utilisée.
+
+Patère
+L’improvisateur doit prendre un ou des éléments de costume qui se trouvent sur la patère pour entrer sur scène. Il n’y a pas de thème. L’improvisateur doit composer sur le champ un personnage à l’aide de l’élément de costume qu’il a choisi et endossé et s’inspirer de celui-ci pour écrire son improvisation.
+
+Personnage imposé
+Un personnage est imposé à un où plusieurs improvisateurs et celui-ci (ceux-ci) doit (doivent) le composer et l’incarner sur le champs en s’inspirant de celui-ci pour l’écriture de l’impro. (Une idée de François Gagné)
+
+Personnage voilé
+Le personnage de l’improvisateur avec toutes ses caractéristiques est connu de tout le monde sauf de lui. S’il devine qui il est à la fin de l’impro il mérite un citron boni.
+
+Petites annonces
+Chaque improvisateur incarne le personnage imposé par la lecture d’une annonce de service de rencontres.
+
+Photo-roman
+
+Un photo-roman est projeté sur un écran sous forme de diapositives et les improvisateurs doivent donner un sens à l’histoire en prêtant leur voix et leur âme aux personnages à l’aide de microphones.
+
+Point de vue
+C’est une improvisation où différents narrateurs donnent leur version de la même histoire.
+
+Populo caucus
+Une improvisation mixte où le public aura à décider laquelle des deux consultations sera jouée.
+
+Post-synchro
+Un vidéo où un film est projeté sur un écran et les improvisateurs doivent donner un sens à l’histoire en prêtant leurs voix et leurs âmes aux personnages à l’aide de microphones.
+
+Poursuite
+Une troupe poursuit l’improvisation de l’autre troupe.
+
+Poursuite alternative
+En alternance les troupes poursuivent l’histoire de l’autre en respectant vigoureusement tout ce qui est installé par l’autre. (Une idée de François Gagné)
+
+Poursuite alternative voilée
+Même déroulement que la poursuite alternative à l’exception que la troupe qui ne joue pas ne doit en aucun temps voir l’improvisation de l’autre troupe. Elle n’a que le son comme seul point de repère.
+
+Preview
+Il s’agit ici d’une improvisation à la manière d’une bande annonce de film.
+
+Procès
+Un membre du public est accusé d’un délit. Une troupe représente la couronne et l’autre la défense. Cchaque troupe mandate un improvisateur qui jouera le rôle de l’avocat. Dans un premier temps, à tour de rôle, les avocats présentent leur cause et interrogent l’accusé au besoin. Dans un deuxième temps et toujours à tour de rôle, les avocats font venir à la barre des témoins qui sont personnifiés par la troupe adverse.
+
+Proverbe
+L’improvisation doit s’inspirer d’un proverbe lu par le Maître de jeu.
+
+Publicité
+Il s’agit ici d’une improvisation qui doit annoncer un produit.
+
+Punch out ou Punch out imposé
+Une phrase est imposée soit par l’autre troupe où soit par le maître de jeu. Cette phrase doit inspirer l’écriture de l’improvisation. L’improvisation se terminera lorsque la phrase sera dite, en prenant soin lque a sortie soit cohérente avec l’écriture installée.
+
+Quintatlon
+Le maître de jeu impose cinq catégories et un thème. À chaque son de cloche l’improvisateur doit passer de l’une à l’autre sans heurt comme si le changement était justifié dans l’écriture de son improvisation.
+
+Radiophonique
+Une improvisation strictement sonore avec l’aide d’un microphone.
+Radiophonique avec soutien musical
+C’est une improvisation radiophonique où l’improvisateur doit obligatoirement laisser son écriture être influencé par l’ambiance musicale imposée.
+
+Relais
+C’est une improvisation mixte à un contre un. Au son de la cloche les improvisateurs figent et sont remplacés par deux autres improvisateurs qui poursuivent rigoureusement ce qui a été installé par leurs prédécesseurs.
+Reportage
+C’est une improvisation sous forme de reportage. Un soutien vidéo peut également être utilisé.
+Rêve
+Pour honorer un improvisateur, ce dernier peut réaliser son fantasme d’impro. Il a carte blanche.
+
+Revue de presse
+L’improvisation doit rigoureusement s’inspirer de la lecture d’un article de presse faite par le Maître de jeu.
+
+Rimée
+Une improvisation où le rime, qu’il soit libre ou non, est obligatoire.
+
+Sans thème ni caucus
+Une improvisation sans thème ni caucus.
+
+Sans paroles avec soutien musical
+Une improvisation sans parole où l’écriture doit être rigoureusement influencé par l’ambiance musical imposée.
+
+Sans paroles avec soutien d’une trame sonore
+Une improvisation sans paroles où l’écriture doit être rigoureusement influencée par l’ambiance musicale imposée par la bande sonore provenant d’un soutien fixe.
+
+Saute-mouton
+Il s’agit de quatre improvisations différentes avec un thème différent pour chacune des improvisations. La première improvisation se joue avec un improvisateur et on rajoute un improvisateur à chaque improvisation qui suit. Puis on redescend à rebours jusqu’à la première en enlevant un improvisateur à chaque fois.
+
+Sensorielle
+On stimule l’un des cinq sens d’un improvisateur. Cette stimulation sensorielle doit servir d’inspiration pour l’écriture de l’improvisation de ce dernier.
+
+Sitcom
+Il s’agit ici d’une improvisation de comédie de situation où le public est appelé à réagir de la même façon que s’il assistait à l’enregistrement télé d’un sitcom.
+
+Situation imposée
+Une situation est imposée par le maître de jeu. (Une idée d’Yves Richard)
+
+Situation voilée
+Une situation est connue de tous sauf d’un improvisateur. S’il découvre de quoi il est question à la fin de l’improvisation il mérite un citron boni.
+
+Soutien musical
+Une improvisation où l’écriture doit être rigoureusement influencée par l’ambiance musicale imposée.
+
+Soutien musical avec C.D.
+Une improvisation où l’écriture doit être rigoureusement influencée par l’ambiance musicale imposée.
+
+Témoignage
+Un improvisateur par équipe se voit imposer un élément de costume avec lequel il doit composer un personnage qu’il nous présente sous forme de témoignage après une brève consultation, le temps qu’il puisse enfiler le costume.( Une idée de Martin Félip )
+
+Texte
+Un texte à deux personnages est remis aux troupes à l’entracte. Elles ont dix minutes pour mémoriser et monter trois versions différentes du texte en question. Lors de la présentation pendant le spectacle, aucune erreur dans le texte ne sera tolérée.
+
+Thème voilé
+C’est une improvisation comparée où le thème n’est connu que de la troupe qui joue. Si à la fin de l’improvisation le public devine quel était le thème en question, la troupe méritera un citron boni. Évidemment il est interdit à la troupe qui joue de prononcer un mot qui se trouve dans le thème.
+
+Titre de chanson
+Le thème de l’improvisation est choisi parmi les titres de chansons qui se retrouvent sur un disque compact choisi préalablement. On demande au public de choisir un chiffre. Le titre de la chanson correspondant au chiffre choisi sera le thème joué.
+
+Tournage
+Des improvisateurs ont la durée du spectacle pour tourner, monter et mixer un court-métrage sur un thème imposé par le maître de jeu.
+
+Tranche de vie
+Un improvisateur doit nous raconter sans jouer une anecdote qui lui est vraiment arrivée.
+
+Travail à la chaîne
+La phrase d’un improvisateur doit obligatoirement commencer par le dernier mot de l’autre improvisateur.
+
+T.V.Hebdo
+L’improvisation doit s’inspirer rigoureusement de la lecture du synopsis d’un film choisi dans le T.V.Hebdo ainsi que de la critique que l’on fait de ce film
+Univote
+À la fin de l’improvisation, un seul membre du public sera appelé à voter.
+
+Un seul mot
+L’improvisateur n’a le droit d’utiliser qu’un seul et même mot tout au long de
+l’improvisation.
+
+Variation sur un même thème
+Le maître de jeu donne un thème et à chaque fois que la cloche se fait entendre, les improvisateurs doivent immédiatement recommencer une nouvelle improvisation en respectant le thème imposé.
+
+Vente de garage
+Des objet sont disposés sur la scène. À chaque fois qu’un improvisateur entre, il doit obligatoirement saisir un des objets et s’inspirer de celui-ci pour l’écriture de l’improvisation et la composition de son personnage.
+
+Verglas
+(Voir Black out)
+
+Videoclip
+Les improvisateurs doivent créer un vidéoclip sur scène sur une pièce musicale imposée.
+
+Videoway
+Il s’agit ici d’une improvisation mixte avec quatre canaux de télévision identifiés par F1, F2, F3 et F4. et avec un contenu différent pour chacun des canaux. Il faut un improvisateur de chaque troupe par canal. Le maître de jeu saute d’un canal à l’autre (F1, F2, F3 ou F4) sans aucun ordre prédéterminé. Quand le maître de jeu revient sur un canal, les improvisateurs doivent faire l’effort d’avancer dans le temps comme si l’on zappait en temps réel à la télé. (Une idée de François Gagné)
+
+Videoway zapping
+Il s’agit d’une videoway où toute les zones sont jouées par les mêmes improvisateurs.
+
+Voyage dans le temps
+Chaque fois que la cloche se fait entendre, l’époque dans laquelle l’histoire se déroule doit changer sans que l’histoire ou que l’essence des personnages ne changent.
+
+Zapping
+C’est une improvisation sans thème où à chaque son de cloche les improvisateurs doivent recommencer une autre improvisation en se fiant obligatoirement à leur dernier geste au moment où la cloche s’est fait entendre.
+</pre>

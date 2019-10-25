@@ -24,7 +24,10 @@ Mais m'a  E  me t'nir loin
 Ahhhh, j'ai dit  A  ouais ça tient on s'créerait din années 80
 Mais ça s'rait plus safe D  d'allumer une clope 'ec une canisse de gaz din main
  A  Ouais ça tient on s'créerait din années 80
-Mais ça s'rait plus  E  safe</pre>
+Mais ça s'rait plus  E  safe
+
+X2
+</pre>
 <script>
 $('pre').css('column-count', '1')
 </script>

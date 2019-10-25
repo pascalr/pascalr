@@ -1,3 +1,44 @@
+<div id="toc"/>
+
+<h2>Résumé</h2>
+
+<h3>blah</h3>
+
+<h3>foo</h3>
+
+<h4>asdfasd</h4>
+
+<h4>asdsssss</h4>
+
+<pre>
+If faut stocker <b>107</b> Gt CO2 entre 2015 et 2060. 
+</pre>
+
+<h2>Objectif</h2>
+
+<pre>
+Pour cela, selon le scénario « technologies propres » (CTS) de l'Agence internationale de l'énergie il faut stocker dans le monde <b>107</b> gigatonnes de dioxyde de carbone (Gt CO2) entre 2015 et 20601. 
+</pre>
+
+<h2>Calculating CO2 stored in trees based on mass of tree</h2>
+
+<pre>
+We’re going to use some assumptions for this formula. Firstly, the formula we’ll use will obtain an average estimate over the life span of a sample tree, and secondly, will exclude stores in soil carbon. Some generalisations:
+• 35% of the green mass of a tree is water so 65% is solid dry mass;
+• 50% of the dry mass of a tree is carbon;
+• 20% of tree biomass is below ground level in roots so a multiplication factor of 120% is used; and
+• To determine the equivalent amount of carbon dioxide, the carbon figure is multiplied by a factor of 3.67.
+
+Source: https://forestlearning.edu.au/images/resources/How%20carbon%20is%20stored%20in%20trees%20and%20wood%20products.
+pdf
+
+<b>Calculating amount of CO2 stored in construction timber</b>
+
+The amount of carbon in sawn timber logs can be calculated using average rates of recovery after processing which is estimated at around 35% for hardwoods such as eucalypts, and 50% for softwoods such as pine. The standard moisture content for air dried timber (and wood products) is 12% or another way to look at it is that 88% of moisture has been removed.
+
+So to calculate the CO2 in construction timber the variables you need is the air dry mass of the log, the percentage of moisture removed and the recovery rate.CO2 sequestered in construction timber (kg) =air dry mass of saw log (kg) x 88% (oven dry mass) x 50% (carbon %) x 3.67 x recovery rate (%)
+</pre>
+
 <h2>Augmenter le coût de l'essence</h2>
 
 <pre>
@@ -5,6 +46,8 @@ La meilleure solution que je voit est
 </pre>
 
 <h2>La batterie de la planète se vide</h2>
+
+<h3>patate</h3>
 
 <pre>
 On vide le pétrole qui est de l'énergie d'accumulé depuis des milliers d'années en une centaine d'année.
@@ -27,3 +70,84 @@ Il faut rajouter 16% à 34% de plus pour prendre en compte la production de l'es
 
 2093 kg CO2 * 1.25 = 2
 </pre>616 kg CO2
+
+<h2>Sources</h2>
+
+<pre>
+https://fr.wikipedia.org/wiki/S%C3%A9questration_du_dioxyde_de_carbone
+</pre>
+
+<script defer>
+function createLink(href, innerHTML) {
+  var a = document.createElement("a");
+  a.setAttribute("href", href);
+  a.innerHTML = innerHTML;
+  return a;
+}
+
+function getHeadingOl(h) {
+  console.log(h.children)
+  console.log(h.children.length)
+  if (h.children.length === 1) {
+    console.log('here')
+    return h.appendChild(document.createElement("ol"))
+  } else {
+    console.log('there')
+    return h.lastChild
+  }
+}
+
+function generateTOC() {
+  console.log('Generating TOC')
+  var toc = document.getElementById('toc')
+  var headings = $(':header')
+
+  toc.appendChild(document.createElement("h1")).innerHTML = "Table des matières"
+
+  var lastH1 = toc.appendChild(document.createElement("ol"))
+  var lastH2 = null
+  var lastH3 = null
+  var lastH4 = null
+
+  var previous = null
+
+  for (var i = 0; i < headings.length; i++) {
+    var h = headings[i]
+    h.setAttribute('id', "section_" + i);
+
+    var depth = parseInt(h.localName.slice(1)) - 1
+    var ol = toc
+    
+    if (h.localName === previous) {
+      // Add only a li
+      console.log(depth)
+      console.log(ol)
+      for (var j = 0; j < depth; j++) {console.log('here...'); ol = ol.lastChild}
+      console.log(ol)
+      ol.appendChild(document.createElement("li"))
+        .appendChild(createLink("#section_" + i, h.innerHTML));
+    } else {
+      // Add an ol and a li
+      for (var j = 0; j < depth - 1; j++) {ol = ol.lastChild}
+      ol = ol.appendChild(document.createElement("ol"))
+      ol.appendChild(document.createElement("li"))
+        .appendChild(createLink("#section_" + i, h.innerHTML));
+    }
+
+    
+    console.log(depth)
+
+    /*if (h.localName === 'h2') {
+      // TODO: Add section id to every header so the link works!
+      lastH2 = lastH1.appendChild(document.createElement("li"))
+        .appendChild(createLink("#section_" + i, h.innerHTML));
+    } else if (h.localName === 'h3') {
+      lastH3 = getHeadingOl(lastH2).appendChild(document.createElement("li"))
+        .appendChild(createLink("#section_" + i, h.innerHTML));
+    }*/
+    previous = h.localName
+  }
+}
+
+generateTOC()
+</script>

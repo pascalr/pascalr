@@ -139,5 +139,5 @@ Safety dance
 Safety dance
 </pre>
 <script>
-$('pre').css('column-count', '3')
+$('pre').css('column-count', '4')
 </script>

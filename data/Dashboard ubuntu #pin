@@ -31,14 +31,28 @@ Bienvenue sur le dashboard ubuntu custom!!!
 
 <h1>Son</h1>
 
-https://askubuntu.com/questions/14077/how-can-i-change-the-default-audio-device-from-command-line
 
-<br/>
-<br/>
+<pre>
+Current sink:
+pacmd list-sinks | grep '* index' | cut -b12-
+</pre>
+
 
 Volume: <input type="range" min="1" max="65536" value="32768" class="slider" id="myRange" onchange="$.get('/run/setVolume?volume=' + this.value)">
 
 <br/>
+
+<script>
+//$.get('/run/getSoundInfo')
+</script>
+
+<img class="icon" src="/images/audio-card.svg" onclick="$.get('/run/firefox')" height="32")>
+<input type="radio" name="gender" value="other">
+<img class="icon" src="/images/audio-headphones.svg" onclick="$.get('/run/firefox')" height="32")>
+<input type="radio" name="gender" value="other">
+<img class="icon" src="/images/video-display.svg" onclick="$.get('/run/firefox')" height="32")>
+<input type="radio" name="gender" value="other">
+
 <br/>
 
 <button onclick="$.get('/run/resetSound', (res) => {console.log(res)})">Reset audio</button>

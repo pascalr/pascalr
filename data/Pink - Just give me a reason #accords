@@ -1,12 +1,8 @@
-Just Give Me A Reason chords by P!nk
-Key: G
-
+<pre>
 [Intro]
-
 Em A D G/B C G/B Am7 Dsus4
 
 [Verse 1]
-
 G
 Right from the start
            C                  Em
@@ -27,7 +23,6 @@ G      C     G/B   Dsus4 D
 Of our love, our love
 
 [Chorus]
-
 G                            D/F#
 Just give me a reason just a little bit's enough
        Em                            Bm
@@ -42,7 +37,6 @@ We're not broken just bent
 And we can learn to love again
 
 [Verse 2]
-
    G                              C              Em
 Im sorry I don't understand where all of this is coming from
   C                    G
@@ -65,7 +59,6 @@ There's nothing more than empty sheets
 Between our love, our love, oh our love, our love
 
 [Chorus]
-
 G                            D/F#
 Just give me a reason just a little bit's enough
        Em                            Bm
@@ -80,7 +73,6 @@ You're not broken just bent
 And we can learn to love again
 
 [Bridge]
-
 Em                 Bm
 Oh tears ducts and rust
                 C
@@ -95,7 +87,6 @@ N.C.
 We'll come clean
 
 [Chorus]
-
 N.C.
 Just give me a reason
 Just a little bit's enough
@@ -107,7 +98,6 @@ We're not broken just bent
 And we can learn to love again.
 
 [Chorus]
-
 G                            D/F#
 Just give me a reason just a little bit's enough
        Em                            Bm
@@ -122,7 +112,6 @@ We're not broken just bent
 And we can learn to love again
 
 [Outro]
-
 G  D/F#                    Em
 Ohhh we can learn to love again
       Bm       Dsus4              G
@@ -133,5 +122,7 @@ Em                          Bm              Dsus4
 That we're not broken just bent and we can learn to love again
 
 [Outro]
-
-Em A D G C G/B Am7 Dsus4 G
+Em A D G C G/B Am7 Dsus4 G</pre>
+<script>
+$('pre').css('column-count', '3')
+</script>
