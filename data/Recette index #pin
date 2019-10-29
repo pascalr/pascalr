@@ -1,0 +1,12 @@
+<div id="listeRecettes">blah</div>
+
+<script defer>
+const FILE_LIST = [
+  'Crêpe hollandaise #recette #déjeuner #public',
+  'Relish #recette #condiment #public',
+]
+$.get('/listeRecettes', (data) => {
+  $('#listeRecettes').html(data.toString())
+})
+</script>
+

@@ -1,3 +1,4 @@
+<pre>
 SI J'ÉTAIS UN HOMME - Diane Tell
 
 Intro : C   C/B   C7/Bb   F/A   Gm7   Cm   Ebmaj7   Ab 
@@ -43,3 +44,7 @@ On d Abmaj7 evient économe  G4       G
 monte : Eb   G9/D   G7   Cm   Bbm6   Bbm6/Eb 
  
 je ser Ab ai rom Bb antiq Ebm ue       Db        F#maj7            Bmaj7            Bb4         Bb 
+</pre>
+<script>
+$('pre').css('column-count', '2')
+</script>

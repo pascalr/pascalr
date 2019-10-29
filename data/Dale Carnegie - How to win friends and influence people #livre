@@ -1,1 +1,28 @@
-null
+<style>
+.main_image {
+  float: left;
+  margin-right: 20px;
+}
+</style>
+
+<img class="main_image" src="/images/1572026403272_image.png" width="200">
+
+<h1>How to win friends and influence people</h1>
+<div id='rating'>⭐⭐⭐⭐⭐</div>
+<div id='authour'>Dale Carnegie</div>
+
+<h2>Résumé</h2>
+
+<p>
+Le nom d'une personne est le mot le plus important pour elle.
+</p>
+
+<p>
+Toujours commencer par pourquoi.
+</p>
+
+<h2>Critique</h2>
+
+<p>
+Super bon!
+</p>

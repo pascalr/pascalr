@@ -1,1 +1,7 @@
+<pre>
 style="transform:rotate(90deg);
+
+h2 {
+  clear: left; /* Pour clear float: left; */
+}
+</pre>

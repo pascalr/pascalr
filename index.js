@@ -271,6 +271,16 @@ app.post('/bookmark', function(req, res) {
   //console.log(html)
 })
 
+app.get('/listeRecettes', function(req, res) {
+  fs.readdir(__dirname + '/data', function (err, files) {
+    if (err) {return console.log('Unable to scan directory: ' + err); throw err;} 
+
+    const recettesPublic = files.filter(f => (f.includes('#recette') && f.includes('#public')))
+
+    res.send({data: recettesPublic});
+  });
+})
+
 app.get('/search/:query?', function(req, res) {
   const query = removeAccents(decodeURIComponent(req.params.query))
   console.log('Searching for query = ' + query)
@@ -436,6 +446,25 @@ app.get('/run/:command',function (req, res) {
     res.set({ 'content-type': 'text/plain; charset=utf-8' });
     res.send(stdout)
   });
+})
+
+app.get('/publierRecettes', function(req,res) {
+  exec("rm ../recettesPascal/data/*", function(err, stdout, stderr) {
+    exec("cp data/*#recette*#public* ../recettesPascal/data", function(err, stdout, stderr) {
+      res.end('done')
+    })
+    exec("cp data/*#public*#recette* ../recettesPascal/data", function(err, stdout, stderr) {
+      res.end('done')
+    })
+  })
+})
+
+app.get('/resizeImages', function(req,res) {
+  exec("find ../recettesPascal/images -iname '*.jpg' -exec convert \\{} -verbose -resize 400x400\\> \\{} \\;", function(err, stdout, stderr) {
+  })
+  exec("find ../recettesPascal/images -iname '*.png' -exec convert \\{} -verbose -resize 400x400\\> \\{} \\;", function(err, stdout, stderr) {
+  })
+  res.end('done')
 })
 
 //app.use('/scripts', express.static(__dirname + '/node_modules/quill-better-table/dist/'));

@@ -1,0 +1,31 @@
+<style>
+
+.todo {
+  padding-top: 6px;
+  background-color: yellow; 
+  background-image: linear-gradient(#ddd .1em, transparent .1em);
+  background-size: 100% 1.2em;
+  border: solid black 1px;
+  border-radius: 8px;
+}
+</style>
+
+<h1>Mon site!</h1>
+
+<h2>TODO</h2>
+
+<div class="todo">
+<ul>
+<li>A lot!</li>
+<li>Fixer le font pour pre et regulier, que ce soit constant...</li>
+<li>Ou arreter d'utiliser pre, pour ca il faudrait que je puisse ecrire avec la partie de droite directement!</li>
+<li>Publish ma recette de relish.</li>
+</ul>
+</div>
+
+<h2>Commandes</h2>
+
+<button onclick="$.get('/publierRecettes')">Publier les recettes</button>
+
+<button onclick="$.get('/resizeImages')">Rapetisser les images</button>
+

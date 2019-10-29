@@ -10,7 +10,7 @@
 <h1>Pizza</h1>
 <div id='rating'>⭐⭐⭐⭐⭐</div>
 
-
+<pre>
 Preparation
     1 h et 30 min
 Waiting
@@ -18,19 +18,24 @@ Waiting
 Makes
     Two 20-cm (8-inch) pizzas 
 
+
+</pre>
+
 <h2>Ingrédients</h2>
 
 <h3>Pâte</h3>
 
-<ol>
-<li>1 cup (250 ml) warm water</li>
-<li>1 teaspoon (5 ml) instant yeast</li>
-<li>1 teaspoon (5 ml) sugar</li>
-<li>2 cups (300 g) all-purpose flour</li>
-<li>1 teaspoon (5 ml) salt</li>
+<ul>
+<li>1 c. à thé de levure instantanée</li>
+<li>2 tasses de farine</li>
+<li>1 tasse d'eau tiède (250 ml)</li>
+<li>1 c. à thé de sucre (5 ml)</li>
+<li>1 c. à thé de sel (5 ml)</li>
+</ul>
 
 <h3>Sauce</h3>
 
+<ol>
 <li>60 ml (1/4 tasse) d’huile d’olive</li>
 <li>30 ml (2 c. à soupe) de pâte de tomates</li>
 <li>2,5 ml (1/2 c. à thé) d’origan séché</li>

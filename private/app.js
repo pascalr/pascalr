@@ -230,17 +230,6 @@ class App extends React.Component {
     this.setState({selectedFilterTags}, this.updateFilteredItems)
   }
 
-  /*onBookmark = (event) => {
-    const {bookmarkLink, bookmarkName} = this.state
-    console.log(event)
-    event.preventDefault()
-    $.post('http://localhost:3000/bookmark', {link: bookmarkLink, name: bookmarkName}, response => {
-      this.reloadFiles()
-      this.setState({bookmarkLink: '', bookmarkName: ''})
-      console.log('Bookmarked!')
-    });
-  }*/
-
   render() {
 
     const {selectedFilterTags, filter, selectedItem, data, filteredItems} = this.state
@@ -255,7 +244,7 @@ class App extends React.Component {
       //{src: '../common/film.png', name: 'Film'},
       {src: '../common/penguin.png', name: 'recette'},
       {src: '../common/mic.png', name: 'karaoke'},
-      //{src: '../common/heart.png', name: 'love'},
+      {src: '../common/public.png', name: 'public'},
       //{src: '../common/danse.png', name: 'danse'},
     ]
 

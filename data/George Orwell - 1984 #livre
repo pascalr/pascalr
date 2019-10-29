@@ -1,0 +1,22 @@
+<style>
+.main_image {
+  float: left;
+  margin-right: 20px;
+}
+</style>
+
+<img class="main_image" src="/images/1572026684185_image.png" width="200">
+
+<h1>1984</h1>
+<div id='rating'>⭐⭐⭐</div>
+<div id='authour'>George Orwell</div>
+
+<h2>Résumé</h2>
+
+<p>
+</p>
+
+<h2>Critique</h2>
+
+<p>
+</p>
