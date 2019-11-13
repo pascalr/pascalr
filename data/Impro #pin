@@ -1,3 +1,35 @@
+<pre>
+Participe:
+
+Guillaume
+Gabrielle
+Jeff
+Louis
+Gabriel
+Cynthia
+Annie
+Loïc
+Marie-Hélène
+Renaud
+
+Annie
+
+Peut-être:
+
+Maryline
+Stéphanie
+
+Peux pas:
+
+Anaïs
+
+Pas encore:
+
+Mélanie
+Gabriel
+Francis
+</pre>
+
 musique dans les interludes, mpg123
 
 <h1>Générateur d'improvisations</h1>
@@ -68,6 +100,11 @@ var x = setInterval(function() {
 </div>
 <pre>
 
+Thème: Amour
+À la manière de... un italien. Un francais. Un russe. Un espagnol. Un cubain. Un allemand.
+
+En paroles de chanson.
+
 Style de chanson:
 
 Country (12 bar blues: I I I I IV IV I I V V I I)
@@ -88,6 +125,7 @@ Tones de mon clavier:
 111 (Synth Strings): Sonne comme de la musique d'église, un peu épic
 175: (sine) Ca fais un beat de club! Alterner accord base avec note haute! Pout-chi Pout-cha
 241,254: Etchic
+262: Banjo (ne sonne pas bien par contre)
 
 Thèmes:
 

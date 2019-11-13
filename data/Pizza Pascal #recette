@@ -3,6 +3,9 @@
   float: left;
   margin-right: 20px;
 }
+h2 {
+  clear: left;
+}
 </style>
 
 <img class="main_image" src="/images/zzz1570202817042_image.png" width="200">
@@ -11,14 +14,11 @@
 <div id='rating'>⭐⭐⭐⭐⭐</div>
 
 <pre>
-Preparation
+Pâte (Temps pour lever)
     1 h et 30 min
-Waiting
-    35 MIN 
-Makes
-    Two 20-cm (8-inch) pizzas 
-
-
+Cuisson
+    20 min
+2 pizzas (8-inch) ou 1 pizza épaisse (9"x13")
 </pre>
 
 <h2>Ingrédients</h2>
@@ -48,11 +48,15 @@ Makes
 
 <ol>
 <p>
-<li>Déposer tous les ingrédients dans la bol de la machine à pain. Protéger la levure avec la farine et surtout éviter qu'elle ne soit en contact direct avec le sel.</li>
+<li>Déposer tous les ingrédients dans la bol de la machine à pain. Protéger la levure avec la farine et surtout éviter qu'elle ne soit en contact direct avec le sel. Démarrer la machine au mode «Pâte».</li>
 </p>
 
 <p>
 <li>Combiner tous les ingrédients de la sauce ensemble.</li>
+</p>
+
+<p>
+<li>Préparer les ingrédients souhaitées sur la pizza (oignons, piments, olives, champignons, etc...) et râper le fromage.</li>
 </p>
 
 <p>

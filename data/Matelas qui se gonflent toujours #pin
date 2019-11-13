@@ -1,4 +1,13 @@
 <pre>
+Bon ben ça existe déja!
+https://instabed.com/neverflat-pump/
+
+J'aurais du acheter un kit de split pin pour tenir mon capteur.
+
+Checker si mes connecteurs font avec la switch.
+
+Au Canac, les plus gros O-ring sont 1-1/8 X 7/8. À pi/4*(1+1/8)^2: 0.994 in<sup>2</sup> À 0.3 psi, ça veut dire à peu près 0.3 lb ou 136 g.
+
 Je pèse 80 kg. Donc 800 N.
 
 J'ai la superficie à peu près d'un carré de 15 po x 65 po. Donc près de 0.63 m<sup>2</sup>.
@@ -8,6 +17,44 @@ J'exerce une contrainte de: <span id="answer_1572285456510"/> Pa. Donc 0.073 psi
 <script>
   $('#answer_1572285456510').html(800*0.63)
 </script>
+
+97	100.45	3.55670103092784
+101.325	104.775	3.40488527017024
+104	107.45	3.31730769230769
+<img src="/images/1572545237967_image.png">
+
+97	100.45	3.55670103092784
+101.325	104.775	3.40488527017024
+104	107.45	3.31730769230769
+<img src="/images/1572545308757_image.png">
+
+<p>
+The standard atmospheric pressure at sea level is taken as 1013.25 hPa or 1013.25 mb, but the air pressure at  sea  level  normally  varies  between  about  1040  hPa  and 970 hPa
+</p>
+
+ <table style="width: 450px">
+  <caption>Tableau 1. Variation de volume selon la pression atmosphérique</caption>
+  <tr>
+    <th>Atm Pressure</th>
+    <th>Max Pressure</th>
+    <th>Diminution Volume</th>
+  </tr>
+  <tr>
+    <td>97.0 kPa</td>
+    <td>100.45 kPa</td>
+    <td>3.56%</td>
+  </tr>
+  <tr>
+    <td>101.325 kPa</td>
+    <td>104.775 kPa</td>
+    <td>3.40%</td>
+  </tr>
+  <tr>
+    <td>104.0 kPa</td>
+    <td>107.45 kPa</td>
+    <td>3.32%</td>
+  </tr>
+</table> 
 
 Hypothèse:
 

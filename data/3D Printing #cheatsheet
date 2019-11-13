@@ -1,0 +1,16 @@
+<p>
+Ça me prend repetier-host.
+</p>
+
+<p>
+Télécharger la dernière version AppImage de repetier-host. https://www.repetier.com/download-now/
+chmod 755 sur le fichier.
+</p>
+
+<h3>Configuration Repetier-Host</h3>
+
+<p>
+Changer le baud rate à 115200.
+Printer Shape: X Max: 220, Y Max: 220. Print area width: 220, Print area depth: 220, Print are height 240
+Il faut que je m'ajoute dans le groupe: sudo usermod -a -G dialout pascalr. Il faut logout et login par après pour que cela marche. (C'est une solution à un problème de connection avec l'imprimante, manque d'autorisation pour utiliser le port) https://askubuntu.com/questions/58119/changing-permissions-on-serial-port
+</p>

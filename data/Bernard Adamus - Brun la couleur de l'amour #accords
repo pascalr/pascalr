@@ -60,5 +60,5 @@ A----0-2-3--
 E--3--------
 </pre>
 <script>
-$('pre').css('column-count', '3')
+$('pre').css('column-count', '2')
 </script>
