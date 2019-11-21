@@ -1,3 +1,4 @@
+<pre>
 [Intro] x4
 
      Dm                     Fmaj7       C
@@ -111,4 +112,7 @@ Dm                Fmaj7                 C                Dm
 Then you really might know what it's like...  to have to lose.
 
 [Outro]
-Dm Fmaj7 C Dm
+Dm Fmaj7 C Dm</pre>
+<script>
+$('pre').css('column-count', '3')
+</script>

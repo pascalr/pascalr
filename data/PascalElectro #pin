@@ -5,23 +5,46 @@ C'est quoi mes compétences?
 - Représentation du projet en 3d
 
 Soumission gratuite
+
+En effet, je viens juste de commencer mon entreprise. Ce qui offre beaucoup d'avantages pour vous! Je charge moins cher que la norme le temps de me faire un nom dans le domaines. De plus, je n'ai pas beaucoup de clients alors je vais pouvoir consacrer toute mon énergie pour vous!
+
+J'offre mes services un peu comme technicien en génie mécanique, et comme électromécanicien.
 -->
 
-<h1>Pascal Rainville - Portfolio</h1>
+<h1>Pascal Rainville - Portfolio automatisation industrielle</h1>
 
-<h2>Dessin technique</h2>
+<h2>Dessin industrielle</h2>
+
+<img src="/images/1573684882948_image.png" width="200px">
+
+<p>
+Production de croquis. Modélisations d'objets en trois dimensions pour bien visualiser le résultat désiré avant la réalisation.
+</p>
+
+<h2>Soudure</h2>
+
+Soudage-montage d'éléments de structures métalliques.
 
 <h2>Automatisation</h2>
 
+Programmation de HMI et PLC. Configuration de variateurs de vitesses.
+
 <h2>Électricité</h2>
 
-Câblage 
+Câblage de panneaux électriques
+
+<h2>Hydraulique et Pneumatique</h2>
 
 <h2>Mécanique</h2>
 
+<h2>Programmation</h2>
+
+Maîtrises des languages java, javascript, c, c++, ruby.
+Possibilité de travailler avec n'importe quel language de programmation. (Python, ...)
+
 <h2>Sécurité</h2>
 
-Installation de rideaux de sécurité.
+Installation de rideaux de sécurité. Câblage, nivelage, etc.
 
 <h1>Ressources</h1>
 
@@ -32,3 +55,19 @@ Simmons
 </pre>
 
 https://automation.omron.com/fr/ca/
+
+<!--
+Je ne conçoit rien de nouveau, je fais juste mettre des éléments déjà conçut sécuritairement ensemble.
+
+Je ne peux pas donner des consultations ou des avis
+
+Je ne peux pas faire des mesurages, des tracés, préparer des rapports, calculs, études, dessins, plans, devis et cachier des charges
+
+Je ne peux pas inspecter ou surveiller des travaux
+
+•   l’analyse  fonctionnelle ;
+•    l’analyse de risques ;
+•    la définition des standards pour la programmation ; 
+•   les descriptions fonctionnelles (ou devis) de logigrammes et de directives d’essais ; 
+•   l’attestation de la conformité d’un programme.
+-->
