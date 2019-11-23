@@ -1,3 +1,4 @@
+<pre>
 Piano Man
 Billy Joel
 It's nine o'clock on a Saturday
@@ -50,3 +51,7 @@ Sing us a song you're the piano man
 Sing us a song tonight
 Well we're all in the mood for a melody
 And you got us feeling alright
+</pre>
+<script>
+$('pre').css('column-count', '3')
+</script>
