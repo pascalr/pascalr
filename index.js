@@ -137,7 +137,31 @@ function removeFromIndex(filename) {
   index.removeDoc(doc)
 }
 
-fs.readdir(DATA_PATH, function (err, files) {
+// callback(err, filename)
+function forEachFile(dir, callback) {
+  fs.readdir(dir, function(err, list) {
+    if (err) return callback(err);
+    list.forEach(function(file) {
+      file = path.resolve(dir, file);
+      fs.stat(file, function(err, stat) {
+        if (stat && stat.isDirectory()) {
+          forEachFile(file, callback)
+        } else {
+          callback(null, file)
+        }
+      })
+    })
+  })
+}
+
+forEachFile(DATA_PATH, function(err, file) {
+  fs.readFile(file, function(error, content) {
+    if (error) {console.log('Unable to read data file: ' + error); throw error}
+    addToIndex(path.basename(file), content)
+  })
+})
+
+/*fs.readdir(DATA_PATH, function (err, files) {
   if (err) {console.log('Unable to read data directory: ' + err); throw err}
 
   files.forEach(function (file) {
@@ -148,8 +172,7 @@ fs.readdir(DATA_PATH, function (err, files) {
       addToIndex(file, content)
     });
   });
-
-})
+})*/
 
 //app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.urlencoded({ extended: true }))

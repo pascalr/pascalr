@@ -1,0 +1,1 @@
+path.basename('/foobaz/asdf/quux.html') // returns 'quux.html'

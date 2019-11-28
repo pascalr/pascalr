@@ -240,6 +240,7 @@ class EditPage extends React.Component {
         e('span', {onClick: () => this.insertText('<b></b>', 3) }, icon('format_bold-24px.svg')),
         e('span', {onClick: () => this.insertText('<s></s>', 3) }, icon('format_strikethrough-24px.svg')),
         e('span', {onClick: () => this.insertText('<i></i>', 3) }, icon('format_italic-24px.svg')),
+        e('span', {onClick: () => this.insertText('<img src="images/" alt="">', 17) }, icon('add_photo_alternate-24px.svg')),
         e('span', {onClick: () => this.insertText('<u></u>', 3) }, icon('format_underlined-24px.svg')),
         e('span', {className: 'dropdown'},
           e('span', {className: 'tooldropbtn', onClick: () => {this.setState({showEmojiDropdown: !showEmojiDropdown})}}, '😊'),
