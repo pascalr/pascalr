@@ -11,57 +11,6 @@ function icon(filename) {
   return e('img', {src: `/icon/${filename}`, alt: filename, height: 24, width: 24})
 }
 
-const LIVRE_TEMPLATE = `<style>
-.main_image {
-  float: left;
-  margin-right: 20px;
-}
-</style>
-
-<img class="main_image" src="/images/1570202817042_image.png" width="200">
-
-<h1>Title</h1>
-<div id='subtitle'>Subtitle</div>
-<div id='rating'>⭐⭐⭐⭐⭐</div>
-<div id='authour'>Author</div>
-
-<h2>Résumé</h2>
-
-<p>
-</p>
-
-<h2>Critique</h2>
-
-<p>
-</p>
-`
-
-const RECETTE_TEMPLATE = `<style>
-.imgRecette {
-  float: left;
-  margin-right: 20px;
-}
-</style>
-
-<div><small>Recette originale de: <a href=""><b>Lien</b></a></small></div>
-<hr/>
-
-<img class='imgRecette' src="/images/zzz1570399748285_image.png" width='200px'>
-
-<h1>Nom recette</h1>
-
-<pre>
-    Préparation :   ? minutes
-    Cuisson :       ? minutes
-    ? portions
-    ⭐⭐⭐⭐⭐
-</pre>
-
-<h2>Ingrédients</h2>
-
-<h2>Préparation</h2>
-`
-
 class EditPage extends React.Component {
   constructor(props) {
     super(props)
@@ -73,6 +22,9 @@ class EditPage extends React.Component {
     const {filename} = this.props
     $.get('http://localhost:3000/getFile/'+encodeURIComponent(filename), (content) => {
       this.setState({content})
+    })
+    $.get('http://localhost:3000/listeTemplates', ({templates}) => {
+      this.setState({templates})
     })
     window.addEventListener('beforeunload', this.handleLeavePage)
   }
@@ -198,6 +150,12 @@ class EditPage extends React.Component {
     })
   }
 
+  templateList = () => {
+    return Object.keys(this.state.templates || {}).map((t) => (
+      e('div', {key: `template_${t}`, onClick: () => this.insertText(this.state.templates[t])}, t)
+    ))
+  }
+
   render() {
     const {content, showSidePreview, showActionDropdown, showEmojiDropdown, showTitleDropdown, showTemplateDropdown} = this.state
     const {filename} = this.props
@@ -220,10 +178,7 @@ class EditPage extends React.Component {
         e('span', {className: 'dropdown'},
           e('button', {className: 'dropbtn', onClick: () => {this.setState({showTemplateDropdown: !showTemplateDropdown})}}, 'Templates', e('i', {className: 'fa fa-caret-down'})),
           showTemplateDropdown ? e('div', {id: 'myDropdown', className: 'dropdown-content'},
-            e('div', {onClick: () => this.insertText(RECETTE_TEMPLATE)}, 'Recette'),
-            e('div', {onClick: () => this.insertText(LIVRE_TEMPLATE)}, 'Livre'),
-            e('div', {onClick: () => this.insertText('')}, 'Film'),
-            e('div', {onClick: () => this.insertText('')}, 'Jeu'),
+            this.templateList(),
           ) : null,
         ),
         e('input', {id: 'filterVal2', onKeyDown: this.onKeyDown, type: 'text', value: this.state.query, onChange: ({target}) => {this.setState({query: target.value})}}),

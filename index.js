@@ -154,6 +154,15 @@ function forEachFile(dir, callback) {
   })
 }
 
+// generate template list
+var templates = {} 
+forEachFile(path.join(DATA_PATH, 'templates'), function(err, file) {
+  fs.readFile(file, function(error, content) {
+    if (error) {console.log('Unable to read data file: ' + error); throw error}
+    templates[path.basename(file)] = content.toString()
+  })
+})
+
 forEachFile(DATA_PATH, function(err, file) {
   fs.readFile(file, function(error, content) {
     if (error) {console.log('Unable to read data file: ' + error); throw error}
@@ -292,6 +301,10 @@ app.post('/bookmark', function(req, res) {
   });
 
   //console.log(html)
+})
+
+app.get('/listeTemplates', function(req, res) {
+  res.send({templates})
 })
 
 app.get('/listeRecettes', function(req, res) {
