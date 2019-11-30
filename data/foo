@@ -1,0 +1,7 @@
+<style>
+.red {
+  background-color: red;
+}
+</style>
+
+<span class="red">basd</span>

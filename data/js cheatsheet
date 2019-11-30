@@ -1,1 +1,12 @@
+<pre>
 path.basename('/foobaz/asdf/quux.html') // returns 'quux.html'
+
+var myDate = new Date(); 
+myDate.getDay() // day of week
+myDate.getDate() // day of month
+myDate.getMonth() // month of year
+myDate.getFullYear() // year
+
+document.getElementById(id).attribute = new value
+element.innerHTML = "New Heading";
+</pre>

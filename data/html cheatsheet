@@ -1,0 +1,6 @@
+<pre>
+document.getElementById("demo")
+var node = document.createElement("li")
+var textnode = document.createTextNode("Water")
+node.appendChild(textnode);     
+</pre>
