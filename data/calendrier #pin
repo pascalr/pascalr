@@ -1,58 +1,78 @@
-Modified version of Ciprian Ionescu. Original from <a href="https://codepen.io/ciprianionescu/pen/JYPwwL">https://codepen.io/ciprianionescu/pen/JYPwwL</a>
+Modified version of calendar widget. Original by <a href="https://codepen.io/ciprianionescu/pen/JYPwwL">Ciprian Ionescu</a>.
 <hr/>
-<section class="calendar" id="section">
-  <form id="cal">
-    <label class="weekday">Su</label>
-    <label class="weekday">Mo</label>
-    <label class="weekday">Tu</label>
-    <label class="weekday">We</label>
-    <label class="weekday">Th</label>
-    <label class="weekday">Fr</label>
-    <label class="weekday">Sa</label>
-  </form>
-</section>
 
 <script>
 
-var form = document.getElementById('cal')
-var now = new Date()
+function createMonth(now, monthIndex) {
+  var section = document.createElement('section')
+  section.className = "calendar"
+  document.body.appendChild(section)
 
-var options = {month: 'long'};
-var month = new Intl.DateTimeFormat('fr-CA', options).format(now)
-//var month = new Intl.DateTimeFormat('en-US', options).format(now)
-var header = document.createElement('h1')
-header.innerHTML = month + " " + now.getFullYear()
-document.getElementById('section').prepend(header)
+  var monthNb = (now.getMonth()+monthIndex)%12
+  var months = {0: 'Janvier', 1: 'Février', 2: 'Mars', 3: 'Avril', 4: 'Mai', 5: 'Juin', 6: 'Juillet', 7: 'Août', 8: 'Septembre', 9: 'Octobre', 10: 'Novembre', 11: 'Décembre'}
+  var month = months[monthNb%12]
 
-for (var i = 1; i < 36; i++) {
-  var elem = document.createElement('label')
-  elem.day = i
-  elem.className = i > 4 ? "day" : "day invalid"
-  form.appendChild(elem)
+  var year = (now.getFullYear() + Math.floor((now.getMonth()+monthIndex)/12))
+
+  var header = document.createElement('h1')
+  header.innerHTML = month + " " + year
+  section.appendChild(header)
+
+  var form = document.createElement('form');
+  section.appendChild(form);
+
+  ["Di","Lu","Ma","Me","Je","Ve","Sa"].forEach(date => {
+    var weekday = document.createElement('label')
+    weekday.className = "weekday"
+    weekday.innerHTML = date
+    form.appendChild(weekday)
+  })
+
+  var monthDate = new Date(year, monthNb, 1)
+  var offset = monthDate.getDay()
+
+  var lastDate = new Date(year, (monthNb+1)%12, 0).getDate()
+
+  for (var i = 1; i < 36; i++) {
+    var elem = document.createElement('label')
+    elem.day = i
+    elem.className = (i > offset && i <= (lastDate+offset)) ? "day" : "day invalid"
+    if (monthIndex === 0 && i-offset === now.getDate()) {
+      elem.className += " currentDay"
+    }
+    form.appendChild(elem)
   
-  var input = document.createElement('input')
-  input.className = 'appointment'
-  input.type = 'text'
-  input.date = i-4
-  input.required = 'true'
-  input.placeholder = 'What would you like to do?'
-  elem.appendChild(input)
+    var input = document.createElement('input')
+    input.className = 'appointment'
+    input.type = 'text'
+    input.date = i-offset
+    input.required = 'true'
+    input.placeholder = 'What would you like to do?'
+    elem.appendChild(input)
 
-  var day = document.createElement('span')
-  day.innerText = i-4
-  elem.appendChild(day)
+    var day = document.createElement('span')
+    day.innerText = i-offset
+    elem.appendChild(day)
 
-  var em = document.createElement('em')
-  elem.appendChild(em)
+    var em = document.createElement('em')
+    elem.appendChild(em)
+  }
+  var div = document.createElement('div')
+  div.className = "clearfix"
+  form.appendChild(div)
 }
-var div = document.createElement('div')
-div.className = "clearfix"
-form.appendChild(div)
+
+var now = new Date()
+for(var i = 0; i < 12; i++) {
+  createMonth(now, i)
+}
+
 </script>
 
 <style>
 
 section.calendar {
+  margin-left: 400px;
   background-color: #29323f;
   font-family: "Dosis", sans-serif;
   color: #fff;
@@ -91,6 +111,13 @@ section.calendar form label.day {
   width: 25px;
   margin: 8px;
 }
+section.calendar form label.day.currentDay span {
+  background-color: #e7d84f;
+  border-color: #e7d84f;
+  color: #29323f;
+  font-weight: bold;
+}
+
 section.calendar form label.day span {
   display: inline-block;
   width: 25px;
