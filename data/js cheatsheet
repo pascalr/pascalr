@@ -9,4 +9,9 @@ myDate.getFullYear() // year
 
 document.getElementById(id).attribute = new value
 element.innerHTML = "New Heading";
+
+var images = document.getElementsByTagName('img'); 
+var images = [...document.getElementsByTagName('img')]
+
+document.getElementById("demo").style.color = "red";
 </pre>

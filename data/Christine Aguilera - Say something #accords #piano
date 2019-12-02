@@ -75,5 +75,5 @@ Am               F        C
    Say something
 </pre>
 <script>
-$('pre').css('column-count', '3')
+$('pre').css('column-count', '2')
 </script>

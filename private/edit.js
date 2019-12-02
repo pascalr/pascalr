@@ -26,6 +26,9 @@ class EditPage extends React.Component {
     $.get('http://localhost:3000/listeTemplates', ({templates}) => {
       this.setState({templates})
     })
+    $.get('http://localhost:3000/listeStyles', ({styles}) => {
+      this.setState({styles})
+    })
     window.addEventListener('beforeunload', this.handleLeavePage)
   }
   componentWillUnmount() {
@@ -156,8 +159,14 @@ class EditPage extends React.Component {
     ))
   }
 
+  styleList = () => {
+    return Object.keys(this.state.styles || {}).map((s) => (
+      e('div', {key: `style_${s}`, onClick: () => this.insertText(this.state.styles[s])}, s)
+    ))
+  }
+
   render() {
-    const {content, showSidePreview, showActionDropdown, showEmojiDropdown, showTitleDropdown, showTemplateDropdown} = this.state
+    const {content, showSidePreview, showActionDropdown, showEmojiDropdown, showTitleDropdown, showTemplateDropdown, showStyleDropdown} = this.state
     const {filename} = this.props
 
     const id = Date.now()
@@ -179,6 +188,12 @@ class EditPage extends React.Component {
           e('button', {className: 'dropbtn', onClick: () => {this.setState({showTemplateDropdown: !showTemplateDropdown})}}, 'Templates', e('i', {className: 'fa fa-caret-down'})),
           showTemplateDropdown ? e('div', {id: 'myDropdown', className: 'dropdown-content'},
             this.templateList(),
+          ) : null,
+        ),
+        e('span', {className: 'dropdown'},
+          e('button', {className: 'dropbtn', onClick: () => {this.setState({showStyleDropdown: !showStyleDropdown})}}, 'Styles', e('i', {className: 'fa fa-caret-down'})),
+          showStyleDropdown ? e('div', {id: 'myDropdown', className: 'dropdown-content'},
+            this.styleList(),
           ) : null,
         ),
         e('input', {id: 'filterVal2', onKeyDown: this.onKeyDown, type: 'text', value: this.state.query, onChange: ({target}) => {this.setState({query: target.value})}}),

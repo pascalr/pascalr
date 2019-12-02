@@ -154,5 +154,5 @@ once I was seven years old
 Em               D     G 
 once I was seven years old</pre>
 <script>
-$('pre').css('column-count', '3')
+$('pre').css('column-count', '4')
 </script>

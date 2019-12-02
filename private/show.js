@@ -31,7 +31,7 @@ const filename = decodeURIComponent(htmlFilename)
 class ShowNav extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {showActionDropdown: false, marginWidth: '15%'}
+    this.state = {showActionDropdown: false, marginWidth: '0%'}
   }
 
   render() {

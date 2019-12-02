@@ -1,0 +1,86 @@
+<style>
+img {
+  max-width: 128px;
+  max-height: 128px;
+  border: solid 2px white;
+}
+
+img[selected='true'] {
+  border: solid 2px red;
+}
+
+#listeEpicerie {
+  min-height: 400px;
+}
+</style>
+
+<section id="ingredients">
+
+<h1>Ingrédients en vrac</h1>
+<hr>
+
+<img src="/images/1575315733265_image.png">
+<img src="/images/1575315811065_image.png">
+<img src="/images/chickpea-316594_640.jpg">
+<img src="images/lentil-2250141_640.jpg">
+
+<h1>Autres ingrédients</h1>
+<hr>
+
+<h2>Légumes</h2>
+
+<img src="/images/1575311314401_image.png">
+<img src="/images/1575311339626_image.png">
+<img src="/images/1575311381513_image.png">
+<img src="/images/1575311494607_image.png">
+<img src="images/peas-1144_640.jpg">
+<img src="/images/1575315238386_image.png">
+<img src="/images/1575315346290_image.png">
+<img src="images/eat-1294946.svg">
+
+<h2>Général</h2>
+
+<img src="/images/1575311154068_image.png">
+<img src="/images/1575311260858_image.png">
+<img src="/images/1575311292226_image.png">
+<img src="/images/1575311410156_image.png">
+
+
+<h2>Rare</h2>
+
+<img src="/images/1575313101161_image.png">
+</section>
+
+<br/>
+<br/>
+<br/>
+<h1>Liste d'épicerie</h1>
+<hr>
+
+<div id="listeEpicerie"/>
+
+<script defer>
+var liste = document.getElementById('listeEpicerie')
+var images = [...document.getElementsByTagName('img')]
+var clones = []
+images.forEach((img) => {
+
+  if (img.parentNode.id != 'ingredients') return;
+
+  console.log(img.src)
+
+  var clone = img.cloneNode()
+  clone.hidden = true
+  liste.appendChild(clone)
+  clones = [...clones, clone]
+
+  img.onclick = function () {
+    const selected = !(this.getAttribute('selected') === 'true')
+    this.setAttribute('selected', selected)
+    
+    clones.forEach((cl) => {
+      if (cl.src === this.src) cl.hidden = !selected
+    })
+  }
+})
+</script>

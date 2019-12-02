@@ -163,6 +163,15 @@ forEachFile(path.join(DATA_PATH, 'templates'), function(err, file) {
   })
 })
 
+// generate style list
+var styles = {} 
+forEachFile(path.join(DATA_PATH, 'styles'), function(err, file) {
+  fs.readFile(file, function(error, content) {
+    if (error) {console.log('Unable to read data file: ' + error); throw error}
+    styles[path.basename(file)] = content.toString()
+  })
+})
+
 forEachFile(DATA_PATH, function(err, file) {
   fs.readFile(file, function(error, content) {
     if (error) {console.log('Unable to read data file: ' + error); throw error}
@@ -305,6 +314,10 @@ app.post('/bookmark', function(req, res) {
 
 app.get('/listeTemplates', function(req, res) {
   res.send({templates})
+})
+
+app.get('/listeStyles', function(req, res) {
+  res.send({styles})
 })
 
 app.get('/listeRecettes', function(req, res) {
