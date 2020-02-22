@@ -27,6 +27,7 @@ COMMANDS = {
 do
   pacmd set-sink-volume $SINK ${query.volume}
 done`)},
+  arduino: {fn: (query) => (`echo ${query.cmd} > /dev/ttyACM0`)}
 }
 
 //65536
