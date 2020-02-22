@@ -1,46 +1,142 @@
 <style>
+#menu {
+  background-color: black;
+  color: white;
+}
+.item:hover {
+  background-color: orange;
+}
+.item {
+  padding-left: 6px;
+  padding-right: 10px;
+  border-right: solid 1px white;
+  cursor: pointer;
+}
 #manette {
   position: relative;
 }
 .icon {
+  border: solid black 2.5px;
   position: absolute;
   cursor: pointer;
   z-index: 3;
 }
+.icon:active {
+  background-color: red;
+}
 .background_image {
   z-index: 2;
   position: absolute;
+  user-drag: none; 
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 </style>
 
+<h1>Menu</h1>
+<div id="menu">
+<span class="item" onclick="menuItemClicked('inventaire')">Inventaire</span>
+<span class="item" onclick="menuItemClicked('recette')">Recette</span>
+<span class="item" onclick="menuItemClicked('manuel')">Manuel</span>
+</div>
+
+<script>
+function menuItemClicked(id) {
+  document.getElementById("inventaire").style.display = "none";
+  document.getElementById("recette").style.display = "none";
+  document.getElementById("manuel").style.display = "none";
+  document.getElementById(id).style.display = "block";
+}
+
+function selectedAxis(id) {
+  if (document.getElementById(id).style.backgroundColor === "red"){
+      document.getElementById(id).style.backgroundColor = "white";    
+  } else {
+    document.getElementById("axisX").style.backgroundColor = "white";
+    document.getElementById("axisY").style.backgroundColor = "white";
+    document.getElementById("axisZ").style.backgroundColor = "white";
+    document.getElementById(id).style.backgroundColor = "red";
+  }
+}
+</script>
+
+<div id="manuel">
 <h1>Commandes</h1>
 
 <div id="manette">
-<img class="background_image" src="/images/invention/manette.svg" width=512">
+<img class="background_image" src="/images/invention/manette.svg" width=512" ondragstart="return false;">
+
+<div style="position: absolute; top: 75px; left: 240px;">
+Manual
+</div>
+
+<div style="position: absolute; top: 75px; left: 320px; z-index: 4;">
+<input type="checkbox" min="100" max="500" value="350" style ="direction: rtl;" onchange="$.get('/run/arduino?cmd=m' + this.value)">
+</div>
 
 <div style="position: absolute; top: 240px; left: 275px;">
 Speed
 </div>
 
-<div style="position: absolute; top: 260px; left: 215px;">
-<input type="range" min="1" max="65536" value="32768" class="slider" id="myRange" onchange="$.get('/run/setVolume?volume=' + this.value)">
+<div style="position: absolute; top: 260px; left: 215px; z-index: 4;">
+<input type="range" min="100" max="500" value="350" style ="direction: rtl;" onchange="$.get('/run/arduino?cmd=v' + this.value)">
 </div>
 
-<img class="icon" src="/images/invention/dir_x.svg" onclick="$.get('/run/arduino?cmd=x')" style="top: 80px; left: 120px;">
-<img class="icon" src="/images/invention/dir_y.svg" onclick="$.get('/run/arduino?cmd=y')" style="top: 160px; left: 120px;">
-<img class="icon" src="/images/invention/dir_z.svg" onclick="$.get('/run/arduino?cmd=z')" style="top: 240px; left: 120px;">
-<img class="icon" src="/images/invention/cmd_plus.svg" onclick="$.get('/run/arduino?cmd=+')" style="top: 350px; left: 120px;">
-<img class="icon" src="/images/invention/cmd_minus.svg" onclick="$.get('/run/arduino?cmd=-')" style="top: 350px; left: 330px;">
+<img class="icon" src="/images/invention/ref.svg" onclick="$.get('/run/arduino?cmd=G28')" style="top: 135px; left: 240px;">
+<img class="icon" src="/images/invention/info.svg" onclick="$.get('/run/arduino?cmd=?')" style="top: 135px; left: 330px;">
+<img id="axisX" class="icon" src="/images/invention/dir_x.svg" onclick="$.get('/run/arduino?cmd=x'); selectedAxis('axisX')" style="top: 80px; left: 120px;">
+<img id="axisY" class="icon" src="/images/invention/dir_y.svg" onclick="$.get('/run/arduino?cmd=y'); selectedAxis('axisY')" style="top: 160px; left: 120px;">
+<img id="axisZ" class="icon" src="/images/invention/dir_z.svg" onclick="$.get('/run/arduino?cmd=z'); selectedAxis('axisZ')" style="top: 240px; left: 120px;">
+<img class="icon" src="/images/invention/cmd_minus.svg" onclick="$.get('/run/arduino?cmd=%2D')" style="top: 350px; left: 120px;">
+<img class="icon" src="/images/invention/cmd_plus.svg" onclick="$.get('/run/arduino?cmd=%2B')" style="top: 350px; left: 330px;">
 <img class="icon" src="/images/invention/e_stop.svg" onclick="$.get('/run/arduino?cmd=s')" style="top: 300px; left: 210px;" height=100>
 </div>
 
 <div style="padding-top: 512px;"></div>
 
+<h1>Console</h1>
+</div>
+
+<div id="inventaire">
+<h1>Inventaire</h1>
+
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<br/>
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+
+</div>
+
+<div id="recette">
 <h1>Recettes</h1>
+
+50g riz
 
 <img src="/images/1582349055246_image.png" width=128 onclick="$.get('/run/arduino?cmd=riz')">
 
+</div>
 
-Manual<input type="checkbox">
-<input type="range">
+<h2>Codes</h2>
+Riz au jasmin: 1610
+
 
