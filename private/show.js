@@ -52,7 +52,7 @@ class ShowNav extends React.Component {
     const {showActionDropdown, marginWidth} = this.state
 
     return e('div', {className: 'navbar'},
-      e('a', {href: 'http://localhost:3000/'}, 'Home'),
+      e('a', {href: 'http://localhost:3000/show/desktop'}, 'Home'),
       e('a', {href: `http://localhost:3000/edit/${encodeURIComponent(filename)}`}, 'Edit'),
       //e('a', {href: `http://localhost:3000/publish/${encodeURIComponent(filename)}`}, 'Publish'),
       e('span', {className: 'dropdown'},

@@ -29,6 +29,12 @@ img[selected='true'] {
 <img src="/images/1575393581784_image.png">
 <img src="/images/1575393720297_image.png">
 <img src="/images/1575394039424_image.png">
+<img src="/images/1575311410156_image.png">
+<img src="/images/1578520072917_image.png">
+<img src="/images/1578609671542_image.png">
+<img src="/images/1578614907161_image.png">
+<img src="/images/1578522258930_image.png">
+<img src="/images/1578522304416_image.png">
 
 <h2>Épices</h2>
 
@@ -38,6 +44,15 @@ img[selected='true'] {
 
 <h1>Autres ingrédients</h1>
 <hr>
+
+<h2>Fruits</h2>
+
+<img src="/images/1575418339187_image.png">
+<img src="/images/1575418362814_image.png">
+<img src="/images/1575418396741_image.png">
+<img src="/images/1575418411085_image.png">
+<img src="/images/1575418424487_image.png">
+<img src="/images/1575418465949_image.png">
 
 <h2>Légumes</h2>
 
@@ -56,16 +71,29 @@ img[selected='true'] {
 <img src="/images/1575311154068_image.png">
 <img src="/images/1575311260858_image.png">
 <img src="/images/1575311292226_image.png">
-<img src="/images/1575311410156_image.png">
 <img src="/images/1575393453750_image.png">
 <img src="/images/1575393480602_image.png">
 <img src="/images/1575393644603_image.png">
 <img src="/images/1575393690005_image.png">
-
+<img src="/images/1575406811373_image.png">
+<img src="/images/1575406881855_image.png">
+<img src="/images/1575414163904_image.png">
+<img src="/images/1575414548966_image.png">
+<img src="/images/1575414628352_image.png">
+<img src="/images/1575414728157_image.png">
+<img src="/images/1575418512667_image.png">
+<img src="/images/1575418577789_image.png">
+<img src="/images/1575418663552_image.png">
 
 <h2>Rare</h2>
 
 <img src="/images/1575313101161_image.png">
+
+<h2>À NE JAMAIS ACHETER</h2>
+
+<img src="/images/1575418849047_image.png" title="radicchio">
+<img src="/images/1575418709334_image.png" title="rapini">
+
 </section>
 
 <br/>

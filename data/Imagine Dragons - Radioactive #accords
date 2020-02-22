@@ -82,5 +82,5 @@ Bm     D         A            E
 Bm     D         A            E
   Whoa, whoa, I'm radioactive, radioactive</pre>
 <script>
-$('pre').css('column-count', '3')
+$('pre').css('column-count', '2')
 </script>
