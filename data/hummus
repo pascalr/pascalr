@@ -1,0 +1,22 @@
+<div style="position: absolute; top: 75px; left: 320px; z-index: 4;">
+<input type="checkbox" min="100" max="500" value="350" style ="direction: rtl;" onchange="$.get('/run/arduino?cmd=m' + this.value)">
+</div>
+<pre>
+
+Hummus
+Pot 1
+Ajouter, 540 ml, pois chiches
+Ajouter 500 ml d'eau
+Attendre 2 heures
+Vider l'eau à travers la passoire
+
+Pot 2
+Faire 125 ml tahini
+Ajouter  2 gousses d'ail (ou poudre d'ail p-ê)
+Ajouter 125 ml d'eau
+Ajouter 2 citrons (ou jus de citron)
+(optionnel) Ajouter cumin
+(optionnel) Ajouter poivre de cayenne
+(optionnel) Ajouter persil
+(optionnel) Ajouter huile d'olive
+</pre>

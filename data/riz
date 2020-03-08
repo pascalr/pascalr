@@ -1,0 +1,56 @@
+<style>
+input:not([type='submit']) {
+  text-align: right;
+  outline: none;
+  border: none;
+}
+input.qty {
+  width: 40px;
+}
+input.ingredient {
+  width: 250px;
+  font-style: italic;
+}
+input.instruction {
+  text-align: left;
+  font-weight: bold;
+  width: 90px;
+}
+</style>
+
+Ajouter une instruction: 
+<button>Pot</button><button>Ajouter</button><button>Verser</button><button>Mélanger</button><button>Soupoudrer</button>
+
+<div>
+<br>
+Recettes -> Repas -> Riz
+<br>
+<br>
+</div>
+
+<h1>Riz</h1>
+
+<form action="/run/recette" method="post">
+<div>-
+<input class="instruction" name="in" value="Cuiseur" readonly>
+<input class="qty" name="in" value="1" readonly>
+</div>
+
+<div>-
+<input class="instruction" name="in" value="Ajouter" readonly>
+<input class="qty" name="in" value="140" readonly> g
+<input class="ingredient" name="in" value="Riz" readonly>
+</div>
+
+<div>-
+<input class="instruction" name="in" value="Verser" readonly>
+<input class="qty" name="in" value="200"> ml
+<input class="ingredient" name="in" value="Eau" readonly>
+</div>
+
+<div>-
+<input class="instruction" name="in" value="Cuire" readonly>
+</div>
+
+<input type="submit" value="Cuisinner!">
+</form>

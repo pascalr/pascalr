@@ -480,6 +480,11 @@ app.get('/images/*',function (req, res) {
   res.sendFile(path.join(__dirname, req.path));
 })
 
+app.post('/run/recette',function (req, res) {
+  console.log('HERE! About to run command: ' + req.params.command)
+  console.log(req)
+})
+
 app.get('/run/:command',function (req, res) {
 
   console.log('About to run command: ' + req.params.command)

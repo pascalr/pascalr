@@ -1,0 +1,71 @@
+<style>
+input:not([type='submit']) {
+  text-align: right;
+  outline: none;
+  border: none;
+}
+input.qty {
+  width: 40px;
+}
+input.ingredient {
+  width: 250px;
+  font-style: italic;
+}
+input.instruction {
+  text-align: left;
+  font-weight: bold;
+  width: 90px;
+}
+</style>
+
+Ajouter une instruction: 
+<button>Pot</button><button>Ajouter</button><button>Verser</button><button>Mélanger</button><button>Soupoudrer</button>
+
+<div>
+<br>
+Recettes -> Acompagnement -> Tahini
+<br>
+<br>
+</div>
+
+<h1>Tahini</h1>
+
+<form action="/run/recette" method="post">
+<div>-
+<input class="instruction" name="in" value="Pot" readonly>
+<input class="qty" name="in" value="1" readonly>
+</div>
+
+<div>-
+<input class="instruction" name="in" value="Ajouter" readonly>
+<input class="qty" name="in" value="140" readonly> g
+<input class="ingredient" name="in" value="Graines de sésame grillées" readonly>
+</div>
+
+<div>-
+<input class="instruction" name="in" value="Mélanger" readonly>
+<input class="qty" id="potId" name="in" value="60"> s
+</div>
+
+<div>-
+<input class="instruction" name="in" value="Verser" readonly>
+<input type="number" id="potId" name="potId" min="1" max="2000" value="45"> ml
+<select id="cars" name="cars">
+  <option value="potVide">Huile de canola</option>
+</select>
+</div>
+
+<div>- <input class="instruction" name="in" value="Soupoudrer" readonly>
+<input type="number" id="potId" name="potId" min="1" max="2000" value="5"> g
+<select id="cars" name="cars">
+  <option value="potVide">Sel</option>
+</select>
+</div>
+
+<div>-
+<input class="instruction" name="in" value="Mélanger" readonly>
+<input type="number" id="potId" name="potId" min="1" max="2000" value="60"> s
+</div>
+
+<input type="submit" value="Cuisinner!">
+</form>

@@ -130,6 +130,22 @@ Speed
 <div id="recette">
 <h1>Recettes</h1>
 
+<h2>Entrées</h2>
+Soupe aux pois
+<h2>Brevages</h2>
+Chocolat chaud
+Capuccino vanille française
+Fraise kiwi
+<h2>Repas</h2>
+Riz
+Pâtes
+
+<h2>Desserts</h2>
+Gateau aux carottes
+<h2>Accompagnements</h2>
+<div><a href="/show/hummus">Hummus</a></div>
+<div><a href="/show/tahini">Tahini</a></div>
+
 50g riz
 
 <img src="/images/1582349055246_image.png" width=128 onclick="$.get('/run/arduino?cmd=riz')">

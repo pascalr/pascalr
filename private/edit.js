@@ -262,7 +262,7 @@ class EditPage extends React.Component {
         e('textarea', {ref: this.contentRef, value: content, rows: '40', cols: '65', onChange: this.handleChange, onPaste: this.onPaste})
       ), showSidePreview ?
       e('div', {className: 'showContent'},
-        e('div', {contentEditable: true, dangerouslySetInnerHTML: {__html: content}})
+        e('div', {dangerouslySetInnerHTML: {__html: content}})
       ) : null,
       )
     )
