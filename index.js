@@ -480,8 +480,81 @@ app.get('/images/*',function (req, res) {
   res.sendFile(path.join(__dirname, req.path));
 })
 
+const CODE_MOVE = "M" // () changes mode to move (maybe useless)
+const CODE_GRAB = "G" // () close the claw until pressure switch is closed
+const CODE_RELEASE = "R" // () open the claw to position 0
+const CODE_X = "X" // (mm) absolute position to move to
+const CODE_Y = "Y" // (mm) absolute position to move to
+const CODE_Z = "Z" // (mm) absolute position to move to
+const CODE_ADD = "A" // (qty) tilts until weight lost is equal to qty
+const CODE_END = "\n" // () do the command, separates all the small commands
+const CODE_TERMINATE = ";" // () send the command
+
+var pince = {
+  x: 0,
+  y: 0,
+  z: 0,
+}
+
+var CUISEUR = 1;
+
+var INGREDIENTS_POSITION = {
+  riz: {x: 50, y: 100}
+}
+
+function grabIngredient(ingredient) {
+  if (!INGREDIENTS_POSITION[ingredient]) {throw "Unkown ingredient " + ingredient}
+  return retract() + CODE_MOVE + CODE_X + INGREDIENTS_POSITION[ingredient].x + CODE_Y + INGREDIENTS_POSITION[ingredient].y + CODE_END + grab()
+}
+
+function grab() {
+  return CODE_MOVE + CODE_Z + "500" + CODE_END
+}
+
+function removeCap() {
+}
+
+function moveToContainer() {
+}
+
+function add() {
+
+}
+
+function retract() {
+  return pince.z <= 0 ? "" : "G00Z0\n"
+}
+
 app.post('/run/recette',function (req, res) {
   console.log('HERE! About to run command: ' + req.params.command)
+  var gcode = ""
+  var selectedContainerType = 0;
+  var selectedContainer = 0;
+  for (var i = 0; i < req.body.in.length; i++) {
+    const cmd = req.body.in[i]
+    if (cmd === "Cuiseur") {
+      selectedContainerType = CUISEUR;
+      selectedContainer = req.body.in[i+1];
+      i++;
+    } else if (cmd === "Ajouter") {
+      const qty = req.body.in[i+1];
+      const ingredient = req.body.in[i+2];
+      gcode += grabIngredient(ingredient)
+      gcode += retract()
+      // Grab the ingredient
+      // Move to the selected container
+      // Drop the required amount into the container
+      // Retract
+    } else if (cmd === "Verser") {
+    } else if (cmd === "Melanger") {
+    } else if (cmd === "Cuire") {
+    } else {
+      console.log('Unkown command: ' + cmd)
+      res.end('Unkown command: ' + cmd)
+      return false;
+    }
+  }
+  gcode += CODE_TERMINATE
   console.log(req)
 })
 
