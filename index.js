@@ -12,6 +12,8 @@ const { Transform } = require('stream');
 var sys = require('util')
 var exec = require('child_process').exec;
 
+var PARSE_ORDER = ["X","Y","Z"] // split string by comma, than attribute every value of based on the order to an object, send this object back to the UI
+
 COMMANDS = {
   ls: {cmd: "ls -la"},
   firefox: {cmd: "firefox"},
