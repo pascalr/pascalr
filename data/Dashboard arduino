@@ -34,6 +34,20 @@
   -webkit-user-select: none;
   -ms-user-select: none;
 }
+input {
+  width: 80px;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 </style>
 
 <h1>Menu</h1>
@@ -93,9 +107,36 @@ Speed
 <img class="icon" src="/images/invention/cmd_minus.svg" onclick="$.get('/run/arduino?cmd=%2D')" style="top: 350px; left: 120px;">
 <img class="icon" src="/images/invention/cmd_plus.svg" onclick="$.get('/run/arduino?cmd=%2B')" style="top: 350px; left: 330px;">
 <img class="icon" src="/images/invention/e_stop.svg" onclick="$.get('/run/arduino?cmd=s')" style="top: 300px; left: 210px;" height=100>
+
+<div  style="position: absolute; left: 550px;">
+<h2>Actuelle</h2>
+Position X: <input type="number" readonly><br/>
+Position Y: <input type="number" readonly><br/>
+Position Z: <input type="number" readonly><br/>
+Position W: <input type="number" readonly><br/>
+<button>Read</button>
+</div>
+<div  style="position: absolute; left: 800px;">
+<h2>Désirée</h2>
+<form action="#" onsubmit="$.get(`/run/arduino?cmd=X${this[0].value}Y${this[1].value}Z${this[2].value}W${this[3].value}`);return false">
+Position X: <input type="number" value="0"><br/>
+Position Y: <input type="number" value="10"><br/>
+Position Z: <input type="number" value="20"><br/>
+Position W: <input type="number" value="30"><br/>
+<input type="submit" value="Go">
+</form>
+</div>
+<div  style="position: absolute; top: 200px; left: 550px;">
+<h2>Log</h2>
+ <textarea cols=100 rows=14 readonly>
+At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+</textarea> 
+</div>
 </div>
 
 <div style="padding-top: 512px;"></div>
+
+<!-- ********************************************************************************************************************************************************************************************************* -->
 
 <h1>Console</h1>
 </div>
@@ -126,6 +167,9 @@ Speed
 <img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
 
 </div>
+
+
+<!-- ********************************************************************************************************************************************************************************************************* -->
 
 <div id="recette">
 <h1>Recettes</h1>
