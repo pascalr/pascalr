@@ -15,13 +15,18 @@ var exec = require('child_process').exec;
 const SerialPort = require('serialport');
 
 // ************ ARDUINO ********************
+var arduinoLog = {}
+
 const Readline = require('@serialport/parser-readline');
-const port = new SerialPort('/dev/ttyACM0', { baudRate: 9600 });
+const port = new SerialPort('/dev/ttyACM0', { baudRate: 9600, autoOpen: false });
 const parser = port.pipe(new Readline({ delimiter: '\n' }));
 port.on("open", () => {
+  arduinoLog = {}
   console.log('serial port open');
 });
 parser.on('data', data =>{
+  const timestamp = Date.now()
+  arduinoLog[timestamp.toString()] = data.toString()
   console.log('got word from arduino:', data);
 });
 // *****************************************
@@ -327,9 +332,28 @@ app.post('/bookmark', function(req, res) {
   //console.log(html)
 })
 
+app.get('/reloadArduino', function(req, res) {
+  port.close(function (err) {
+    console.log('port closed', err);
+    port.open(function (err) {
+      if (err) {
+        return console.log('Error opening port: ', err.message)
+      }
+  
+      // Because there's no callback to write, write errors will be emitted on the port:
+      //port.write('main screen turn on')
+    })
+  })
+})
+
 app.get('/poll/arduino', function(req, res) {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('should work! does it work?', 'utf-8');
+  res.set('Content-Type', 'text/plain');
+  const keys = Object.keys(arduinoLog).slice()
+  keys.forEach((key) => {
+    res.write(arduinoLog[key]);
+    delete arduinoLog[key]
+  })
+  res.end();
 })
 
 app.get('/listeTemplates', function(req, res) {
