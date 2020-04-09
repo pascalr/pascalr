@@ -50,6 +50,17 @@ input[type=number] {
 }
 </style>
 
+<script>
+(function poll() {
+  setInterval(function() {
+    $.get( "/poll/arduino", function( data ) {
+      console.log('data: ' + data)
+      document.getElementById("log").value += data;
+    });
+  }, 1000);
+})();
+</script>
+
 <h1>Menu</h1>
 <div id="menu">
 <span class="item" onclick="menuItemClicked('inventaire')">Inventaire</span>
@@ -139,8 +150,8 @@ Position W: <input type="number" value="30"><br/>
 </div>
 <div  style="position: absolute; top: 200px; left: 550px;">
 <h2>Log</h2>
- <textarea cols=100 rows=14 readonly>
-At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+ <textarea id="log" cols=100 rows=14 readonly>
+Log...
 </textarea> 
 </div>
 </div>

@@ -327,6 +327,11 @@ app.post('/bookmark', function(req, res) {
   //console.log(html)
 })
 
+app.get('/poll/arduino', function(req, res) {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('should work! does it work?', 'utf-8');
+})
+
 app.get('/listeTemplates', function(req, res) {
   res.send({templates})
 })
