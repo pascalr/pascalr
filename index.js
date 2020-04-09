@@ -12,7 +12,19 @@ const { Transform } = require('stream');
 var sys = require('util')
 var exec = require('child_process').exec;
 
-var PARSE_ORDER = ["X","Y","Z"] // split string by comma, than attribute every value of based on the order to an object, send this object back to the UI
+const SerialPort = require('serialport');
+
+// ************ ARDUINO ********************
+const Readline = require('@serialport/parser-readline');
+const port = new SerialPort('/dev/ttyACM0', { baudRate: 9600 });
+const parser = port.pipe(new Readline({ delimiter: '\n' }));
+port.on("open", () => {
+  console.log('serial port open');
+});
+parser.on('data', data =>{
+  console.log('got word from arduino:', data);
+});
+// *****************************************
 
 COMMANDS = {
   ls: {cmd: "ls -la"},
@@ -644,8 +656,8 @@ app.get('*',function (req, res) {
   stream.pipe(res)
 });
 
-var port = 3000
+var portnb = 3000
 
-app.listen(port);
+app.listen(portnb);
 
-console.log('Listening on http://localhost:' + port)
+console.log('Listening on http://localhost:' + portnb)
