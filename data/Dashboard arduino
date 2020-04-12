@@ -1,4 +1,9 @@
 <style>
+html *
+{
+   font-size: 0.99em;
+   font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+}
 #menu {
   background-color: black;
   color: white;
@@ -12,7 +17,7 @@
   border-right: solid 1px white;
   cursor: pointer;
 }
-#manette {
+#manuel {
   position: relative;
 }
 .icon {
@@ -34,9 +39,34 @@
   -webkit-user-select: none;
   -ms-user-select: none;
 }
-input {
+input[type='number'] {
   width: 80px;
 }
+input[type=checkbox] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid gray;
+  outline: none;
+  vertical-align: middle;
+  background-color: white;
+}
+
+input[type=checkbox]:checked {
+  background-color: yellow;
+}
+
+button {
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -54,14 +84,29 @@ input[type=number] {
 (function poll() {
   setInterval(function() {
     $.get( "/poll/arduino", function( data ) {
-      console.log('data: ' + data)
-      document.getElementById("log").value += data;
+      let log = document.getElementById("log")
+      log.value += data.log;
+      log.scrollTop = log.scrollHeight;
+
+      const info = data.info
+      if (info) {
+        window.info = info
+        Object.keys(info).forEach((key) => {
+          const input = document.getElementById(key)
+          if (input) {
+            if (input.type == "checkbox") {
+              input.checked = info[key] === "1"
+            } else {
+              input.value = info[key]
+            }
+          }
+        })
+      }
     });
   }, 1000);
 })();
 </script>
 
-<h1>Menu</h1>
 <div id="menu">
 <span class="item" onclick="menuItemClicked('inventaire')">Inventaire</span>
 <span class="item" onclick="menuItemClicked('recette')">Recette</span>
@@ -75,86 +120,107 @@ function menuItemClicked(id) {
   document.getElementById("manuel").style.display = "none";
   document.getElementById(id).style.display = "block";
 }
-
-function selectedAxis(id) {
-  if (document.getElementById(id).style.backgroundColor === "red"){
-      document.getElementById(id).style.backgroundColor = "white";    
-  } else {
-    document.getElementById("axisX").style.backgroundColor = "white";
-    document.getElementById("axisY").style.backgroundColor = "white";
-    document.getElementById("axisZ").style.backgroundColor = "white";
-    document.getElementById(id).style.backgroundColor = "red";
-  }
-}
 </script>
 
-<div id="manuel">
+<div id="manuel" style="display: none;">
 <h1>Commandes</h1>
 
-<div id="manette">
-<img class="background_image" src="/images/invention/manette.svg" width=512" ondragstart="return false;">
-
-<div style="position: absolute; top: 75px; left: 240px;">
-Manual
+<div>
+<button onclick="$.get('/reloadArduino');document.getElementById('log').value=''">Connect</button>
+<button onclick="$.get('/closeArduino')">Close</button>
+<button onclick="$.get('/run/arduino?cmd=\?')">Info</button>
+<button onclick="$.get('/run/arduino?cmd=\s')" style="color: red;">Stop</button>
 </div>
 
-<div style="position: absolute; top: 75px; left: 320px; z-index: 4;">
-<input type="checkbox" min="100" max="500" value="350" style ="direction: rtl;" onchange="$.get('/run/arduino?cmd=m' + this.value)">
-</div>
-
-<div style="position: absolute; top: 240px; left: 275px;">
-Speed
-</div>
-
-<div style="position: absolute; top: 260px; left: 215px; z-index: 4;">
-<input type="range" min="100" max="500" value="350" style ="direction: rtl;" onchange="$.get('/run/arduino?cmd=v' + this.value)">
-</div>
-
-<img class="icon" src="/images/invention/ref.svg" onclick="$.get('/run/arduino?cmd=G28')" style="top: 135px; left: 240px;">
-<img class="icon" src="/images/invention/info.svg" onclick="$.get('/run/arduino?cmd=?')" style="top: 135px; left: 330px;">
-<img id="axisX" class="icon" src="/images/invention/dir_x.svg" onclick="$.get('/run/arduino?cmd=x'); selectedAxis('axisX')" style="top: 80px; left: 120px;">
-<img id="axisY" class="icon" src="/images/invention/dir_y.svg" onclick="$.get('/run/arduino?cmd=y'); selectedAxis('axisY')" style="top: 160px; left: 120px;">
-<img id="axisZ" class="icon" src="/images/invention/dir_z.svg" onclick="$.get('/run/arduino?cmd=z'); selectedAxis('axisZ')" style="top: 240px; left: 120px;">
-<img class="icon" src="/images/invention/cmd_minus.svg" onclick="$.get('/run/arduino?cmd=%2D')" style="top: 350px; left: 120px;">
-<img class="icon" src="/images/invention/cmd_plus.svg" onclick="$.get('/run/arduino?cmd=%2B')" style="top: 350px; left: 330px;">
-<img class="icon" src="/images/invention/e_stop.svg" onclick="$.get('/run/arduino?cmd=s')" style="top: 300px; left: 210px;" height=100>
-
-
-
-
-<div  style="position: absolute; top: 20px; left: 475px;">
+<div  style="position: absolute; top: 80px; left: 0px;">
 <button style="font-size: 28px; margin-bottom: 10px;" onclick="$.get('/run/arduino?cmd=H')">🏠</button><br/>
 <button onclick="$.get('/run/arduino?cmd=HX')">🏠 X</button><br/>
 <button onclick="$.get('/run/arduino?cmd=HY')">🏠 Y</button><br/>
 <button onclick="$.get('/run/arduino?cmd=HZ')">🏠 Z</button><br/>
 <button onclick="$.get('/run/arduino?cmd=HW')">🏠 W</button><br/>
-<button onclick="$.get('/reloadArduino');document.getElementById('log').value=''">Reload</button><br/>
 </div>
 
-<div  style="position: absolute; left: 550px;">
-<h2>Actuelle</h2>
-Position X: <input type="number" readonly><br/>
-Position Y: <input type="number" readonly><br/>
-Position Z: <input type="number" readonly><br/>
-Position W: <input type="number" readonly><br/>
-<button>Read</button>
+<div  style="position: absolute; top: 60px; left: 100px;">
+<h2>Position</h2>
+Position X: <input id="Pos X" type="number" readonly>
+<button onclick="$.get('/run/arduino?cmd=%2DX')">-</button>
+<button onclick="$.get('/run/arduino?cmd=%2BX')">+</button>
+<br/>
+Position Y: <input id="Pos Y" type="number" readonly>
+<button onmousedown="$.get('/run/arduino?cmd=%2DY')"
+onclick="$.get('/run/arduino?cmd=s')">-</button>
+<button onmousedown="$.get('/run/arduino?cmd=%2BY')"
+onclick="$.get('/run/arduino?cmd=s')">+</button>
+<br/>
+Position Z: <input id="Pos Z" type="number" readonly>
+<button onclick="$.get('/run/arduino?cmd=%2DZ')">-</button>
+<button onclick="$.get('/run/arduino?cmd=%2BZ')">+</button>
+<br/>
+Position W: <input id="Pos W" type="number" readonly>
+<button onclick="$.get('/run/arduino?cmd=%2DW')">-</button>
+<button onclick="$.get('/run/arduino?cmd=%2BW')">+</button>
+<br/>
 </div>
-<div  style="position: absolute; left: 800px;">
-<h2>Désirée</h2>
+<div  style="position: absolute; top: 60px; left: 400px;">
+<h2>Destination</h2>
 <form action="#" onsubmit="$.get(`/run/arduino?cmd=MX${this[0].value}Y${this[1].value}Z${this[2].value}W${this[3].value}`);return false">
-Position X: <input type="number" value="0"><br/>
-Position Y: <input type="number" value="10"><br/>
-Position Z: <input type="number" value="20"><br/>
-Position W: <input type="number" value="30"><br/>
-<input type="submit" value="Go">
+Position X: <input id="Dest X" type="number" readonly><br/>
+Position Y: <input id="Dest Y" type="number" readonly><br/>
+Position Z: <input id="Dest Z" type="number" readonly><br/>
+Position W: <input id="Dest W" type="number" readonly><br/>
 </form>
 </div>
-<div  style="position: absolute; top: 200px; left: 550px;">
-<h2>Log</h2>
+
+<div  style="position: absolute; top: 60px; left: 620px;">
+<h2>Outputs</h2> Axis
+<select id="axis" name="axis">
+  <option value="X">X</option>
+  <option value="Y">Y</option>
+  <option value="Z">Z</option>
+  <option value="W">W</option>
+</select>
+<br/>
+<input id="PIN enabled Y" type="checkbox">Enabled
+<br/>
+<input id="PIN dir Y" type="checkbox" readonly>Direction<br/>
+<input id="PIN step Y" type="checkbox" readonly>Step<br/>
+<input id="PIN limit switch Y" type="checkbox" readonly>Limit switch<br/>
+<input id="Force Y" type="checkbox" readonly>Force rotation<br/>
+</div>
+
+<div  style="position: absolute; top: 60px; left: 800px;">
+<h2>Inputs</h2> Axis
+<select id="axis" name="axis">
+  <option value="X">X</option>
+  <option value="Y">Y</option>
+  <option value="Z">Z</option>
+  <option value="W">W</option>
+</select>
+<br/>
+Speed: <input type="range" min="500" max="3000" value="500" style ="direction: rtl;" onchange="$.get('/run/arduino?cmd=v' + this.value)">
+<br/>
+</div>
+
+<script>
+function sendMessage() {
+  let v = document.getElementById('message');
+  $.get('/run/arduino?cmd=' + encodeURI(v.value));
+  v.value = "";
+}
+</script>
+
+<div  style="position: absolute; top: 300px; left: 0px;">
+<form action="#" onsubmit="sendMessage(); return false;" autocomplete="off">
+  Message: <input id="message" type="text">
+  <input type="submit" value="Send"/>
+</form>
+</div>
+
+<div  style="position: absolute; top: 350px; left: 0px;">
+
  <textarea id="log" cols=100 rows=14 readonly>
 Log...
 </textarea> 
-</div>
 </div>
 
 <div style="padding-top: 512px;"></div>
@@ -164,7 +230,7 @@ Log...
 <h1>Console</h1>
 </div>
 
-<div id="inventaire">
+<div id="inventaire" style="display: none;">
 <h1>Inventaire</h1>
 
 <img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
@@ -217,9 +283,9 @@ Gateau aux carottes
 
 <img src="/images/1582349055246_image.png" width=128 onclick="$.get('/run/arduino?cmd=riz')">
 
-</div>
-
 <h2>Codes</h2>
 Riz au jasmin: 1610
+
+</div>
 
 

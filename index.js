@@ -14,22 +14,6 @@ var exec = require('child_process').exec;
 
 const SerialPort = require('serialport');
 
-// ************ ARDUINO ********************
-var arduinoLog = {}
-
-const Readline = require('@serialport/parser-readline');
-const port = new SerialPort('/dev/ttyACM0', { baudRate: 9600, autoOpen: false });
-const parser = port.pipe(new Readline({ delimiter: '\n' }));
-port.on("open", () => {
-  arduinoLog = {}
-  console.log('serial port open');
-});
-parser.on('data', data =>{
-  const timestamp = Date.now()
-  arduinoLog[timestamp.toString()] = data.toString()
-  console.log('got word from arduino:', data);
-});
-// *****************************************
 
 COMMANDS = {
   ls: {cmd: "ls -la"},
@@ -332,30 +316,6 @@ app.post('/bookmark', function(req, res) {
   //console.log(html)
 })
 
-app.get('/reloadArduino', function(req, res) {
-  port.close(function (err) {
-    console.log('port closed', err);
-    port.open(function (err) {
-      if (err) {
-        return console.log('Error opening port: ', err.message)
-      }
-  
-      // Because there's no callback to write, write errors will be emitted on the port:
-      //port.write('main screen turn on')
-    })
-  })
-})
-
-app.get('/poll/arduino', function(req, res) {
-  res.set('Content-Type', 'text/plain');
-  const keys = Object.keys(arduinoLog).slice()
-  keys.forEach((key) => {
-    res.write(arduinoLog[key]);
-    delete arduinoLog[key]
-  })
-  res.end();
-})
-
 app.get('/listeTemplates', function(req, res) {
   res.send({templates})
 })
@@ -427,8 +387,6 @@ app.get('/search/:query?', function(req, res) {
 
 app.get('/getFile/:filename', function(req, res) {
 
-  console.log('/getFile')
-
   const filePath = decodeURIComponent(req.params.filename)
 
   fs.readFile('data/'+filePath, function(error, content) {
@@ -446,7 +404,6 @@ app.get('/getFile/:filename', function(req, res) {
         res.end(); 
       }
     } else {
-      console.log('should be working no error...');
       res.writeHead(200, { 'Content-Type': 'text/plain' });
       res.end(content, 'utf-8');
     }
@@ -639,6 +596,70 @@ app.get('/resizeImages', function(req,res) {
 })
 
 //app.use('/scripts', express.static(__dirname + '/node_modules/quill-better-table/dist/'));
+
+
+// ************ ARDUINO ********************
+var arduinoLog = {}
+var arduinoInfo = {}
+var arduinoInfoChanged = false
+
+const Readline = require('@serialport/parser-readline');
+const port = new SerialPort('/dev/ttyACM0', { baudRate: 9600, autoOpen: false });
+const parser = port.pipe(new Readline({ delimiter: '\n' }));
+port.on("open", () => {
+  arduinoLog = {}
+  console.log('serial port open');
+});
+parser.on('data', data =>{
+  const timestamp = Date.now()
+  const str = data.toString()
+  if (str[0] === '-') {
+    const splited = str.split(':')
+    const key = splited[0].trim().substr(1).trim()
+    const value = splited[1].trim()
+    arduinoInfo[key] = value
+    arduinoInfoChanged = true
+  } else {
+    arduinoLog[timestamp.toString()] = str
+  }
+  console.log('got word from arduino:', str);
+});
+
+app.get('/closeArduino', function(req, res) {
+  port.close(function (err) {
+    console.log('port closed', err);
+  })
+  res.end()
+})
+
+app.get('/reloadArduino', function(req, res) {
+  port.close(function (err) {
+    console.log('port closed', err);
+    port.open(function (err) {
+      if (err) {
+        return console.log('Error opening port: ', err.message)
+      }
+  
+      // Because there's no callback to write, write errors will be emitted on the port:
+      //port.write('main screen turn on')
+    })
+  })
+})
+
+app.get('/poll/arduino', function(req, res) {
+  res.set('Content-Type', 'application/json');
+  const keys = Object.keys(arduinoLog).slice()
+  let log = ""
+  keys.forEach((key) => {
+    log = log + arduinoLog[key] + "\n"
+    delete arduinoLog[key]
+  })
+  res.send({log, info: (arduinoInfoChanged ? arduinoInfo : null)})
+  arduinoInfoChanged = false
+  res.end();
+})
+// *****************************************
+
 
 // https://stackoverflow.com/questions/16333790/node-js-quick-file-server-static-files-over-http
 app.get('*',function (req, res) {
