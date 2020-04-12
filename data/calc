@@ -1,0 +1,44 @@
+<style>
+#content {
+  text-align: center;
+}
+</style>
+
+<div id="content">
+  <h1>Calculatrice</h1>
+  <br/>
+
+  <form action="#" onsubmit="calculate();return false">
+    <input id="val" type="text" autofocus>
+    <input type="submit" value="Calculate">
+  </form>
+  <br/>
+  <br/>
+  <textarea id="result" rows=20 cols=50></textarea>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  TODO: Afficher les values de a b c et de x y z, c'est utile de pouvoir avoir des variables. TODO: Gerer la conversion d'unites aussi.
+</div>
+
+<script defer>
+
+$(document).ready(function(){
+  document.getElementById("val").focus();
+});
+
+function calculate() {
+  const val = document.getElementById('val')
+  const evaluated = eval(val.value)
+
+  let result = document.getElementById("result")
+  result.value += val.value + "\n=>" + evaluated + "\n";
+
+  result.scrollTop = result.scrollHeight;
+
+  val.value = evaluated
+}
+</script>
+
+          
