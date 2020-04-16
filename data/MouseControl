@@ -1,0 +1,48 @@
+<video autoplay></video>
+<canvas id="canvas" width="640" height="480" style="border: solid 1px black; background-color: black;"></canvas>
+
+
+<script defer>
+  const constraints = {
+    video: true
+  };
+ 
+  const video = document.querySelector('video');
+
+  navigator.mediaDevices.getUserMedia(constraints).
+    then((stream) => {video.srcObject = stream});
+
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+  setInterval(function(){ computeFrame({video,canvas,context}); }, 16);
+
+  function computeFrame({video,canvas,context}) {
+    //context.drawImage(video, 0, 0, 640, 480);
+    window.video = video
+    let tmpCanvas = document.createElement("canvas");
+    tmpCanvas.width = video.videoWidth;
+    tmpCanvas.height = video.videoHeight;
+    let tmpContext = tmpCanvas.getContext('2d');
+    tmpContext.drawImage(video, 0, 0, tmpCanvas.width, tmpCanvas.height);
+    let frame = tmpContext.getImageData(0, 0, 640, 480);
+    let l = frame.data.length / 4;
+
+    for (let i = 0; i < l; i++) {
+      let r = frame.data[i * 4 + 0];
+      let g = frame.data[i * 4 + 1];
+      let b = frame.data[i * 4 + 2];
+      if (r < 150) {
+        frame.data[i * 4 + 3] = 1;
+      } else {
+        //frame.data[i * 4 + 3] = 0;
+      }
+    }
+    context.putImageData(frame, 0, 0);
+    return;
+  }
+
+
+//        self.width = self.video.videoWidth / 2;
+//        self.height = self.video.videoHeight / 2;
+// https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Manipulating_video_using_canvas
+</script>
