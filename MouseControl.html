@@ -1,0 +1,95 @@
+
+<html>
+<head>
+  <meta charset="utf-8"/>
+</head>
+<body>
+
+<input type="range" min="0" max="255" value="150" onchange="updateThreshold(this.value);"/>
+<input id="threshold" type="text" value="150" readonly>
+Threshold
+<br/>
+<input type="range" min="1" max="10" value="4" onchange="updateSkip(this.value);"/>
+<input id="skip" type="text" value="4" readonly>
+Skip
+
+<script>
+  function updateThreshold(val) {
+    document.getElementById('threshold').value=val;
+  }
+  function updateSkip(val) {
+    document.getElementById('skip').value=val;
+  }
+</script>
+
+
+<video autoplay></video>
+<canvas id="canvas" width="640" height="480" style="border: solid 1px black; background-color: black;"></canvas>
+
+
+<script defer>
+  const constraints = {
+    video: true
+  };
+ 
+  const video = document.querySelector('video');
+
+  navigator.mediaDevices.getUserMedia(constraints).
+    then((stream) => {video.srcObject = stream});
+
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+  setInterval(function(){ computeFrame({video,canvas,context}); }, 16);
+
+  function computeFrame({video,canvas,context}) {
+    //context.drawImage(video, 0, 0, 640, 480);
+    window.video = video
+    let tmpCanvas = document.createElement("canvas");
+    tmpCanvas.width = video.videoWidth;
+    tmpCanvas.height = video.videoHeight;
+    let tmpContext = tmpCanvas.getContext('2d');
+    tmpContext.drawImage(video, 0, 0, tmpCanvas.width, tmpCanvas.height);
+    let frame = tmpContext.getImageData(0, 0, 640, 480);
+    let l = frame.data.length / 4;
+    let lineCount = l / video.videoWidth;
+
+    let threshold = document.getElementById('threshold').value;
+    let skip = document.getElementById('skip').value;;
+
+    let whiteSpots = [];
+    let color = 2; // 0: red, 1: green, 2: blue
+    
+    for (let y = 0; y < video.videoHeight; y+=skip) {
+      for (let x = 0; x < video.videoWidth; x+=skip) {
+        let i = (y*video.videoWidth + x) * 4;
+        let v = frame.data[i+color];
+        if (v > 150) {
+          whiteSpots = [...whiteSpots, {x,y}];
+        }
+      }
+    }
+    
+    for (let i = 0; i < l; i++) {
+      let v = frame.data[i * 4 + color];
+          
+      if (v < threshold) {
+        frame.data[i*4+3] = 1;
+      }
+    }
+    
+    context.putImageData(frame, 0, 0);
+    
+    whiteSpots.forEach(({x,y}) => {
+      context.beginPath();
+      context.arc(x, y, 10, 0, 2 * Math.PI);
+      context.fillStyle = "red";
+      context.fill();
+      context.stroke(); 
+    })
+
+    return;
+  }
+</script>
+
+</body>
+</html>

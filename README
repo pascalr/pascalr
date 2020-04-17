@@ -2,3 +2,5 @@ Pouvoir separer un fichier en sections. Des text fields un a la suite de l'autre
 
 Ajouter un field id a tous les fichiers html. Au lieu de le mettre dans le nom.
 / in names doesnt work
+
+sudo apt install python3-opencv

@@ -26,23 +26,41 @@
     tmpContext.drawImage(video, 0, 0, tmpCanvas.width, tmpCanvas.height);
     let frame = tmpContext.getImageData(0, 0, 640, 480);
     let l = frame.data.length / 4;
+    let lineCount = l / video.videoWidth;
 
-    for (let i = 0; i < l; i++) {
-      let r = frame.data[i * 4 + 0];
-      let g = frame.data[i * 4 + 1];
-      let b = frame.data[i * 4 + 2];
-      if (r < 150) {
-        frame.data[i * 4 + 3] = 1;
-      } else {
-        //frame.data[i * 4 + 3] = 0;
-      }
-    }
-    context.putImageData(frame, 0, 0);
+let whiteSpots = [];
+let skip = 1;
+
+for (let y = 0; y < video.videoHeight; y+=skip) {
+ for (let x = 0; x < video.videoWidth; x+=skip) {
+  let color = 2; // 0: red, 1: green, 2: blue
+  let i = (y*video.videoWidth + x) * 4;
+  let v = frame.data[i+color];
+  if (v > 150) {
+   whiteSpots = [...whiteSpots, {x,y}];
+ }
+}
+}
+
+for (let i = 0; i < l; i++) {
+  let color = 2; // 0: red, 1: green, 2: blue
+  let v = frame.data[i * 4 + color];
+      
+  if (v < 150) {
+    //frame.data[i+3] = 1;
+  }
+}
+
+context.putImageData(frame, 0, 0);
+
+whiteSpots.forEach(({x,y}) => {
+  context.beginPath();
+  context.arc(x, y, 10, 0, 2 * Math.PI);
+  context.fillStyle = "red";
+  context.fill();
+  context.stroke(); 
+})
+
     return;
   }
-
-
-//        self.width = self.video.videoWidth / 2;
-//        self.height = self.video.videoHeight / 2;
-// https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Manipulating_video_using_canvas
 </script>
