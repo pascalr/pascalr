@@ -53,8 +53,10 @@ Skip
     let l = frame.data.length / 4;
     let lineCount = l / video.videoWidth;
 
-    let threshold = document.getElementById('threshold').value;
-    let skip = document.getElementById('skip').value;;
+    let threshold = parseInt(document.getElementById('threshold').value);
+    let skip = parseInt(document.getElementById('skip').value);
+    //let threshold = 150;
+    //let skip = 1;
 
     let whiteSpots = [];
     let color = 2; // 0: red, 1: green, 2: blue
@@ -63,7 +65,7 @@ Skip
       for (let x = 0; x < video.videoWidth; x+=skip) {
         let i = (y*video.videoWidth + x) * 4;
         let v = frame.data[i+color];
-        if (v > 150) {
+        if (v > threshold) {
           whiteSpots = [...whiteSpots, {x,y}];
         }
       }
@@ -73,7 +75,7 @@ Skip
       let v = frame.data[i * 4 + color];
           
       if (v < threshold) {
-        frame.data[i*4+3] = 1;
+        //frame.data[i*4+3] = 1;
       }
     }
     
