@@ -5,23 +5,15 @@
 </head>
 <body>
 
-<input type="range" min="0" max="255" value="150" onchange="updateThreshold(this.value);"/>
-<input id="threshold" type="text" value="150" readonly>
+<input id="color" type="color" name="color" value="#ff0000">
+Color
+<br/>
+<input id="threshold" type="number" min="0" max="255" value="50">
 Threshold
 <br/>
-<input type="range" min="1" max="10" value="4" onchange="updateSkip(this.value);"/>
-<input id="skip" type="text" value="4" readonly>
+<input id="skip" type="number" min="1" max="10" value="4">
 Skip
-
-<script>
-  function updateThreshold(val) {
-    document.getElementById('threshold').value=val;
-  }
-  function updateSkip(val) {
-    document.getElementById('skip').value=val;
-  }
-</script>
-
+<br/>
 
 <video autoplay></video>
 <canvas id="canvas" width="640" height="480" style="border: solid 1px black; background-color: black;"></canvas>
@@ -41,6 +33,110 @@ Skip
   const context = canvas.getContext('2d');
   setInterval(function(){ computeFrame({video,canvas,context}); }, 16);
 
+  function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+
+  // credit: https://css-tricks.com/converting-color-spaces-in-javascript/
+  function RGBToHSL(r,g,b) {
+    // Make r, g, and b fractions of 1
+    r /= 255;
+    g /= 255;
+    b /= 255;
+   
+    // Find greatest and smallest channel values
+    let cmin = Math.min(r,g,b),
+        cmax = Math.max(r,g,b),
+        delta = cmax - cmin,
+        h = 0,
+        s = 0,
+        l = 0;
+  
+    // Calculate hue
+    // No difference
+    if (delta == 0)
+      h = 0;
+    // Red is max
+    else if (cmax == r)
+      h = ((g - b) / delta) % 6;
+    // Green is max
+    else if (cmax == g)
+      h = (b - r) / delta + 2;
+    // Blue is max
+    else
+      h = (r - g) / delta + 4;
+  
+    h = Math.round(h * 60);
+  
+    // Make negative hues positive behind 360°
+    if (h < 0)
+        h += 360;
+
+    // Calculate lightness
+    l = (cmax + cmin) / 2;
+  
+    // Calculate saturation
+    s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+  
+    // Multiply l and s by 100
+    s = +(s * 100).toFixed(1);
+    l = +(l * 100).toFixed(1);
+  
+    return {h,s,l}
+  }
+
+  function rgb2hsv (r,g,b) {
+    var computedH = 0;
+    var computedS = 0;
+    var computedV = 0;
+
+    //remove spaces from input RGB values, convert to int
+    var r = parseInt( (''+r).replace(/\s/g,''),10 );
+    var g = parseInt( (''+g).replace(/\s/g,''),10 );
+    var b = parseInt( (''+b).replace(/\s/g,''),10 );
+
+    if ( r==null || g==null || b==null ||
+        isNaN(r) || isNaN(g)|| isNaN(b) ) {
+      alert ('Please enter numeric RGB values!');
+      return;
+    }
+    if (r<0 || g<0 || b<0 || r>255 || g>255 || b>255) {
+      alert ('RGB values must be in the range 0 to 255.');
+      return;
+    }
+    r=r/255; g=g/255; b=b/255;
+    var minRGB = Math.min(r,Math.min(g,b));
+    var maxRGB = Math.max(r,Math.max(g,b));
+
+    // Black-gray-white
+    if (minRGB==maxRGB) {
+     computedV = minRGB;
+     return [0,0,computedV];
+    }
+
+    // Colors other than black-gray-white:
+    var d = (r==minRGB) ? g-b : ((b==minRGB) ? r-g : b-r);
+    var h = (r==minRGB) ? 3 : ((b==minRGB) ? 1 : 5);
+    computedH = 60*(h - d/(maxRGB - minRGB));
+    computedS = (maxRGB - minRGB)/maxRGB;
+    computedV = maxRGB;
+    return {h:computedH,s:computedS,v:computedV};
+  }
+
+
+  function colorSimilar(r,g,b,threshold,color) {
+    //let {h,s,v} = rgb2hsv(r,g,b)
+    //let hueThreshold = 10
+    //return (h < hueThreshold || Math.abs(h-360) < hueThreshold) && s > 0.7 && v > 0.3
+    let {h,s,l} = RGBToHSL(r,g,b)
+    return l > 80 
+  }
+
   function computeFrame({video,canvas,context}) {
     //context.drawImage(video, 0, 0, 640, 480);
     window.video = video
@@ -53,29 +149,24 @@ Skip
     let l = frame.data.length / 4;
     let lineCount = l / video.videoWidth;
 
-    let threshold = parseInt(document.getElementById('threshold').value);
     let skip = parseInt(document.getElementById('skip').value);
+    let threshold = parseInt(document.getElementById('threshold').value);
+    let color = hexToRgb(document.getElementById('color').value);
+
     //let threshold = 150;
     //let skip = 1;
 
     let whiteSpots = [];
-    let color = 2; // 0: red, 1: green, 2: blue
     
     for (let y = 0; y < video.videoHeight; y+=skip) {
       for (let x = 0; x < video.videoWidth; x+=skip) {
         let i = (y*video.videoWidth + x) * 4;
-        let v = frame.data[i+color];
-        if (v > threshold) {
+        let r = frame.data[i];
+        let g = frame.data[i+1];
+        let b = frame.data[i+2];
+        if (colorSimilar(r,g,b,threshold,color)) {
           whiteSpots = [...whiteSpots, {x,y}];
         }
-      }
-    }
-    
-    for (let i = 0; i < l; i++) {
-      let v = frame.data[i * 4 + color];
-          
-      if (v < threshold) {
-        //frame.data[i*4+3] = 1;
       }
     }
     

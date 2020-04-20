@@ -1,0 +1,46 @@
+<html>
+<header>
+  <meta charset="utf-8"/>
+  <title>This is title</title>
+</header>
+<body>
+  <input id="yaw" readonly><br/>
+<input id="pitch" readonly><br/>
+<input id="roll" readonly><br/>
+<input id="x" readonly><br/>
+<input id="y" readonly><br/>
+<input id="z" readonly><br/>
+<input id="absolute" readonly><br/>
+<script>
+  window.addEventListener("deviceorientation", handleOrientation, true);
+  window.addEventListener("devicemotion", handleMotion, true);
+
+  function handleOrientation(event) {
+    var absolute = event.absolute;
+    var alpha    = event.alpha;
+    var beta     = event.beta;
+    var gamma    = event.gamma;
+
+    document.getElementById('yaw').value = alpha;
+    document.getElementById('pitch').value = beta;
+    document.getElementById('roll').value = gamma;
+    document.getElementById('absolute').value = absolute;
+
+    // Do stuff with the new orientation data
+  }
+
+  function handleMotion(event) {
+    var absolute = event.absolute;
+    var alpha    = event.alpha;
+    var beta     = event.beta;
+    var gamma    = event.gamma;
+
+    document.getElementById('x').value = alpha;
+    document.getElementById('y').value = beta;
+    document.getElementById('z').value = gamma;
+    // Do stuff with the new orientation data
+  }
+</script>
+</body>
+</html>
+

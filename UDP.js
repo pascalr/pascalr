@@ -7,7 +7,12 @@ server.on('error', (err) => {
 });
 
 server.on('message', (msg, rinfo) => {
-  console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+  //console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+  console.log('message:')
+  for (let i = 0; i < 6; i++) {
+    console.log(msg.readDoubleLE(i*8))
+    console.log('\n')
+  }
 });
 
 server.on('listening', () => {
@@ -17,5 +22,5 @@ server.on('listening', () => {
 
 server.bind({
   address: '192.168.0.10',
-  port: 4242
+  port: 4243
 });
