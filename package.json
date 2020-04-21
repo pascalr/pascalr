@@ -9,6 +9,7 @@
     "fs": "0.0.1-security",
     "he": "^1.2.0",
     "lodash": "^4.17.15",
+    "ml-kmeans": "^5.0.0",
     "multer": "^1.4.2",
     "quill-better-table": "^1.2.2",
     "serialport": "^8.0.7"

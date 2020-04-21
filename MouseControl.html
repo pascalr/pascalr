@@ -12,13 +12,13 @@ Color
 Threshold
 <br/>
 <input id="skip" type="number" min="1" max="10" value="4">
-Skip
+
 <br/>
 
 <video autoplay></video>
 <canvas id="canvas" width="640" height="480" style="border: solid 1px black; background-color: black;"></canvas>
 
-
+<script src="kmeans.js"></script> 
 <script defer>
   const constraints = {
     video: true
@@ -31,7 +31,22 @@ Skip
 
   const canvas = document.getElementById('canvas');
   const context = canvas.getContext('2d');
-  setInterval(function(){ computeFrame({video,canvas,context}); }, 16);
+  setInterval(function(){ computeFrame({video,canvas,context}); }, 1600);
+
+  function normalize(vectors) {
+   return vectors.map((vector) => {
+     let norm = 0;
+     for (let i = 0; i < vector.length; i++) {
+       norm += Math.sqrt(vector[i]*vector[i])
+     }
+     if (norm != 0) {
+       for (let i = 0; i < vector.length; i++) {
+         vector[i] = vector[i] / norm;
+       }
+     }
+     return vector
+   })
+ }
 
   function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -40,6 +55,19 @@ Skip
       g: parseInt(result[2], 16),
       b: parseInt(result[3], 16)
     } : null;
+  }
+
+  function lightness(r,g,b) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    
+    let cmin = Math.min(r,g,b),
+        cmax = Math.max(r,g,b);
+
+    let l = (cmax + cmin) / 2; 
+    l = +(l * 100).toFixed(1);
+    return l;
   }
 
   // credit: https://css-tricks.com/converting-color-spaces-in-javascript/
@@ -133,8 +161,8 @@ Skip
     //let {h,s,v} = rgb2hsv(r,g,b)
     //let hueThreshold = 10
     //return (h < hueThreshold || Math.abs(h-360) < hueThreshold) && s > 0.7 && v > 0.3
-    let {h,s,l} = RGBToHSL(r,g,b)
-    return l > 80 
+    //let {h,s,l} = RGBToHSL(r,g,b)
+    return lightness(r,g,b) > 55 
   }
 
   function computeFrame({video,canvas,context}) {
@@ -157,6 +185,7 @@ Skip
     //let skip = 1;
 
     let whiteSpots = [];
+    let spots = [];
     
     for (let y = 0; y < video.videoHeight; y+=skip) {
       for (let x = 0; x < video.videoWidth; x+=skip) {
@@ -166,19 +195,36 @@ Skip
         let b = frame.data[i+2];
         if (colorSimilar(r,g,b,threshold,color)) {
           whiteSpots = [...whiteSpots, {x,y}];
+          spots = [...spots, [x,y]]
         }
       }
     }
     
     context.putImageData(frame, 0, 0);
+
     
-    whiteSpots.forEach(({x,y}) => {
+
+    let centroids = [[320,120],[320,240],[320,360]]
+    console.log(spots.length)
+    calcKmeans(spots, 3, function(err, blah, res) {
+      if (err) throw new Error(err)
+      window.result = res
+      res.forEach((pos) => {
+        context.beginPath();
+        context.arc(pos[0], pos[1], 10, 0, 2 * Math.PI);
+        context.fillStyle = "red";
+        context.fill();
+        context.stroke(); 
+      })
+    })
+
+    /*whiteSpots.forEach((spot) => {
       context.beginPath();
-      context.arc(x, y, 10, 0, 2 * Math.PI);
+      context.arc(spot.x, spot.y, 10, 0, 2 * Math.PI);
       context.fillStyle = "red";
       context.fill();
       context.stroke(); 
-    })
+    })*/
 
     return;
   }
