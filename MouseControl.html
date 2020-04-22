@@ -11,14 +11,14 @@ Color
 <input id="threshold" type="number" min="0" max="255" value="50">
 Threshold
 <br/>
-<input id="skip" type="number" min="1" max="10" value="4">
+<input id="skip" type="number" min="1" max="10" value="2">
 
 <br/>
 
 <video autoplay></video>
 <canvas id="canvas" width="640" height="480" style="border: solid 1px black; background-color: black;"></canvas>
+<canvas id="canvas2" width="640" height="480" style="border: solid 1px black; background-color: black;"></canvas>
 
-<script src="kmeans.js"></script> 
 <script defer>
   const constraints = {
     video: true
@@ -30,8 +30,10 @@ Threshold
     then((stream) => {video.srcObject = stream});
 
   const canvas = document.getElementById('canvas');
+  const centroidsCanvas = document.getElementById('canvas');
   const context = canvas.getContext('2d');
-  setInterval(function(){ computeFrame({video,canvas,context}); }, 1600);
+  const centroidsContext = centroidsCanvas.getContext('2d');
+  setInterval(function(){ computeFrame({video,canvas,context,centroidsCanvas,centroidsContext}); }, 16);
 
   function normalize(vectors) {
    return vectors.map((vector) => {
@@ -57,115 +59,15 @@ Threshold
     } : null;
   }
 
-  function lightness(r,g,b) {
-    r /= 255;
-    g /= 255;
-    b /= 255;
-    
-    let cmin = Math.min(r,g,b),
-        cmax = Math.max(r,g,b);
-
-    let l = (cmax + cmin) / 2; 
-    l = +(l * 100).toFixed(1);
-    return l;
+  function lightness(r,g,b) { // divided by 2 divided by 255 multiplied by 100
+    return (Math.min(r,g,b)+Math.max(r,g,b))/5.1
   }
 
-  // credit: https://css-tricks.com/converting-color-spaces-in-javascript/
-  function RGBToHSL(r,g,b) {
-    // Make r, g, and b fractions of 1
-    r /= 255;
-    g /= 255;
-    b /= 255;
-   
-    // Find greatest and smallest channel values
-    let cmin = Math.min(r,g,b),
-        cmax = Math.max(r,g,b),
-        delta = cmax - cmin,
-        h = 0,
-        s = 0,
-        l = 0;
-  
-    // Calculate hue
-    // No difference
-    if (delta == 0)
-      h = 0;
-    // Red is max
-    else if (cmax == r)
-      h = ((g - b) / delta) % 6;
-    // Green is max
-    else if (cmax == g)
-      h = (b - r) / delta + 2;
-    // Blue is max
-    else
-      h = (r - g) / delta + 4;
-  
-    h = Math.round(h * 60);
-  
-    // Make negative hues positive behind 360°
-    if (h < 0)
-        h += 360;
-
-    // Calculate lightness
-    l = (cmax + cmin) / 2;
-  
-    // Calculate saturation
-    s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
-  
-    // Multiply l and s by 100
-    s = +(s * 100).toFixed(1);
-    l = +(l * 100).toFixed(1);
-  
-    return {h,s,l}
+  function isLuminous(data,i) {
+    return lightness(data[i],data[i+1],data[i+2]) > 55
   }
 
-  function rgb2hsv (r,g,b) {
-    var computedH = 0;
-    var computedS = 0;
-    var computedV = 0;
-
-    //remove spaces from input RGB values, convert to int
-    var r = parseInt( (''+r).replace(/\s/g,''),10 );
-    var g = parseInt( (''+g).replace(/\s/g,''),10 );
-    var b = parseInt( (''+b).replace(/\s/g,''),10 );
-
-    if ( r==null || g==null || b==null ||
-        isNaN(r) || isNaN(g)|| isNaN(b) ) {
-      alert ('Please enter numeric RGB values!');
-      return;
-    }
-    if (r<0 || g<0 || b<0 || r>255 || g>255 || b>255) {
-      alert ('RGB values must be in the range 0 to 255.');
-      return;
-    }
-    r=r/255; g=g/255; b=b/255;
-    var minRGB = Math.min(r,Math.min(g,b));
-    var maxRGB = Math.max(r,Math.max(g,b));
-
-    // Black-gray-white
-    if (minRGB==maxRGB) {
-     computedV = minRGB;
-     return [0,0,computedV];
-    }
-
-    // Colors other than black-gray-white:
-    var d = (r==minRGB) ? g-b : ((b==minRGB) ? r-g : b-r);
-    var h = (r==minRGB) ? 3 : ((b==minRGB) ? 1 : 5);
-    computedH = 60*(h - d/(maxRGB - minRGB));
-    computedS = (maxRGB - minRGB)/maxRGB;
-    computedV = maxRGB;
-    return {h:computedH,s:computedS,v:computedV};
-  }
-
-
-  function colorSimilar(r,g,b,threshold,color) {
-    //let {h,s,v} = rgb2hsv(r,g,b)
-    //let hueThreshold = 10
-    //return (h < hueThreshold || Math.abs(h-360) < hueThreshold) && s > 0.7 && v > 0.3
-    //let {h,s,l} = RGBToHSL(r,g,b)
-    return lightness(r,g,b) > 55 
-  }
-
-  function computeFrame({video,canvas,context}) {
+  function computeFrame({video,canvas,context,centroidsCanvas,centroidsContext}) {
     //context.drawImage(video, 0, 0, 640, 480);
     window.video = video
     let tmpCanvas = document.createElement("canvas");
@@ -181,51 +83,67 @@ Threshold
     let threshold = parseInt(document.getElementById('threshold').value);
     let color = hexToRgb(document.getElementById('color').value);
 
-    //let threshold = 150;
-    //let skip = 1;
+    let centers = [];
 
-    let whiteSpots = [];
-    let spots = [];
-    
     for (let y = 0; y < video.videoHeight; y+=skip) {
       for (let x = 0; x < video.videoWidth; x+=skip) {
         let i = (y*video.videoWidth + x) * 4;
         let r = frame.data[i];
         let g = frame.data[i+1];
         let b = frame.data[i+2];
-        if (colorSimilar(r,g,b,threshold,color)) {
-          whiteSpots = [...whiteSpots, {x,y}];
-          spots = [...spots, [x,y]]
+        if (isLuminous(frame.data, i)) {
+          let minX = x, maxX = x, minY = y, maxY = y;
+          for (minX = x; minX >= 0; minX--) {
+            if (!isLuminous(frame.data, i+((minX-x)*4))) {break}
+          }
+          for (maxX = x; maxX <= video.videoWidth; maxX++) {
+            if (!isLuminous(frame.data, i+((maxX-x)*4))) {break}
+          }
+          for (minY = y; minY >= 0; minY--) {
+            if (!isLuminous(frame.data, i+((minY-y)*4*video.videoWidth))) {break}
+          }
+          for (maxY = y; maxY <= video.videoHeight; maxY++) {
+            if (!isLuminous(frame.data, i+((minY-y)*4*video.videoWidth))) {break}
+          }
+          let maxDim = Math.max(maxX - minX, maxY - minY)
+          if (maxDim > 2) { // The maxDim must at least be 3 pixels wide
+            let centerX = (maxX + minX) / 2
+            let centerY = (maxY + minY) / 2
+            centers = [...centers, {x: Math.round(centerX),y: Math.round(centerY)}];
+          }
         }
       }
     }
-    
+
     context.putImageData(frame, 0, 0);
 
-    
+    // FIXME: What about a false negative nearby the point? It's an edge case let's not consider for now...
 
-    let centroids = [[320,120],[320,240],[320,360]]
-    console.log(spots.length)
-    calcKmeans(spots, 3, function(err, blah, res) {
-      if (err) throw new Error(err)
-      window.result = res
-      res.forEach((pos) => {
-        context.beginPath();
-        context.arc(pos[0], pos[1], 10, 0, 2 * Math.PI);
-        context.fillStyle = "red";
-        context.fill();
-        context.stroke(); 
-      })
+      // remove near duplicates
+    let points = [];
+    let thresh = 10;
+    centers.forEach((spot) => {
+      let l = points.length
+      let isNearby = false
+      for (let i = 0; i < l; i++) {
+        if (Math.abs(spot.x - points[i].x) < thresh && Math.abs(spot.y - points[i].y) < thresh) {
+          isNearby = true; break;
+        }
+      }
+      if (!isNearby) {
+        points = [...points, spot]
+      }
     })
+    window.points = points;
 
-    /*whiteSpots.forEach((spot) => {
+    points.forEach((spot) => {
       context.beginPath();
       context.arc(spot.x, spot.y, 10, 0, 2 * Math.PI);
       context.fillStyle = "red";
       context.fill();
-      context.stroke(); 
-    })*/
-
+      context.stroke();
+    })
+    
     return;
   }
 </script>
