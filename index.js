@@ -627,15 +627,16 @@ parser.on('data', data =>{
 
 app.get('/closeArduino', function(req, res) {
   port.close(function (err) {
-    console.log('port closed', err);
+    console.log(`${new Date().toUTCString()} - Port closed.`, err);
   })
   res.end()
 })
 
 app.get('/reloadArduino', function(req, res) {
   port.close(function (err) {
-    console.log('port closed', err);
+    console.log(`${new Date().toUTCString()} - Port closed.`, err);
     port.open(function (err) {
+      console.log(`${new Date().toUTCString()} - Port opened.`, err);
       if (err) {
         return console.log('Error opening port: ', err.message)
       }
