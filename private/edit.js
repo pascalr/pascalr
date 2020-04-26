@@ -2,6 +2,19 @@
 
 const e = React.createElement
 
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+function uniqueId(ids) {
+  // In the very rare chance that two ids are the same, get another one
+  const id = uuidv4();
+  return ids[id] ? uniqueId(ids) : id;
+}
+
 function stripHtml(html){
   var doc = new DOMParser().parseFromString(html, 'text/html');
   return doc.body.textContent || "";
@@ -14,14 +27,30 @@ function icon(filename) {
 class EditPage extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {content: '', showSidePreview: true, showActionDropdown: false, modified: false}
+    this.state = {content: '', showSidePreview: true, showActionDropdown: false, modified: false, sections: {}, hiddenSections: {}}
     this.contentRef = React.createRef();
   }
 
   componentDidMount() {
     const {filename} = this.props
     $.get('http://localhost:3000/getFile/'+encodeURIComponent(filename), (content) => {
-      this.setState({content})
+      let rawSections = content.split('<!-- SECTION')
+      let sections = {}
+      if (rawSections[0].trim()) {
+        let id = [uuidv4()]
+        sections = {[id]: {name: 'Untitled', content: rawSections[0], id}}
+      }
+      rawSections.slice(1).forEach((s) => {
+        let i = s.indexOf('-->')
+        let sectionName = s.substr(0,i).trim() || 'Untitled'
+        let content = s.substr(i+3).trim()
+        let id = uniqueId(sections)
+        sections[id] = {name: sectionName, content, id}
+      })
+
+      window.sections = sections
+      window.content = content
+      this.setState({content,sections})
     })
     $.get('http://localhost:3000/listeTemplates', ({templates}) => {
       this.setState({templates})
@@ -93,6 +122,15 @@ class EditPage extends React.Component {
   handleChange = (event) => {
     this.setState({content: event.target.value, modified: true})
   }
+  
+  handleSectionChange = (oldSection, event) => {
+    let sections = {...this.state.sections}
+    let section = {...oldSection}
+    section.content = event.target.value
+    sections[section.id] = section
+
+    this.setState({sections, modified: true})
+  }
 
   onKeyDown = (event) => {
     const key = event.key
@@ -163,6 +201,36 @@ class EditPage extends React.Component {
     return Object.keys(this.state.styles || {}).map((s) => (
       e('div', {key: `style_${s}`, onClick: () => this.insertText(this.state.styles[s])}, s)
     ))
+  }
+
+  printSections = () => {
+    return e('div', null,
+      e('div', null, 'Comment section name'),
+      e('h1', {id: 'filename'},
+        e('span', {style: {marginLeft: '50px'}}, filename),
+        e('span', {style: {marginLeft: '50px'}},
+          e('button', {onClick: this.saveClicked}, 'Save')
+        )
+      ),
+      Object.keys(this.state.sections).map((id) => {
+        return e('div', {key: `section_${id}`}, this.printSection(this.state.sections[id]))
+      })
+    )
+  }
+  hideSection = (section) => {
+    let hiddenSections = this.state.hiddenSections
+    hiddenSections[section.name] = !hiddenSections[section.name]
+    this.setState({hiddenSections})
+  }
+  printSection = (section) => {
+    const {hiddenSections} = this.state
+
+    const isHidden = hiddenSections[section.name];
+    return e('div', null,
+      e('h3', {id: 'filename', className: 'clickable', onClick: () => this.hideSection(section)},((section.name || 'Untitled') + (isHidden ? '↓':'↑'))),
+      isHidden ? null :
+      e('textarea', {value: section.content, rows: '10', cols: '65', onChange: (event) => this.handleSectionChange(section, event)}),
+    )
   }
 
   render() {
@@ -253,6 +321,7 @@ class EditPage extends React.Component {
       ),
       e('div', {className: showSidePreview ? 'editShowContentContainer' : 'undefined'},
       e('div', {className: showSidePreview ? 'editContent' : 'theEditContent'},
+        this.printSections(),
         e('h1',{id: 'filename'},
           e('span', {style: {marginLeft: '50px'}}, filename),
           e('span', {style: {marginLeft: '50px'}},

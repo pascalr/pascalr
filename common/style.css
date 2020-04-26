@@ -5,6 +5,9 @@ img {
 }
 /* The CSS box-sizing property allows us to include the padding and border in an element's total width and height. */
 * { box-sizing: border-box; }
+.clickable {
+  cursor: pointer;
+}
 
 /* ********* END CSS to keep *********** */
 
@@ -109,12 +112,6 @@ cite {
 .filterTagIcon {
   width: 16px;
   height: 16px;
-}
-.clickable {
-  cursor: pointer;
-}
-.clickable:hover {
-  background-color: red;
 }
 /*
 body {
