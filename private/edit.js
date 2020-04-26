@@ -27,7 +27,7 @@ function icon(filename) {
 class EditPage extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {content: '', showSidePreview: true, showActionDropdown: false, modified: false, sections: {}, hiddenSections: {}}
+    this.state = {content: '', showSidePreview: true, showActionDropdown: false, modified: false, sections: {}, selectedSection: ''}
     this.contentRef = React.createRef();
   }
 
@@ -43,12 +43,16 @@ class EditPage extends React.Component {
       rawSections.slice(1).forEach((s) => {
         let i = s.indexOf('-->')
         let sectionName = s.substr(0,i).trim() || 'Untitled'
+        let hidden = false
+        if (sectionName[0] === '*') {
+          sectionName = sectionName.slice(1)
+          hidden = true
+        }
         let content = s.substr(i+3).trim()
         let id = uniqueId(sections)
-        sections[id] = {name: sectionName, content, id}
+        sections[id] = {name: sectionName, content, id, hidden}
       })
 
-      window.sections = sections
       this.setState({content,sections})
     })
     $.get('http://localhost:3000/listeTemplates', ({templates}) => {
@@ -76,7 +80,7 @@ class EditPage extends React.Component {
     const {filename} = this.props
     let content = ""
     Object.values(sections).forEach((section) => {
-      content += `\n<!-- SECTION ${section.name || ''} -->\n` 
+      content += `\n<!-- SECTION ${section.hidden ? '*' : ''}${section.name || ''} -->\n` 
       content += section.content
     })
     content = content.trim()
@@ -89,7 +93,8 @@ class EditPage extends React.Component {
 
   chordifyClicked = (event) => {
     this.addSection('Begin cordify', '<pre class="chordify" style="column-count: 3;">', true,
-    () => this.addSection('End cordify', '</pre>', true))
+    () => this.addSection('Cordify content', '', false,
+    () => this.addSection('End cordify', '</pre>', true)))
     //const content = '<pre>\n' + this.state.content + `</pre>\n<script>\n$('pre').css('column-count', '3')\n</script>`
     //this.setState({content, modified: true})
   }
@@ -112,7 +117,8 @@ class EditPage extends React.Component {
   }
 
   insertText = (text, offset = 0) => {
-    let {content} = this.state
+    let sections = {...this.state.sections}
+    let section = {...sections[this.state.selectedSection]}
     const selectionStart = this.contentRef.current.selectionStart
     const selectionEnd = this.contentRef.current.selectionEnd
     console.log(content)
@@ -120,17 +126,14 @@ class EditPage extends React.Component {
     console.log(this.contentRef.current.selectionEnd)
     console.log(text)
     console.log(window.getSelection().toString())
-    content = content.slice(0, selectionStart) + text.slice(0, offset) + content.slice(selectionStart, selectionEnd) + text.slice(offset) + content.slice(selectionEnd)
-    this.setState({content, modified: true}, () => {
+    section.content = section.content.slice(0, selectionStart) + text.slice(0, offset) + section.content.slice(selectionStart, selectionEnd) + text.slice(offset) + section.content.slice(selectionEnd)
+    sections[section.id] = section
+    this.setState({sections, modified: true}, () => {
       this.contentRef.current.focus()
       this.contentRef.current.selectionStart = this.contentRef.current.selectionEnd = selectionStart + offset
     })
   }
 
-  handleChange = (event) => {
-    this.setState({content: event.target.value, modified: true})
-  }
-  
   handleSectionChange = (oldSection, event) => {
     let sections = {...this.state.sections}
     let section = {...oldSection}
@@ -146,6 +149,10 @@ class EditPage extends React.Component {
       const href = `/?q=${encodeURIComponent(this.state.query)}`
       window.location.href = href
     }
+  }
+
+  onFocus = (section) => {
+    this.setState({selectedSection: section.id})
   }
 
   onPaste = (event) => {
@@ -214,7 +221,7 @@ class EditPage extends React.Component {
   addSection = (name, content, hidden, callback) => {
     const sections = {...this.state.sections}
     const id = uniqueId(sections)
-    sections[id] = {name: name || 'Untitled', content: content || ""}
+    sections[id] = {name: name || 'Untitled', content: content || "", hidden, id}
     this.setState({sections, modified: true}, callback)
   }
 
@@ -230,7 +237,7 @@ class EditPage extends React.Component {
       Object.keys(this.state.sections).map((id) => {
         return e('div', {key: `section_${id}`}, this.printSection(this.state.sections[id]))
       }),
-      e('div', {className: 'clickable', onClick: this.addSection}, '+ Add section'),
+      e('div', {className: 'clickable', onClick: () => this.addSection()}, '+ Add section'),
     )
   }
 
@@ -240,23 +247,24 @@ class EditPage extends React.Component {
     this.setState({sections})
   }
 
-  hideSection = (section) => {
-    let hiddenSections = {...this.state.hiddenSections}
-    hiddenSections[section.id] = !hiddenSections[section.id]
-    this.setState({hiddenSections})
+  hideSection = (theSection) => {
+    let sections = {...this.state.sections}
+    let section = {...theSection}
+    section.hidden = !section.hidden
+    sections[section.id] = section
+    this.setState({sections})
   }
 
   printSection = (section) => {
-    const {hiddenSections} = this.state
+    const {selectedSection} = this.state
 
-    const isHidden = hiddenSections[section.id];
     return e('div', null,
       e('div', null,
-        e('span', {className: 'sectionName clickable', onClick: () => this.hideSection(section)},((section.name || 'Untitled') + (isHidden ? '↓':'↑'))),
+        e('span', {className: 'sectionName clickable', onClick: () => this.hideSection(section)},((section.name || 'Untitled') + (section.hidden ? '↓':'↑'))),
         e('span',{className: 'clickable', onClick: () => this.deleteSection(section)},'delete'),
       ),
-      isHidden ? null :
-      e('textarea', {value: section.content, rows: '10', cols: '65', onChange: (event) => this.handleSectionChange(section, event)}),
+      section.hidden ? null :
+      e('textarea', {ref: (section.id === selectedSection ? this.contentRef : null), value: section.content, rows: '10', cols: '65', onChange: (event) => this.handleSectionChange(section, event), onPaste: this.onPaste, onFocus: () => this.onFocus(section)}),
     )
   }
 
