@@ -33,7 +33,7 @@ Threshold
   const centroidsCanvas = document.getElementById('canvas');
   const context = canvas.getContext('2d');
   const centroidsContext = centroidsCanvas.getContext('2d');
-  setInterval(function(){ computeFrame({video,canvas,context,centroidsCanvas,centroidsContext}); }, 16);
+  setInterval(function(){ computeFrame({video,canvas,context,centroidsCanvas,centroidsContext}); }, 1600);
 
   function normalize(vectors) {
    return vectors.map((vector) => {
@@ -136,7 +136,9 @@ Threshold
     })
     window.points = points;
 
+    console.log(`-----`)
     points.forEach((spot) => {
+      console.log(`x: ${spot.x}, y: ${spot.y}`)
       context.beginPath();
       context.arc(spot.x, spot.y, 10, 0, 2 * Math.PI);
       context.fillStyle = "red";

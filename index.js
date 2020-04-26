@@ -625,6 +625,13 @@ parser.on('data', data =>{
   console.log('got word from arduino:', str);
 });
 
+function nocache(req, res, next) {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+  next();
+}
+
 app.get('/closeArduino', function(req, res) {
   port.close(function (err) {
     console.log(`${new Date().toUTCString()} - Port closed.`, err);
@@ -633,6 +640,8 @@ app.get('/closeArduino', function(req, res) {
 })
 
 app.get('/reloadArduino', function(req, res) {
+  console.log('GET path=' + req.path);
+  console.log('*** reloadingArduino ***')
   port.close(function (err) {
     console.log(`${new Date().toUTCString()} - Port closed.`, err);
     port.open(function (err) {
@@ -645,19 +654,24 @@ app.get('/reloadArduino', function(req, res) {
       //port.write('main screen turn on')
     })
   })
+  res.end()
 })
 
-app.get('/poll/arduino', function(req, res) {
-  res.set('Content-Type', 'application/json');
+app.get('/poll/arduino', nocache, function(req, res) {
+  console.log('poll/arduino')
+  //res.set('Content-Type', 'application/json');
+  //res.writeHead(200, { 'Content-Type': 'application/json' });
   const keys = Object.keys(arduinoLog).slice()
   let log = ""
   keys.forEach((key) => {
     log = log + arduinoLog[key] + "\n"
     delete arduinoLog[key]
   })
-  res.send({log, info: (arduinoInfoChanged ? arduinoInfo : null)})
+  //res.status(200).send({log, info: (arduinoInfoChanged ? arduinoInfo : null)})
+  res.status(200).json({log, info: (arduinoInfoChanged ? arduinoInfo : null)})
+
   arduinoInfoChanged = false
-  res.end();
+  //res.end();
 })
 // *****************************************
 
