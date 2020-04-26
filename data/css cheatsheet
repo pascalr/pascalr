@@ -7,4 +7,10 @@ h2 {
 
 visibility: hidden;
 visibility: visible;
+
+li::before {
+  content: "•"; /* Insert content that looks like bullets */
+  padding-right: 8px;
+  color: blue; /* Or a color you prefer */
+}
 </pre>

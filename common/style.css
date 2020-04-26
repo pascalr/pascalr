@@ -1,3 +1,15 @@
+/* *********** CSS to keep ************* */
+/* COMMENTS ARE REQUIRED IF NOT SELF EXPLANATORY */
+img {
+  vertical-align: middle; /* Usually, 4 pixels are added below for inline element for descendants (letters like j, g, p, etc.) This removes the 4 extra pixels. */
+}
+/* The CSS box-sizing property allows us to include the padding and border in an element's total width and height. */
+* { box-sizing: border-box; }
+
+/* ********* END CSS to keep *********** */
+
+
+
 table, th, td {
   border: 1px solid black;
 }
@@ -102,8 +114,7 @@ cite {
   cursor: pointer;
 }
 .clickable:hover {
-  background-color: #BBBBBB;
-  filter: brightness(90%);
+  background-color: red;
 }
 /*
 body {
@@ -146,32 +157,6 @@ h1{
     font-size:13pt;
     border-bottom: 1px solid lightgray;
 }*/
-a {
-    font-weight: 500;
-    perspective: 600px;
-    perspective-origin: 50% 100%;
-    transition: color 0.3s;
-    text-decoration: none;
-    color: #060606;
-}
-a:hover,
-a:focus {
-    color: #e74c3c;
-}
-a::before {
-    background-color: #fff;
-    transition: transform 0.2s;
-    transition-timing-function: cubic-bezier(0.7,0,0.3,1);
-    transform: rotateX(90deg);
-    transform-origin: 50% 100%;
-}
-a:hover::before,
-a:focus::before {
-    transform: rotateX(0deg);
-}
-a::after {
-    border-bottom: 2px solid #fff;
-}
 
 .nothing {
   border: 0;
@@ -182,14 +167,23 @@ a::after {
   overflow: hidden;
   background-color: #333;
   font-family: Arial, Helvetica, sans-serif;
+  border-bottom: solid 1px #777;
+  border-top: solid 1px #777;
 }
 
 .navbar a, .menubtn {
   font-size: 16px;
   color: white;
   text-align: center;
-  padding: 4px 10px;
   text-decoration: none;
+  padding: 0px 5px;
+  display: inline-block;
+  margin: 0px;
+}
+
+img {
+  margin: 0px;
+  padding: 0px;
 }
 
 .tooldropbtn {
@@ -249,12 +243,6 @@ pre {
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
-
-
-
-
-/* The CSS box-sizing property allows us to include the padding and border in an element's total width and height. */
-* { box-sizing: border-box; }
 
 .autocomplete {
   position: absolute;

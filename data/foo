@@ -1,7 +1,23 @@
 <style>
-.red {
-  background-color: red;
+a{
+  display: block;
+  width: auto;
+    height: auto;
+}
+.box {
+  border: 5px solid rebeccapurple;
+  background-color: lightgray;
+  padding: 40px;
+  margin: 40px;
+  width: 300px;
+  height: 150px;
+display: block;
+}
+.test {
+  vertical-align: middle;
 }
 </style>
 
-<span class="red">basd</span>
+<a href="/edit/foo"><img class="test" src="/icon/home.svg"></img></a>
+
+<span class="box">hello</span>

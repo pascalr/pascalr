@@ -13,6 +13,10 @@ function deleteFile(name, callback) {
   }
 }
 
+function icon(filename) {
+  return e('img', {src: `/icon/${filename}`, className: 'clickable', alt: filename, height: 24, width: 24})
+}
+
 function rIcon(filename) {
   return e('img', {src: `/icon/${filename}`, className: 'clickable', style: {filter: 'invert(1)'}, alt: filename, height: 24, width: 24})
 }
@@ -52,16 +56,10 @@ class ShowNav extends React.Component {
     const {showActionDropdown, marginWidth} = this.state
 
     return e('div', {className: 'navbar'},
-      e('a', {href: 'http://localhost:3000/show/desktop'}, 'Home'),
-      e('a', {href: `http://localhost:3000/edit/${encodeURIComponent(filename)}`}, 'Edit'),
+      e('a', {href: 'http://localhost:3000/show/desktop'}, icon('home.svg')),
+      e('a', {href: 'http://localhost:3000/'}, icon('list.svg')),
+      e('a', {href: `http://localhost:3000/edit/${encodeURIComponent(filename)}`}, icon('brush.svg')),
       //e('a', {href: `http://localhost:3000/publish/${encodeURIComponent(filename)}`}, 'Publish'),
-      e('span', {className: 'dropdown'},
-        e('button', {className: 'dropbtn', onClick: () => {this.setState({showActionDropdown: !showActionDropdown})}}, 'Actions', e('i', {className: 'fa fa-caret-down'})),
-        showActionDropdown ? e('div', {id: 'myDropdown', className: 'dropdown-content'},
-          e('div', null, 'Show 1'),
-          e('div', null, 'Show 2'),
-        ) : null,
-      ),
       /*e('span', {onClick: () => {
         if (marginWidth === '0%') {
           $('#root').css('margin-left', '15%')
