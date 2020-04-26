@@ -49,7 +49,6 @@ class EditPage extends React.Component {
       })
 
       window.sections = sections
-      window.content = content
       this.setState({content,sections})
     })
     $.get('http://localhost:3000/listeTemplates', ({templates}) => {
@@ -73,8 +72,15 @@ class EditPage extends React.Component {
   }
 
   saveClicked = (event) => {
-    const {content} = this.state
+    const {sections} = this.state
     const {filename} = this.props
+    let content = ""
+    Object.values(sections).forEach((section) => {
+      content += `\n<!-- SECTION ${section.name || ''} -->\n` 
+      content += section.content
+    })
+    content = content.trim()
+
     $.post('http://localhost:3000/save', {content, filename}, data => {
       console.log('Document saved')
       this.setState({modified: false})
@@ -82,8 +88,10 @@ class EditPage extends React.Component {
   }
 
   chordifyClicked = (event) => {
-    const content = '<pre>\n' + this.state.content + `</pre>\n<script>\n$('pre').css('column-count', '3')\n</script>`
-    this.setState({content, modified: true})
+    this.addSection('Begin cordify', '<pre class="chordify" style="column-count: 3;">', true,
+    () => this.addSection('End cordify', '</pre>', true))
+    //const content = '<pre>\n' + this.state.content + `</pre>\n<script>\n$('pre').css('column-count', '3')\n</script>`
+    //this.setState({content, modified: true})
   }
 
   removeNewlinesClicked = (event) => {
@@ -203,6 +211,13 @@ class EditPage extends React.Component {
     ))
   }
 
+  addSection = (name, content, hidden, callback) => {
+    const sections = {...this.state.sections}
+    const id = uniqueId(sections)
+    sections[id] = {name: name || 'Untitled', content: content || ""}
+    this.setState({sections, modified: true}, callback)
+  }
+
   printSections = () => {
     return e('div', null,
       e('div', null, 'Comment section name'),
@@ -214,20 +229,32 @@ class EditPage extends React.Component {
       ),
       Object.keys(this.state.sections).map((id) => {
         return e('div', {key: `section_${id}`}, this.printSection(this.state.sections[id]))
-      })
+      }),
+      e('div', {className: 'clickable', onClick: this.addSection}, '+ Add section'),
     )
   }
+
+  deleteSection = (section) => {
+    let sections = {...this.state.sections}
+    delete sections[section.id]
+    this.setState({sections})
+  }
+
   hideSection = (section) => {
-    let hiddenSections = this.state.hiddenSections
-    hiddenSections[section.name] = !hiddenSections[section.name]
+    let hiddenSections = {...this.state.hiddenSections}
+    hiddenSections[section.id] = !hiddenSections[section.id]
     this.setState({hiddenSections})
   }
+
   printSection = (section) => {
     const {hiddenSections} = this.state
 
-    const isHidden = hiddenSections[section.name];
+    const isHidden = hiddenSections[section.id];
     return e('div', null,
-      e('h3', {id: 'filename', className: 'clickable', onClick: () => this.hideSection(section)},((section.name || 'Untitled') + (isHidden ? '↓':'↑'))),
+      e('div', null,
+        e('span', {className: 'sectionName clickable', onClick: () => this.hideSection(section)},((section.name || 'Untitled') + (isHidden ? '↓':'↑'))),
+        e('span',{className: 'clickable', onClick: () => this.deleteSection(section)},'delete'),
+      ),
       isHidden ? null :
       e('textarea', {value: section.content, rows: '10', cols: '65', onChange: (event) => this.handleSectionChange(section, event)}),
     )
@@ -322,13 +349,6 @@ class EditPage extends React.Component {
       e('div', {className: showSidePreview ? 'editShowContentContainer' : 'undefined'},
       e('div', {className: showSidePreview ? 'editContent' : 'theEditContent'},
         this.printSections(),
-        e('h1',{id: 'filename'},
-          e('span', {style: {marginLeft: '50px'}}, filename),
-          e('span', {style: {marginLeft: '50px'}},
-            e('button', {onClick: this.saveClicked}, 'Save')
-          )
-        ),
-        e('textarea', {ref: this.contentRef, value: content, rows: '40', cols: '65', onChange: this.handleChange, onPaste: this.onPaste})
       ), showSidePreview ?
       e('div', {className: 'showContent'},
         e('div', {dangerouslySetInnerHTML: {__html: content}})

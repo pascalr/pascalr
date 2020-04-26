@@ -289,3 +289,6 @@ input[type=submit] {
   background-color: DodgerBlue !important;
   color: #ffffff;
 }
+.sectionName {
+  font-weight: bold;
+}
