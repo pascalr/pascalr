@@ -38,16 +38,47 @@ function menuItemClicked(item) {
 <h1>Les ressorts</h1>
 <h2>Les ressorts de torsion</h2>
 <h3>Les ressorts de torsion cylindriques à spires</h3>
-<h4>Variables</h4>
 
+
+
+<script>
+function calculate() {
+  var nbTourATourner = (parseFloat(h.value)/(parseFloat(Dd.value)*3.1416))+parseFloat(nsup.value)
+  alpha.value = nbTourATourner*2*3.1416
+  m.value = (parseFloat(F.value) * 9.81)*(parseFloat(Dd.value)/2)
+  N.value = parseFloat(E.value)*Math.pow(parseFloat(d.value),4)*alpha.value/(m.value*64*parseFloat(D.value))
+}
+window.onload = calculate()
+</script>
+
+<form id="theForm" oninput="calculate()">
+<h4>Données générales</h4>
+Dd: Diamètre du drum (mm):<input id="Dd" type="number" value="30.1625"><br/>
 D: Diamètre d'enroulement (centre à centre) (mm):<input id="D" type="number" value="13"><br/>
+E: module d'élasticité longitudinal (N/mm^2)<input id="E" type="number" value="200000"><br/>
 d: Diamètre du fil (mm):<input id="d" type="number" value="0.889"><br/>
-alpha: Angle d'enroulement (radians):<input id="" type="number" value=""><br/>
-M: moment (N.mm):<input id="" type="number" value=""><br/>
-N: nombre de spires actives:<input id="" type="number" value=""><br/>
-E: module d'élasticité longitudinal (N/mm^2)<input id="" type="number" value=""><br/>
+Kf: coefficient de concentration de contraintes:<input id="Kf" value="1.1" readonly><br/>
+
+<h4>Calcul du moment</h4>
+F: charge (kg):<input id="F" type="number" value="4"><br/>
+M: moment (N.mm):<input id="m" readonly><br/>
+
+<h4>Calcul de l'angle d'enroulement</h4>
+h: Distance à monter (mm):<input id="h" type="number" value="1270"><br/>
+nsup: Nombre de tour supplémentaire pour garder de la tension:<input id="nsup" type="number" value="1"><br/>
+alpha: Angle d'enroulement du ressort (radians):<input readonly id="alpha"><br/>
+</form>
+
+<h4>Calcul du nombre de spires actives</h4>
+
+N: nombre de spires actives:<input id="N" readonly><br/>
+
+<h4>etc</h4>
+
+: ():<input id="" type="number" value=""><br/>
+
+
 sigma: contrainte (N/mm^2)<input id="" type="number" value=""><br/>
-Kf: coefficient de concentration de contraintes:<input id="" type="number" value=""><br/>
 Rpe: résistance pratique à l'extension (N/mm^2)<input id="" type="number" value=""><br/>
 
 <h4>Résultats</h4>
