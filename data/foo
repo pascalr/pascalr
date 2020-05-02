@@ -1,248 +1,41 @@
-<!-- SECTION *truetrueBegin cordify -->
-<pre class="chordify" style="column-count: 3;">
-<!-- SECTION Cordify content -->
-Life is life, needs a reggae rhythm, play the chord on the back beat and you've got it.
-
- <b></b>
-<b></b>
-<img src="/images/1587931229599_image.png">
-[Intro]
-
- 
-
-Am   Dm    Gsus4 G
-
-   Nanananana         (x4)
-
- 
-
- 
-
-[Chorus]
-
- 
-
-Am      Dm    Gsus4  G
-
-Life (nanananana)
-
-        Am      Dm    Gsus4  G
-
-Life is life (nanananana)
-
-                Am      Dm    G
-
-Labadab dab dab life (nanananana)
-
-Am             Dm    G
-
-Liiiiiiiife (nanananana)
-
- 
-
- 
-
-[Verse]
-
- 
-
-        Am           F
-
-When we all give the power
-
-   Dm           G
-
-We all give the best
-
-      Am           F
-
-Every minute of an hour
-
-      Dm              G
-
-Don't think about the rest
-
-        Am          F
-
-And you all get the power
-
-    Dm          G
-
-You all get the best
-
-     Am            Dm
-
-When everyone gets everything
-
-    F               G
-
-And every song everybody sings
-
- 
-
- 
-
-[Chorus]
-
- 
-
-        Am           Dm           Gsus4  G
-
-Life is life when we all feel the power
-
-        Am        Dm               Gsus4  G
-
-Life is life come on, stand up and dance
-
-        Am            Dm             Gsus4  G
-
-Life is life when the feeling of the people
-
-        Am          Dm             Gsus4  G
-
-Life is life is the feeling of the band
-
- 
-
- 
-
-[Verse]
-
- 
-
-        Am           F
-
-When we all give the power
-
-   Dm           G
-
-We all give the best
-
-      Am           F
-
-Every minute of an hour
-
-      Dm              G
-
-Don't think about the rest
-
-        Am          F
-
-And you all get the power
-
-    Dm          G
-
-You all get the best
-
-     Am            Dm
-
-When everyone gets everything
-
-    F               G
-
-And every song everybody sings
-
- 
-
- 
-
-[Chorus]
-
- 
-
-        Am           Dm           Gsus4  G
-
-Life is life when we all feel the power
-
-        Am        Dm               Gsus4  G
-
-Life is life come on, stand up and dance
-
-        Am            Dm             Gsus4  G
-
-Life is life when the feeling of the people
-
-        Am          Dm             Gsus4  G
-
-Life is life is the feeling of the band
-
- 
-
- 
-
-[Bridge]
-
- 
-
-Life (nanananana)
-
-(nanananana)
-
-(nanananana)
-
-(nanananana)
-
- 
-
- 
-
-[Chorus]
-
- 
-
-        Am           Dm           Gsus4  G
-
-Life is life when we all feel the power
-
-        Am        Dm               Gsus4  G
-
-Life is life come on, stand up and dance
-
-        Am            Dm             Gsus4  G
-
-Life is life when the feeling of the people
-
-        Am          Dm             Gsus4  G
-
-Life is life is the feeling of the band
-
- 
-
- 
-
-[Verse]
-
- 
-
-And you call when it's over
-
-You call it should last
-
-Every minute of the future
-
-Is a memory of the past
-
-Cause we all gave the power
-
-We all gave the best
-
-And everyone gave everything
-
-And every song everybody sang
-
- 
-
- 
-
-[Ending]
-
- 
-
-        Am
-
-Life is life
-<!-- SECTION *End cordify -->
-</pre>
 <!-- SECTION Untitled -->
+<style>
+#menu {
+  background-color: black;
+  color: white;
+}
+.item:hover {
+  background-color: orange;
+}
+.item {
+  padding-left: 6px;
+  padding-right: 10px;
+  border-right: solid 1px white;
+  cursor: pointer;
+}
+</style>
 
-<!-- SECTION Untitled -->
+<div id="menu">
+<span class="item" onclick="menuItemClicked(this)">Inventaire</span>
+<span class="item" onclick="menuItemClicked(this)">Recette</span>
+<span class="item" onclick="menuItemClicked(this)">Manuel</span>
+</div>
+
+<script>
+function menuItemClicked(item) {
+  let siblings = item.parentElement.children;
+  for (let i = 0; i < siblings.length; i++) {
+    let elem = document.getElementById(siblings[i].innerText)
+    if (elem) {elem.style.display = "none";}
+  }
+  let elem = document.getElementById(item.innerText)
+  if (elem) {elem.style.display = "block";}
+}
+</script>
+
+<div id="Inventaire">
+Inventaire
+</div>
+<div id="Recette">
+Recette
+</div>

@@ -1,0 +1,76 @@
+<!-- SECTION Untitled -->
+<pre>
+Calculs:
+
+Voici les calculs:
+
+Quel est l'angle maximal avec 3 pivots?
+
+C'est un peu moins de 180 degrés, parce que sinon les pivots se rentrent dedans.
+
+Calcul de l'efficacité: Je défini l'efficacité par la force tangentielle sur la force du vecteur au complet. Dans le bon axe c'est 100%, quand c'est normal c'est 0%.
+
+Calcul de la forme aussi. Tsé de plus en plus petit. Le moment est linéaire, mais le résistance à la torsion est au carré, ça fais quoi ensemble?
+</pre>
+<!-- SECTION Untitled -->
+<pre>
+# Il y a un point A,B et C. Le moteur au point A applique une force au point B
+# qui tourne 180 deg autour du point C. Pour que ce soit plus simple, on aligne
+# les points a la vertical. Le point A est a 0,0
+
+A = [0,0];
+C = [0,10];
+
+n = 30; # Le nombre de points
+
+thetas = [pi/2:pi/n:3*pi/2];
+alphas = zeros(1,n+1);
+ABX = zeros(1,n+1);
+ABY = zeros(1,n+1);
+r = 1;
+
+BX = r*cos(thetas);
+BY = r*sin(thetas)+C(2);
+
+for i = [1:n+1]
+    B = [BX(i),BY(i)];
+    AB = B - A;
+    CB = B - C;
+    ABX(i) = AB(1);
+    ABY(i) = AB(2);
+    angle1 = atan2d(AB(2),AB(1));
+    angle2 = mod(atan2d(CB(2),CB(1)) + 360, 360);
+    alphas(i) = mod(angle2 - angle1 + 360, 360);
+end
+
+figure
+hold on
+plot(A(1),A(2))
+plot(C(1),C(2))
+plot(BX,BY)
+xlabel('x')
+ylabel('y')
+axis([-2  2 -1 12])
+title('Position des points')
+
+figure
+hold on
+plot(linspace(0,180,n+1), sind(alphas))
+plot([90 90],[0 1])
+axis([0  180 0 1])
+title('Angle AB')
+</pre>
+<!-- SECTION Untitled -->
+EfficiencyBalls screws also offer higher levels of efficiency because rolling contact provides a lower coefficient of friction than sliding contact.  The efficiency of ball screws isrelatively constant and is typically better than 90%.  The efficiency of lead screws, on the other hand, typically ranges between 20% and 80%.  The efficiency of a lead screw is highly dependent upon its helix angle.  As a general rule, higher helix angles mean higher efficiency.  A higher helix angle is more efficientbecause less of the energy used to drive the lead screw goes into overcoming friction.  This is because the number of times the screw must rotate to achieve the same linear displacement is reduced on a high helix screw.  A disadvantage of a high helix angle is that more torqueis required to turn the screw
+
+It’s important to note that when the efficiency of a lead screw exceeds 50%, the lead screw becomes back-drivable, which means it can be driven backwards by the load.
+
+On the other hand, plastic and stainless steel lead screw assembliesaretypicallylimited to a duty cycle of 50% under the rated load.  Lead screw assemblies that use bronze nuts have higher load capacities,but these heavier loads increase frictionalheat so their duty cycles must be lower, often as low as 10%.
+<!-- SECTION Untitled -->
+NOTE de design:
+
+Mettre mon site de machine beau.
+
+Oui ça serait cool un bras robotique, mais je mets de côté pour l'instant. Tellement de monde ont essayer d'en faire, je n'arriverai jamais à faire mieux pour moins cher. C'est plus cool, mais aussi c'est moins efficace. Parce qu'il n'y a pas de support, c'est beaucoup plus difficile pour les moteurs. Des mouvements linéaires sont beaucoup plus efficaces parce que le déplacement se fait sur des roues.
+
+Toutefois, ce n'est pas en vaint, j'ai une bonne idée je crois. Le potentiel est dans des trucs imbriqués (comme des poupées russes!) C'est beaucoup plus éléguant qu'une structure pleine avec un petit déplacement.
