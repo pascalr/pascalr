@@ -95,8 +95,6 @@ class EditPage extends React.Component {
     this.addSection('Begin cordify', '<pre class="chordify" style="column-count: 3;">', true,
     () => this.addSection('Cordify content', '', false,
     () => this.addSection('End cordify', '</pre>', true)))
-    //const content = '<pre>\n' + this.state.content + `</pre>\n<script>\n$('pre').css('column-count', '3')\n</script>`
-    //this.setState({content, modified: true})
   }
 
   removeNewlinesClicked = (event) => {
@@ -255,22 +253,26 @@ class EditPage extends React.Component {
     this.setState({sections})
   }
 
+
+  // OPTIMIZE: The are you sure for the delete should be right under the mouse when the person clicks.
   printSection = (section) => {
     const {selectedSection} = this.state
 
     return e('div', null,
       e('div', null,
         e('span', {className: 'sectionName clickable', onClick: () => this.hideSection(section)},((section.name || 'Untitled') + (section.hidden ? '↓':'↑'))),
-        e('span',{className: 'clickable', onClick: () => this.deleteSection(section)},'delete'),
+        e('span',{className: 'clickable', onClick: () => confirm("Are you sure?") && this.deleteSection(section)},'delete'),
       ),
       section.hidden ? null :
-      e('textarea', {ref: (section.id === selectedSection ? this.contentRef : null), value: section.content, rows: '10', cols: '65', onChange: (event) => this.handleSectionChange(section, event), onPaste: this.onPaste, onFocus: () => this.onFocus(section)}),
+      e('textarea', {ref: (section.id === selectedSection ? this.contentRef : null), value: section.content, rows: '30', cols: '100', onChange: (event) => this.handleSectionChange(section, event), onPaste: this.onPaste, onFocus: () => this.onFocus(section)}),
     )
   }
 
   render() {
-    const {content, showSidePreview, showActionDropdown, showEmojiDropdown, showTitleDropdown, showTemplateDropdown, showStyleDropdown} = this.state
+    const {sections, showSidePreview, showActionDropdown, showEmojiDropdown, showTitleDropdown, showTemplateDropdown, showStyleDropdown} = this.state
     const {filename} = this.props
+
+    const content = Object.keys(sections).map(s => sections[s].content).join('')
 
     const id = Date.now()
 
@@ -278,7 +280,7 @@ class EditPage extends React.Component {
       //e('div', {className: 'navigationMenu'},
       //),
       e('div', {className: 'navbar'},
-        e('a', {href: 'http://localhost:3000/'}, 'Home'),
+        e('a', {href: 'http://localhost:3000/show/desktop'}, 'Home'),
         e('a', {href: `http://localhost:3000/show/${encodeURIComponent(filename)}`}, 'Show'),
         e('span', {className: 'dropdown'},
           e('button', {className: 'dropbtn', onClick: () => {this.setState({showActionDropdown: !showActionDropdown})}}, 'Actions', e('i', {className: 'fa fa-caret-down'})),

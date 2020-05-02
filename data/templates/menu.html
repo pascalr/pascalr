@@ -1,0 +1,40 @@
+<style>
+#menu {
+  background-color: black;
+  color: white;
+}
+.item:hover {
+  background-color: orange;
+}
+.item {
+  padding-left: 6px;
+  padding-right: 10px;
+  border-right: solid 1px white;
+  cursor: pointer;
+}
+</style>
+
+<div id="menu">
+<span class="item" onclick="menuItemClicked(this)">Inventaire</span>
+<span class="item" onclick="menuItemClicked(this)">Recette</span>
+<span class="item" onclick="menuItemClicked(this)">Manuel</span>
+</div>
+
+<script>
+function menuItemClicked(item) {
+  let siblings = item.parentElement.children;
+  for (let i = 0; i < siblings.length; i++) {
+    let elem = document.getElementById(siblings[i].innerText)
+    if (elem) {elem.style.display = "none";}
+  }
+  let elem = document.getElementById(item.innerText)
+  if (elem) {elem.style.display = "block";}
+}
+</script>
+
+<div id="Inventaire">
+Inventaire
+</div>
+<div id="Recette">
+Recette
+</div>
