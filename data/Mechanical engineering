@@ -43,6 +43,8 @@ Torsion springs should be deflected in the direction that closes the coils.
 Double torsion springs can be used when twice the force is required or when you need an even dist    ribution of torque.
 <br/><br/>
 Usually about 1 extra wind is added so the cable stays in tension.
+<br/><br/>
+D'habitude, le ressort rétrécit, mais se rallonge. Là il ne peut pas se rallonger... Quelle est l'effet sur le ressort???
 </p>
 <h3>Les ressorts de torsion cylindriques à spires</h3>
 
@@ -61,7 +63,7 @@ function calculate() {
   var Kf = parseFloat(this.Kf.value)
   var d = parseFloat(this.d.value)
   var E = parseFloat(this.E.value)
-  var D = parseFloat(this.D.value)
+  var D_roul = parseFloat(this.D_roul.value)
   var l_max = parseFloat(this.l_max.value)
   var d = parseFloat(this.d.value)
 
@@ -70,6 +72,14 @@ function calculate() {
 
   // Calcul du nombre de tour maximale selon l'espace et la diamètre du fil.
   var N_max = Math.floor(l_max/d)
+
+  // Calcul du diametre d'enroulement centre à centre
+  // When the spring is released form the mandrel, it springs back. This is the equation for music wire.
+  // source: https://www.daycounter.com/Calculators/Springs/
+  // wire 
+  var x = 23.57// x is the spring index: D/d, FIXME: Let's approximate to D_roul
+  var k = -0.01245*x + 0.98425 // k is the diameter coefficient
+  var D = (D_roul + d)/k
 
   // Calcul de l'angle que le ressort doit effectué pour parcourir la course
   var nbTourATourner = (h/(Dd*3.1416))+nsup
@@ -84,87 +94,78 @@ function calculate() {
   var mom = Math.min(m,m_rup)*Nb
 
   if (m_rup < m) {
-    result.innerText += `Le fil choisi est trop petit. Il aurait du mesurer au moins ${d_calc.toFixed(2)} mm pour résister. On continue avec le moment maximale de ${mom.toFixed(1)} N/mm².\n`
+    var pourcentage = (mom/(m*Nb)*100).toFixed(1)
+
+    result.innerText += `Le fil choisi est trop petit. Il aurait du mesurer au moins ${d_calc.toFixed(2)} mm pour résister. On continue avec le moment maximale de ${mom.toFixed(1)} N/mm². Seulement ${pourcentage}% du poids de la charge va être compensé.\r\n\r\n`
+  } else {
+    result.innerText += `Le fil est suffisamment gros pour résister.\r\n\r\n`
   }
 
   var N = E*Math.pow(d,4)*alpha/(mom*64*D)
-  var sigma = Kf*32*mom/(3.1416*Math.pow(d,3))
 
+  // Calcul du diamètre minimale après torsion
+  // FIXME: Ca devrait etre le nombre de spires totale et non le nombre de spire active.
+  // var D_min = (D*N)/(N+nbTourATourner) FIXME: angle ou nb tour?
+  var D_min = (D*N)/(N+alpha)
+
+  result.innerText += `NB. Le diamètre de l'axe doit être plus petit que ${D_min.toFixed(2)} mm.\r\n\r\n`
   
   // Set calculated values
-  this.Rpe.value = Rpe
-  this.alpha.value = alpha
-  this.m.value = m
-  this.m_rup.value = m_rup
-  this.N.value = N
+  this.Rpe.value = Rpe.toFixed(2)
+  this.alpha.value = alpha.toFixed(2)
+  this.m.value = m.toFixed(2)
+  this.m_rup.value = m_rup.toFixed(2)
+  this.N.value = N.toFixed(2)
   this.N_max.value = N_max
-  this.sigma.value = sigma
-  this.d_calc.value = d_calc
+  this.d_calc.value = d_calc.toFixed(2)
+  this.D.value = D.toFixed(2)
+  this.D_min.value = D_min.toFixed(2)
 }
 window.onload = calculate()
 </script>
 
 <br/><br/>
 
-<h4>Résultats</h4>
-<div id="result">Résultats...</div>
-
 <form id="theForm" oninput="calculate()">
-<h4>Données générales</h4>
-Dd: Diamètre du drum (mm):<input id="Dd" type="number" value="66.675"><br/>
-D: Diamètre d'enroulement (centre à centre) (mm):<input id="D" type="number" value="13"><br/>
+<h4>Données</h4>
+
+d: Diamètre du fil (mm):<input id="d" type="number" value="0.889"><br/>
+E: module d'élasticité longitudinal (N/mm<sup>2</sup>)<input id="E" type="number" value="200000"><br/>
+Rm: résistance à la tension (N/mm<sup>2</sup>)<input id="Rm" type="number" value="2234"><br/>
+Rpe: résistance pratique à l'extension [0.7*Rm] (N/mm^2)<input id="Rpe" readonly><br/>
+Kf: coefficient de concentration de contraintes [f(D/d)]:<input id="Kf" value="1.1" readonly><br/>
+M_rup: moment à la résistance pratique [Rpe*π*d³/(32*Kf)] (N.mm):<input id="m_rup" readonly><br/>
+
+<br/>
+
 Nb: Nombre de ressort:<input id="Nb" type="number" value="1"><br/>
 l_max: Longueur maximale (mm):<input id="l_max" type="number" value="200"><br/>
-N_max: Nombre de tour maximal:<input id="N_max" readonly><br/>
+N_max: Nombre de tour maximal [l_max/d]:<input id="N_max" readonly><br/>
+D_roul: Diamètre du mandrin d'enroulement (mm):<input id="D_roul" type="number" value="16"><br/>
+D: Diamètre d'enroulement [D+d] (mm):<input id="D" readonly><br/>
+
 <br/>
-d: Diamètre du fil (mm):<input id="d" type="number" value="0.889"><br/>
-Rm: résistance à la tension (N/mm<sup>2</sup>)<input id="Rm" type="number" value="2234"><br/>
-E: module d'élasticité longitudinal (N/mm<sup>2</sup>)<input id="E" type="number" value="200000"><br/>
-Rpe: résistance pratique à l'extension [0.7*Rm] (N/mm^2)<input id="Rpe" readonly><br/>
 
-<h4>Calcul du moment</h4>
+Dd: Diamètre du tambour d'enroulement (mm):<input id="Dd" type="number" value="66.675"><br/>
 F: charge [diviser par 2 si avec poulie] (kg):<input id="F" type="number" value="2"><br/>
-M: moment par ressort(N.mm):<input id="m" readonly><br/>
-M: moment à la résistance pratique à l'extension (N.mm):<input id="m_rup" readonly><br/>
+M: moment requis par ressort [F*9.81*(Dd/2)/Nb] (N.mm):<input id="m" readonly><br/>
 
-<h4>Calcul de l'angle d'enroulement</h4>
+<br />
+
 h: Distance à monter [multiplier par 2 si avec poulie] (mm):<input id="h" type="number" value="2540"><br/>
 nsup: Nombre de tour supplémentaire pour garder de la tension:<input id="nsup" type="number" value="1"><br/>
-alpha: Angle d'enroulement du ressort (radians):<input readonly id="alpha"><br/>
-</form>
-
-<h4>Calcul du diamètre de fil</h4>
-
-Kf: coefficient de concentration de contraintes:<input id="Kf" value="1.1" readonly><br/>
-Coefficient de sécurité:<input id="" type="number" value="2"><br/>
-d_calc: Diamètre du fil (mm):<input id="d_calc" readonly><br/>
-
-<h4>Calcul du nombre de spires actives</h4>
-
-N: nombre de spires actives:<input id="N" readonly><br/>
-
-<h4>Calcul de la contrainte maximale</h4>
-
-
-sigma: contrainte (N/mm<sup>2</sup>)<input id="sigma" readonly><br/>
-
-
-<h4>etc</h4>
-
-: ():<input id="" type="number" value=""><br/>
+alpha: Angle d'enroulement du ressort [2π*((h/(π*Dd))+nsup)] (radians):<input readonly id="alpha"><br/>
 
 <h4>Résultats</h4>
 
-<p>
-D, d et h en mm
-alpha: angle d'enroulement en radians
-F: charge en N
-N: nombre de spires actives
-E: module 
-</p>
-<math>
-	H(s) = ∫<sub>0</sub><sup>∞</sup> e<sup>-st</sup> h(t) dt
-</math>
+<div id="result" style="white-space: pre-line;">Résultats...</div>
+
+<br/><br/>
+
+N: nombre de spires actives:<input id="N" readonly><br/>
+D_min: diamètre minimale après la torsion:<input id="D_min" readonly><br/>
+d_calc: Diamètre du fil (mm):<input id="d_calc" readonly><br/>
+</form>
 
 <p></p>
 <h1>Sources</h1>
