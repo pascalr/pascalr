@@ -37,33 +37,90 @@ function menuItemClicked(item) {
 <div id="Ressorts">
 <h1>Les ressorts</h1>
 <h2>Les ressorts de torsion</h2>
+<p>
+Torsion springs should be deflected in the direction that closes the coils.
+<br/><br/>
+Double torsion springs can be used when twice the force is required or when you need an even dist    ribution of torque.
+<br/><br/>
+Usually about 1 extra wind is added so the cable stays in tension.
+</p>
 <h3>Les ressorts de torsion cylindriques à spires</h3>
-
-
 
 <script>
 function calculate() {
-  Rpe.value = parseFloat(Rm.value)*0.7
-  var nbTourATourner = (parseFloat(h.value)/(parseFloat(Dd.value)*3.1416))+parseFloat(nsup.value)
-  alpha.value = nbTourATourner*2*3.1416
-  m.value = (parseFloat(F.value) * 9.81)*(parseFloat(Dd.value)/2)/parseInt(Nb.value)
-  N.value = parseFloat(E.value)*Math.pow(parseFloat(d.value),4)*alpha.value/(m.value*64*parseFloat(D.value))
-  sigma.value = parseFloat(Kf.value)*32*m.value/(3.1416*Math.pow(parseFloat(d.value),3))
-  d_calc.value = Math.pow((parseFloat(Kf.value)*32*m.value)/(parseFloat(Rpe.value)*3.1416),1/3)
-  m_rup.value = parseFloat((Rpe.value*3.1416*Math.pow(parseFloat(d.value),3))/(parseFloat(Kf.value)*32))
+  var result = document.getElementById('result')
+  result.innerText = ""
+
+  // variables
+  var Rm = parseFloat(this.Rm.value)
+  var h = parseFloat(this.h.value)
+  var Dd = parseFloat(this.Dd.value)
+  var nsup = parseFloat(this.nsup.value)
+  var F = parseFloat(this.F.value)
+  var Nb = parseInt(this.Nb.value)
+  var Kf = parseFloat(this.Kf.value)
+  var d = parseFloat(this.d.value)
+  var E = parseFloat(this.E.value)
+  var D = parseFloat(this.D.value)
+  var l_max = parseFloat(this.l_max.value)
+  var d = parseFloat(this.d.value)
+
+  // Calcul de la résistance pratique à l'enroulement
+  var Rpe = Rm*0.7
+
+  // Calcul du nombre de tour maximale selon l'espace et la diamètre du fil.
+  var N_max = Math.floor(l_max/d)
+
+  // Calcul de l'angle que le ressort doit effectué pour parcourir la course
+  var nbTourATourner = (h/(Dd*3.1416))+nsup
+  var alpha = nbTourATourner*2*3.1416
+
+  // Calculs de moments
+  var m = (F * 9.81)*(Dd/2)/Nb
+  var m_rup = (Rpe*3.1416*Math.pow(d,3))/(Kf*32)
+
+  var d_calc = Math.pow((Kf*32*m)/(Rpe*3.1416),1/3)
+
+  var mom = Math.min(m,m_rup)*Nb
+
+  if (m_rup < m) {
+    result.innerText += `Le fil choisi est trop petit. Il aurait du mesurer au moins ${d_calc.toFixed(2)} mm pour résister. On continue avec le moment maximale de ${mom.toFixed(1)} N/mm².\n`
+  }
+
+  var N = E*Math.pow(d,4)*alpha/(mom*64*D)
+  var sigma = Kf*32*mom/(3.1416*Math.pow(d,3))
+
+  
+  // Set calculated values
+  this.Rpe.value = Rpe
+  this.alpha.value = alpha
+  this.m.value = m
+  this.m_rup.value = m_rup
+  this.N.value = N
+  this.N_max.value = N_max
+  this.sigma.value = sigma
+  this.d_calc.value = d_calc
 }
 window.onload = calculate()
 </script>
 
-TODO: Calculer le diametre du fil requis en fonction de la contrainte maximale, ensuite calculer le nombre de spires actives requis selon le diametre d'enroulement souhaitee.
+<br/><br/>
+
+<h4>Résultats</h4>
+<div id="result">Résultats...</div>
 
 <form id="theForm" oninput="calculate()">
 <h4>Données générales</h4>
 Dd: Diamètre du drum (mm):<input id="Dd" type="number" value="66.675"><br/>
 D: Diamètre d'enroulement (centre à centre) (mm):<input id="D" type="number" value="13"><br/>
-E: module d'élasticité longitudinal (N/mm^2)<input id="E" type="number" value="200000"><br/>
-d: Diamètre du fil (mm):<input id="d" type="number" value="0.889"><br/>
 Nb: Nombre de ressort:<input id="Nb" type="number" value="1"><br/>
+l_max: Longueur maximale (mm):<input id="l_max" type="number" value="200"><br/>
+N_max: Nombre de tour maximal:<input id="N_max" readonly><br/>
+<br/>
+d: Diamètre du fil (mm):<input id="d" type="number" value="0.889"><br/>
+Rm: résistance à la tension (N/mm<sup>2</sup>)<input id="Rm" type="number" value="2234"><br/>
+E: module d'élasticité longitudinal (N/mm<sup>2</sup>)<input id="E" type="number" value="200000"><br/>
+Rpe: résistance pratique à l'extension [0.7*Rm] (N/mm^2)<input id="Rpe" readonly><br/>
 
 <h4>Calcul du moment</h4>
 F: charge [diviser par 2 si avec poulie] (kg):<input id="F" type="number" value="2"><br/>
@@ -79,8 +136,6 @@ alpha: Angle d'enroulement du ressort (radians):<input readonly id="alpha"><br/>
 <h4>Calcul du diamètre de fil</h4>
 
 Kf: coefficient de concentration de contraintes:<input id="Kf" value="1.1" readonly><br/>
-Rpe: résistance pratique à l'extension [0.7*Rm] (N/mm^2)<input id="Rpe" readonly><br/>
-Rm: résistance à la tension (N/mm^2)<input id="Rm" type="number" value="2234"><br/>
 Coefficient de sécurité:<input id="" type="number" value="2"><br/>
 d_calc: Diamètre du fil (mm):<input id="d_calc" readonly><br/>
 
@@ -91,7 +146,7 @@ N: nombre de spires actives:<input id="N" readonly><br/>
 <h4>Calcul de la contrainte maximale</h4>
 
 
-sigma: contrainte (N/mm^2)<input id="sigma" readonly><br/>
+sigma: contrainte (N/mm<sup>2</sup>)<input id="sigma" readonly><br/>
 
 
 <h4>etc</h4>
