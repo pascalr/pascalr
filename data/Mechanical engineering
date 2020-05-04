@@ -43,43 +43,60 @@ function menuItemClicked(item) {
 
 <script>
 function calculate() {
+  Rpe.value = parseFloat(Rm.value)*0.7
   var nbTourATourner = (parseFloat(h.value)/(parseFloat(Dd.value)*3.1416))+parseFloat(nsup.value)
   alpha.value = nbTourATourner*2*3.1416
-  m.value = (parseFloat(F.value) * 9.81)*(parseFloat(Dd.value)/2)
+  m.value = (parseFloat(F.value) * 9.81)*(parseFloat(Dd.value)/2)/parseInt(Nb.value)
   N.value = parseFloat(E.value)*Math.pow(parseFloat(d.value),4)*alpha.value/(m.value*64*parseFloat(D.value))
+  sigma.value = parseFloat(Kf.value)*32*m.value/(3.1416*Math.pow(parseFloat(d.value),3))
+  d_calc.value = Math.pow((parseFloat(Kf.value)*32*m.value)/(parseFloat(Rpe.value)*3.1416),1/3)
+  m_rup.value = parseFloat((Rpe.value*3.1416*Math.pow(parseFloat(d.value),3))/(parseFloat(Kf.value)*32))
 }
 window.onload = calculate()
 </script>
 
+TODO: Calculer le diametre du fil requis en fonction de la contrainte maximale, ensuite calculer le nombre de spires actives requis selon le diametre d'enroulement souhaitee.
+
 <form id="theForm" oninput="calculate()">
 <h4>Données générales</h4>
-Dd: Diamètre du drum (mm):<input id="Dd" type="number" value="30.1625"><br/>
+Dd: Diamètre du drum (mm):<input id="Dd" type="number" value="66.675"><br/>
 D: Diamètre d'enroulement (centre à centre) (mm):<input id="D" type="number" value="13"><br/>
 E: module d'élasticité longitudinal (N/mm^2)<input id="E" type="number" value="200000"><br/>
 d: Diamètre du fil (mm):<input id="d" type="number" value="0.889"><br/>
-Kf: coefficient de concentration de contraintes:<input id="Kf" value="1.1" readonly><br/>
+Nb: Nombre de ressort:<input id="Nb" type="number" value="1"><br/>
 
 <h4>Calcul du moment</h4>
-F: charge (kg):<input id="F" type="number" value="4"><br/>
-M: moment (N.mm):<input id="m" readonly><br/>
+F: charge [diviser par 2 si avec poulie] (kg):<input id="F" type="number" value="2"><br/>
+M: moment par ressort(N.mm):<input id="m" readonly><br/>
+M: moment à la résistance pratique à l'extension (N.mm):<input id="m_rup" readonly><br/>
 
 <h4>Calcul de l'angle d'enroulement</h4>
-h: Distance à monter (mm):<input id="h" type="number" value="1270"><br/>
+h: Distance à monter [multiplier par 2 si avec poulie] (mm):<input id="h" type="number" value="2540"><br/>
 nsup: Nombre de tour supplémentaire pour garder de la tension:<input id="nsup" type="number" value="1"><br/>
 alpha: Angle d'enroulement du ressort (radians):<input readonly id="alpha"><br/>
 </form>
+
+<h4>Calcul du diamètre de fil</h4>
+
+Kf: coefficient de concentration de contraintes:<input id="Kf" value="1.1" readonly><br/>
+Rpe: résistance pratique à l'extension [0.7*Rm] (N/mm^2)<input id="Rpe" readonly><br/>
+Rm: résistance à la tension (N/mm^2)<input id="Rm" type="number" value="2234"><br/>
+Coefficient de sécurité:<input id="" type="number" value="2"><br/>
+d_calc: Diamètre du fil (mm):<input id="d_calc" readonly><br/>
 
 <h4>Calcul du nombre de spires actives</h4>
 
 N: nombre de spires actives:<input id="N" readonly><br/>
 
+<h4>Calcul de la contrainte maximale</h4>
+
+
+sigma: contrainte (N/mm^2)<input id="sigma" readonly><br/>
+
+
 <h4>etc</h4>
 
 : ():<input id="" type="number" value=""><br/>
-
-
-sigma: contrainte (N/mm^2)<input id="" type="number" value=""><br/>
-Rpe: résistance pratique à l'extension (N/mm^2)<input id="" type="number" value=""><br/>
 
 <h4>Résultats</h4>
 
@@ -98,7 +115,7 @@ E: module
 <h1>Sources</h1>
 Guide des sciences et technologies industrielles - Jean-Louis FANCHON
 </div>
-<!-- SECTION Untitled -->
+<!-- SECTION *Untitled -->
 <div id="Vis-Écrou">
 <h1>Les systèmes vis-écrous</h1>
 
@@ -110,7 +127,7 @@ It’s important to note that when the efficiency of a lead screw exceeds 50%, t
 On the other hand, plastic and stainless steel lead screw assembliesaretypicallylimited to a duty cycle of 50% under the rated load.  Lead screw assemblies that use bronze nuts have higher load capacities,but these heavier loads increase frictionalheat so their duty cycles must be lower, often as low as 10%.
 </p>
 </div>
-<!-- SECTION Untitled -->
+<!-- SECTION *Untitled -->
 <div id="Pivots">
 <h1>Les pivots</h1>
 <pre>
