@@ -289,6 +289,7 @@ function calculatePoids() {
   // Set calculated values
   this.volume.value = volume
   this.poids.value = poids
+  this.density_val.value = density
 }
 window.onload = calculate()
 </script>
@@ -312,6 +313,7 @@ l2:<input id="l2" type="number" value="0"><br/>
 l3:<input id="l3" type="number" value="0"><br/>
 <br/>
 
+Densité (kg/m³):<input id="density_val" readonly><br/>
 Volume:<input id="volume" readonly><br/>
 Poids:<input id="poids" readonly><br/>
 </form>

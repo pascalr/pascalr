@@ -45,42 +45,56 @@ Oui ça serait cool un bras robotique, mais je mets de côté pour l'instant. Te
 
 Toutefois, ce n'est pas en vaint, j'ai une bonne idée je crois. Le potentiel est dans des trucs imbriqués (comme des poupées russes!) C'est beaucoup plus éléguant qu'une structure pleine avec un petit déplacement.
 </div>
-<!-- SECTION *Untitled -->
+<!-- SECTION Untitled -->
 <div id="Achats">
 <h1>Achats</h1>
 <pre>
-Acheter bande d'acier (strapping).
-Acheter tôle.
-Acheter marettes plus petites.
+Internet:
+Raspberry PI
+Acheter d'autres controlleurs de stepper (attendre un peu, pas nécessaire pour l'instant.)
+PLA orange ou noir
+
+Addisson électronique:
+Spacer mount screw. (standoff)
+
+Boulons de l'estrie:
+(noir idéalement)
+Cap screw (Allen) 4mm X ?
+Nut 4mm
+
+Canac:
+Bande d'acier (strapping) 0.5".
+Tôle acier galvanisé.
+Petites marettes.
+2 bender
+2 bungee
+Vis à bois tête ronde 1/2"
+Vis à bois tête fraisée 3/4"
+Vis à bois 1"
+caoutchouc pour l'établit: 30" X 39"
+
 Acheter #8-32 X 0.75"
 Acheter #10-24
 Acheter petite quicaillerie, ecrous #6-32
-Acheter tige filetee 0.25"
 Acheter melamine
-Acheter caoutchouc établi
-Acheter split pin
+Acheter split pin?
 Ca pourrait comme être des sapin de plastique comme pour les tiroirs pour séparer les pots dans d    es rangées.
 Nut de nylon pour pince haut bas?
 Acheter circlip?
-Acheter acier 1/4" pour fabriquer coupling male
-Acheter standoff pour electronique
-Acheter Tube carré 1/2.
-Acheter un raspberry pi ou similaire
-Acheter d'autres controlleurs de stepper
 Plexiglass pour enclosure de mon imprimante 3d et pour mes portes de ma machine
-Fer plat 1/2"
-PLA orange
-PVC Tube for Central Vacuum
 
 Acier Lennox:
--fer plat 1/4"
--tige fileté petite
--tige pleine 3/8"
-Est-ce qu'ils ont de la tôle? Est-ce qu'ils ont des tubes minces 3/8"
+Une barre de 1.25" X 0.25" X 10' et une barre 1.25" X 0.375" X 10'
+Deux barres 0.5" X 0.125" X 10'
+Si possible des tubes de 7/16"
+Deux tiges pleines 7/16" X 10'
+Une tige filetée 0.25"
+Une tige filetée 4mm
+Est-ce qu'ils ont de la tôle?
 
 </pre>
 </div>
-<!-- SECTION *Untitled -->
+<!-- SECTION Untitled -->
 <div id="TODO">
 <h1>TODO</h1>
 <pre>
@@ -95,12 +109,7 @@ Je dois avec de l'espace derrière pour que ça monte et descende, donc debout c
 Aussi je dois avoir de l'espace pour le moteur et tout.
 <!-- SECTION Untitled -->
 <h1>Pesée</h1>
-La densité de l'acier est de: 0.2908247 lbs/po^3. Donc à tous les pouce ça pourrait peser 0.7 lbs. Mon trucs finale va mesurer AU MOINS 10 po. Donc 7 lbs. Fois 2 pesées: 14 lbs.
-
-Une plate de 1.5" de 12' de long et 0.25" d'épais mesure: 54 po² et pèse 15 lbs: 
-
-Je vais utiliser des plates de 1" par 4" de large. C'est 4 po², 1.16 lbs/po, 11.6 lbs pour 10 po, 23.2 lbs les 2 côtés ensembles.
-
+<pre>
 Pour me donner une référence, le plus pesant est mes 2 tubes carés. Ils mesurent 40" X (0.75"^2-0.5"^2) C'est 12.5 po^3. C'est 3.6 lbs. Donc des plates de 1" X 4" serait bon en masse.
 
 Acheter des plates de 1/2" X 1" X 10' serait le best, les plates pèserait à peu près une demi-livre chacune, ça ferait une livre par plate, non c'est trop, j'aime mieux 1/4" d'épais.
@@ -116,3 +125,9 @@ Une plate 1/4" X 4" X 1" moins (0.375"^2/4*3.1416)
 Dans 10", il y aurait 40 plaques. Donc 80 plaques, c'est beaucoup...!
 
 Des plates 1/2" serait mieux...
+
+J'ai décider que ce serait des poids de 1.25" X 4" X 0.25"
+
+Je vais acheter:
+Une barre de 1.25" X 0.25" X 10' et une barre 1.25" X 0.375" X 10'
+</pre>
