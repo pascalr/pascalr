@@ -1,4 +1,4 @@
-<!-- SECTION Untitled -->
+<!-- SECTION bar -->
 <style>
 #menu {
   background-color: black;
@@ -39,3 +39,4 @@ Inventaire
 <div id="Recette">
 Recette
 </div>
+<!-- SECTION foo -->

@@ -27,7 +27,7 @@ function icon(filename) {
 class EditPage extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {content: '', showSidePreview: true, showActionDropdown: false, modified: false, sections: {}, selectedSection: ''}
+    this.state = {content: '', showSidePreview: true, showActionDropdown: false, modified: false, sections: {}, selectedSection: '', editingName: null}
     this.contentRef = React.createRef();
   }
 
@@ -253,14 +253,30 @@ class EditPage extends React.Component {
     this.setState({sections})
   }
 
+  handleNameChange = (theSection) => (event) => {
+    let sections = {...this.state.sections}
+    let section = {...theSection}
+    section.name = event.target.value
+    sections[section.id] = section
+    this.setState({sections})
+  }
+
+  printEditingName = (section) => {
+    return e('div', null,
+      e('input', {value: section.name, onChange: this.handleNameChange(section), onBlur: () => {this.setState({editingName: null})}}, null),
+    )
+  }
+
 
   // OPTIMIZE: The are you sure for the delete should be right under the mouse when the person clicks.
   printSection = (section) => {
-    const {selectedSection} = this.state
+    const {selectedSection,editingName} = this.state
 
     return e('div', null,
       e('div', null,
+        (editingName === section.id) ? this.printEditingName(section) :
         e('span', {className: 'sectionName clickable', onClick: () => this.hideSection(section)},((section.name || 'Untitled') + (section.hidden ? '↓':'↑'))),
+        e('span',{className: 'clickable', onClick: () => this.setState({editingName: section.id})},icon('brush-24px.svg')),
         e('span',{className: 'clickable', onClick: () => confirm("Are you sure?") && this.deleteSection(section)},'delete'),
       ),
       section.hidden ? null :
