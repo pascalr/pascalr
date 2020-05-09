@@ -1,4 +1,4 @@
-<!-- SECTION Untitled -->
+<!-- SECTION *Untitled -->
 <style>
 #menu {
   background-color: black;
@@ -21,6 +21,7 @@
 <span class="item" onclick="menuItemClicked(this)">Pivots</span>
 <span class="item" onclick="menuItemClicked(this)">Moteurs</span>
 <span class="item" onclick="menuItemClicked(this)">Bearings</span>
+<span class="item" onclick="menuItemClicked(this)">Calculs</span>
 </div>
 
 <script defer>
@@ -260,8 +261,58 @@ title('Angle AB')
 <h1>Les moteurs</h1>
 Il va probablement falloir que ce soit des servos-moteurs et non des steppers moteurs, parce que avec un servo j'ai le feedback du positionnement, alors je peux détecter s'il y a une anomalie ou une erreur.
 </div>
-<!-- SECTION Untitled -->
+<!-- SECTION *Untitled -->
 <div id="Bearings">
 <h1>Les bearings</h1>
 Deep groove ball bearings by nature of their design can carry axial loads either alone or in combination with radial loads. Axial load capacity of standard bearings is 0.5 times the Basic Static Load Rating, CO of that bearing. Smaller bearings should not be subject to a load greater than 0.25 times CO. Excessive axial loads can lead to serious reduction of bearing service life.
+</div>
+<!-- SECTION Untitled -->
+<div id="Calculs">
+<h1>Calcul de poids</h1>
+<script>
+function calculatePoids() {
+  var result = document.getElementById('result')
+  result.innerText = ""
+
+  // variables
+  var l1 = parseFloat(this.l1.value)
+  var l2 = parseFloat(this.l2.value)
+  var l3 = parseFloat(this.l3.value)
+  var density = parseFloat(this.density.value)
+  var k1 = this.unit_long.value === "mm" ? 0.001 : 0.0254;
+  var k2 = this.unit_poids.value === "kg" ? 1 : 2.20462;
+
+  var volume = l1 * l2 * l3;
+  var volume_in_m3 = l1 * l2 * l3 * Math.pow(k1,3);
+  var poids = volume_in_m3 * density * k2;
+
+  // Set calculated values
+  this.volume.value = volume
+  this.poids.value = poids
+}
+window.onload = calculate()
+</script>
+
+<form id="theForm" oninput="calculatePoids()">
+
+Matériau:<select id="density">
+  <option value="450">épinette</option>
+  <option value="7700" selected>acier</option>
+</select><br/>
+Unité de longueur:<select id="unit_long">
+  <option value="mm">mm</option>
+  <option value="in" selected>in</option>
+</select><br/>
+Unité de poids:<select id="unit_poids">
+  <option value="lb" selected>lb</option>
+  <option value="kg">kg</option>
+</select><br/>
+l1:<input id="l1" type="number" value="0"><br/>
+l2:<input id="l2" type="number" value="0"><br/>
+l3:<input id="l3" type="number" value="0"><br/>
+<br/>
+
+Volume:<input id="volume" readonly><br/>
+Poids:<input id="poids" readonly><br/>
+</form>
 </div>

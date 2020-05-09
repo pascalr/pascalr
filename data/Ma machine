@@ -45,7 +45,7 @@ Oui ça serait cool un bras robotique, mais je mets de côté pour l'instant. Te
 
 Toutefois, ce n'est pas en vaint, j'ai une bonne idée je crois. Le potentiel est dans des trucs imbriqués (comme des poupées russes!) C'est beaucoup plus éléguant qu'une structure pleine avec un petit déplacement.
 </div>
-<!-- SECTION Untitled -->
+<!-- SECTION *Untitled -->
 <div id="Achats">
 <h1>Achats</h1>
 <pre>
@@ -95,8 +95,6 @@ Je dois avec de l'espace derrière pour que ça monte et descende, donc debout c
 Aussi je dois avoir de l'espace pour le moteur et tout.
 <!-- SECTION Untitled -->
 <h1>Pesée</h1>
-Avec mon tube d'aspirateur central, j'ai un diamètre intérieur possible de 1.75 po et 2.4052875 po^2.
-
 La densité de l'acier est de: 0.2908247 lbs/po^3. Donc à tous les pouce ça pourrait peser 0.7 lbs. Mon trucs finale va mesurer AU MOINS 10 po. Donc 7 lbs. Fois 2 pesées: 14 lbs.
 
 Une plate de 1.5" de 12' de long et 0.25" d'épais mesure: 54 po² et pèse 15 lbs: 
