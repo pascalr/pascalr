@@ -258,11 +258,11 @@ class EditPage extends React.Component {
     let section = {...theSection}
     section.name = event.target.value
     sections[section.id] = section
-    this.setState({sections})
+    this.setState({sections, modified: true})
   }
 
   printEditingName = (section) => {
-    return e('div', null,
+    return e('span', null,
       e('input', {value: section.name, onChange: this.handleNameChange(section), onBlur: () => {this.setState({editingName: null})}}, null),
     )
   }

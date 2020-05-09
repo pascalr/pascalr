@@ -1,4 +1,4 @@
-<!-- SECTION *Untitled -->
+<!-- SECTION *Menu -->
 <style>
 #menu {
   background-color: black;
@@ -36,7 +36,7 @@ function menuItemClicked(item) {
   if (elem) {elem.style.display = "block";}
 }
 </script>
-<!-- SECTION *Untitled -->
+<!-- SECTION *Ressorts -->
 <div id="Ressorts">
 <h1>Traitement par la chaleur</h1>
 Music Wire ASTM A 228 	Closes 	500º F 	30 minutes
@@ -193,7 +193,7 @@ Nb_tour: nombre de tour à tourner:<input id="Nb_tour" readonly><br/>
 <h1>Sources</h1>
 Guide des sciences et technologies industrielles - Jean-Louis FANCHON
 </div>
-<!-- SECTION *Untitled -->
+<!-- SECTION *Vis-Écrou -->
 <div id="Vis-Écrou">
 <h1>Les systèmes vis-écrous</h1>
 
@@ -205,7 +205,7 @@ It’s important to note that when the efficiency of a lead screw exceeds 50%, t
 On the other hand, plastic and stainless steel lead screw assembliesaretypicallylimited to a duty cycle of 50% under the rated load.  Lead screw assemblies that use bronze nuts have higher load capacities,but these heavier loads increase frictionalheat so their duty cycles must be lower, often as low as 10%.
 </p>
 </div>
-<!-- SECTION *Untitled -->
+<!-- SECTION *Pivots -->
 <div id="Pivots">
 <h1>Les pivots</h1>
 <pre>
@@ -256,17 +256,17 @@ axis([0  180 0 1])
 title('Angle AB')
 </pre>
 </div>
-<!-- SECTION *Untitled -->
+<!-- SECTION *Moteurs -->
 <div id="Moteurs">
 <h1>Les moteurs</h1>
 Il va probablement falloir que ce soit des servos-moteurs et non des steppers moteurs, parce que avec un servo j'ai le feedback du positionnement, alors je peux détecter s'il y a une anomalie ou une erreur.
 </div>
-<!-- SECTION *Untitled -->
+<!-- SECTION *Bearings -->
 <div id="Bearings">
 <h1>Les bearings</h1>
 Deep groove ball bearings by nature of their design can carry axial loads either alone or in combination with radial loads. Axial load capacity of standard bearings is 0.5 times the Basic Static Load Rating, CO of that bearing. Smaller bearings should not be subject to a load greater than 0.25 times CO. Excessive axial loads can lead to serious reduction of bearing service life.
 </div>
-<!-- SECTION Untitled -->
+<!-- SECTION *Calculs -->
 <div id="Calculs">
 <h1>Calcul de poids</h1>
 <script>

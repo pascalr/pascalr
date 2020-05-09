@@ -1,4 +1,4 @@
-<!-- SECTION Untitled -->
+<!-- SECTION *Style -->
 <style>
 html *
 {
@@ -80,7 +80,7 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 </style>
-
+<!-- SECTION *Polling -->
 <script>
 (function poll() {
   setInterval(function() {
@@ -107,7 +107,7 @@ input[type=number] {
   }, 1000);
 })();
 </script>
-
+<!-- SECTION *Menu -->
 <div id="menu">
 <span class="item" onclick="menuItemClicked('inventaire')">Inventaire</span>
 <span class="item" onclick="menuItemClicked('recette')">Recette</span>
@@ -122,7 +122,7 @@ function menuItemClicked(id) {
   document.getElementById(id).style.display = "block";
 }
 </script>
-
+<!-- SECTION *Manuel -->
 <div id="manuel" style="display: none;">
 <h1>Commandes</h1>
 
@@ -226,11 +226,9 @@ Log...
 
 <div style="padding-top: 512px;"></div>
 
-<!-- ********************************************************************************************************************************************************************************************************* -->
-
 <h1>Console</h1>
 </div>
-
+<!-- SECTION *Inventaire -->
 <div id="inventaire" style="display: none;">
 <h1>Inventaire</h1>
 
@@ -257,10 +255,7 @@ Log...
 <img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
 
 </div>
-
-
-<!-- ********************************************************************************************************************************************************************************************************* -->
-
+<!-- SECTION *Recette -->
 <div id="recette">
 <h1>Recettes</h1>
 

@@ -1,4 +1,4 @@
-<!-- SECTION *Untitled -->
+<!-- SECTION *Menu -->
 <style>
 #menu {
   background-color: black;
@@ -32,7 +32,7 @@ function menuItemClicked(item) {
   if (elem) {elem.style.display = "block";}
 }
 </script>
-<!-- SECTION *Untitled -->
+<!-- SECTION *Notes -->
 <div id="Notes">
 
 <h1>Notes</h1>
@@ -45,7 +45,7 @@ Oui ça serait cool un bras robotique, mais je mets de côté pour l'instant. Te
 
 Toutefois, ce n'est pas en vaint, j'ai une bonne idée je crois. Le potentiel est dans des trucs imbriqués (comme des poupées russes!) C'est beaucoup plus éléguant qu'une structure pleine avec un petit déplacement.
 </div>
-<!-- SECTION Untitled -->
+<!-- SECTION *Achats -->
 <div id="Achats">
 <h1>Achats</h1>
 <pre>
@@ -94,20 +94,20 @@ Est-ce qu'ils ont de la tôle?
 
 </pre>
 </div>
-<!-- SECTION Untitled -->
+<!-- SECTION *TODO -->
 <div id="TODO">
 <h1>TODO</h1>
 <pre>
 Renforcir les rails qui montent en rajoutant des coches dedans, de la même manière que les brackets de menuiseries sont fait.
 </pre>
 </div>
-<!-- SECTION *Untitled -->
+<!-- SECTION *Design -->
 Section transversale debout ou couchée:
 
 Je dois avec de l'espace derrière pour que ça monte et descende, donc debout c'est mieux pour ça?
 
 Aussi je dois avoir de l'espace pour le moteur et tout.
-<!-- SECTION Untitled -->
+<!-- SECTION *Pesée -->
 <h1>Pesée</h1>
 <pre>
 Pour me donner une référence, le plus pesant est mes 2 tubes carés. Ils mesurent 40" X (0.75"^2-0.5"^2) C'est 12.5 po^3. C'est 3.6 lbs. Donc des plates de 1" X 4" serait bon en masse.
