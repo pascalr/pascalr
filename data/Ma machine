@@ -1,4 +1,42 @@
-<!-- SECTION Untitled -->
+<!-- SECTION *Untitled -->
+<style>
+#menu {
+  background-color: black;
+  color: white;
+}
+.item:hover {
+  background-color: orange;
+}
+.item {
+  padding-left: 6px;
+  padding-right: 10px;
+  border-right: solid 1px white;
+  cursor: pointer;
+}
+</style>
+
+<div id="menu">
+<span class="item" onclick="menuItemClicked(this)">TODO</span>
+<span class="item" onclick="menuItemClicked(this)">Notes</span>
+<span class="item" onclick="menuItemClicked(this)">Achats</span>
+</div>
+
+<script>
+function menuItemClicked(item) {
+  let siblings = item.parentElement.children;
+  for (let i = 0; i < siblings.length; i++) {
+    let elem = document.getElementById(siblings[i].innerText)
+    if (elem) {elem.style.display = "none";}
+  }
+  let elem = document.getElementById(item.innerText)
+  if (elem) {elem.style.display = "block";}
+}
+</script>
+<!-- SECTION *Untitled -->
+<div id="Notes">
+
+<h1>Notes</h1>
+
 NOTE de design:
 
 Mettre mon site de machine beau.
@@ -6,3 +44,77 @@ Mettre mon site de machine beau.
 Oui ça serait cool un bras robotique, mais je mets de côté pour l'instant. Tellement de monde ont essayer d'en faire, je n'arriverai jamais à faire mieux pour moins cher. C'est plus cool, mais aussi c'est moins efficace. Parce qu'il n'y a pas de support, c'est beaucoup plus difficile pour les moteurs. Des mouvements linéaires sont beaucoup plus efficaces parce que le déplacement se fait sur des roues.
 
 Toutefois, ce n'est pas en vaint, j'ai une bonne idée je crois. Le potentiel est dans des trucs imbriqués (comme des poupées russes!) C'est beaucoup plus éléguant qu'une structure pleine avec un petit déplacement.
+</div>
+<!-- SECTION Untitled -->
+<div id="Achats">
+<h1>Achats</h1>
+<pre>
+Acheter bande d'acier (strapping).
+Acheter tôle.
+Acheter marettes plus petites.
+Acheter #8-32 X 0.75"
+Acheter #10-24
+Acheter petite quicaillerie, ecrous #6-32
+Acheter tige filetee 0.25"
+Acheter melamine
+Acheter caoutchouc établi
+Acheter split pin
+Ca pourrait comme être des sapin de plastique comme pour les tiroirs pour séparer les pots dans d    es rangées.
+Nut de nylon pour pince haut bas?
+Acheter circlip?
+Acheter acier 1/4" pour fabriquer coupling male
+Acheter standoff pour electronique
+Acheter Tube carré 1/2.
+Acheter un raspberry pi ou similaire
+Acheter d'autres controlleurs de stepper
+Plexiglass pour enclosure de mon imprimante 3d et pour mes portes de ma machine
+Fer plat 1/2"
+PLA orange
+PVC Tube for Central Vacuum
+
+Acier Lennox:
+-fer plat 1/4"
+-tige fileté petite
+-tige pleine 3/8"
+Est-ce qu'ils ont de la tôle? Est-ce qu'ils ont des tubes minces 3/8"
+
+</pre>
+</div>
+<!-- SECTION *Untitled -->
+<div id="TODO">
+<h1>TODO</h1>
+<pre>
+Renforcir les rails qui montent en rajoutant des coches dedans, de la même manière que les brackets de menuiseries sont fait.
+</pre>
+</div>
+<!-- SECTION *Untitled -->
+Section transversale debout ou couchée:
+
+Je dois avec de l'espace derrière pour que ça monte et descende, donc debout c'est mieux pour ça?
+
+Aussi je dois avoir de l'espace pour le moteur et tout.
+<!-- SECTION Untitled -->
+<h1>Pesée</h1>
+Avec mon tube d'aspirateur central, j'ai un diamètre intérieur possible de 1.75 po et 2.4052875 po^2.
+
+La densité de l'acier est de: 0.2908247 lbs/po^3. Donc à tous les pouce ça pourrait peser 0.7 lbs. Mon trucs finale va mesurer AU MOINS 10 po. Donc 7 lbs. Fois 2 pesées: 14 lbs.
+
+Une plate de 1.5" de 12' de long et 0.25" d'épais mesure: 54 po² et pèse 15 lbs: 
+
+Je vais utiliser des plates de 1" par 4" de large. C'est 4 po², 1.16 lbs/po, 11.6 lbs pour 10 po, 23.2 lbs les 2 côtés ensembles.
+
+Pour me donner une référence, le plus pesant est mes 2 tubes carés. Ils mesurent 40" X (0.75"^2-0.5"^2) C'est 12.5 po^3. C'est 3.6 lbs. Donc des plates de 1" X 4" serait bon en masse.
+
+Acheter des plates de 1/2" X 1" X 10' serait le best, les plates pèserait à peu près une demi-livre chacune, ça ferait une livre par plate, non c'est trop, j'aime mieux 1/4" d'épais.
+
+Un mix des deux.
+
+Une plate 1/2" X 1" X 10' pèse 20 lbs.
+Une plate 1/4" X 1" X 10' pèse 10 lbs.
+
+Une plate 1/4" X 4" X 1" moins (0.375"^2/4*3.1416)
+= (1 - 0.110446875)*0.2908247 = 0.25870402071218745 lbs
+
+Dans 10", il y aurait 40 plaques. Donc 80 plaques, c'est beaucoup...!
+
+Des plates 1/2" serait mieux...

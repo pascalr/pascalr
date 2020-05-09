@@ -19,6 +19,8 @@
 <span class="item" onclick="menuItemClicked(this)">Ressorts</span>
 <span class="item" onclick="menuItemClicked(this)">Vis-Écrou</span>
 <span class="item" onclick="menuItemClicked(this)">Pivots</span>
+<span class="item" onclick="menuItemClicked(this)">Moteurs</span>
+<span class="item" onclick="menuItemClicked(this)">Bearings</span>
 </div>
 
 <script defer>
@@ -33,10 +35,16 @@ function menuItemClicked(item) {
   if (elem) {elem.style.display = "block";}
 }
 </script>
-<!-- SECTION Untitled -->
+<!-- SECTION *Untitled -->
 <div id="Ressorts">
+<h1>Traitement par la chaleur</h1>
+Music Wire ASTM A 228 	Closes 	500º F 	30 minutes
+<br/>
+Source: https://www.acxesspring.com/espanol/how-to-heat-treat-spring-steel.html
+
 <h1>Les ressorts</h1>
 <p>Voici un guide de fabrication et d'utilisation des ressorts.</p>
+Attention, je dois ajouter des spires parce que les spires qui sont sur les supports de chaque côtés ne sont pas actives...
 <h2>Les ressorts de torsion</h2>
 <p>
 Torsion springs should be deflected in the direction that closes the coils.
@@ -67,6 +75,7 @@ function calculate() {
   var D_roul = parseFloat(this.D_roul.value)
   var l_max = parseFloat(this.l_max.value)
   var d = parseFloat(this.d.value)
+  var N_ina = parseFloat(this.N_ina.value)
 
   // Calcul de la résistance pratique à l'enroulement
   var Rpe = Rm*0.7
@@ -104,11 +113,14 @@ function calculate() {
   }
 
   var N = E*Math.pow(d,4)*alpha/(mom*64*D)
+  var N_tot = N + N_ina
 
   // Calcul du diamètre minimale après torsion
   // FIXME: Ca devrait etre le nombre de spires totale et non le nombre de spire active.
   // var D_min = (D*N)/(N+nbTourATourner) FIXME: angle ou nb tour?
   var D_min = (D*N)/(N+alpha)
+
+  var long = D*3.1416*N+100
 
   result.innerText += `NB. Le diamètre de l'axe doit être plus petit que ${D_min.toFixed(2)} mm.\r\n\r\n`
   
@@ -123,6 +135,9 @@ function calculate() {
   this.D.value = D.toFixed(2)
   this.D_min.value = D_min.toFixed(2)
   this.mom_gen.value = mom_gen.toFixed(2)
+  this.long.value = long.toFixed(0)
+  this.N_tot.value = N_tot.toFixed(0)
+  this.Nb_tour.value = nbTourATourner
 }
 window.onload = calculate()
 </script>
@@ -131,7 +146,7 @@ window.onload = calculate()
 <h4>Données</h4>
 
 d: Diamètre du fil (mm):<input id="d" type="number" value="0.889"><br/>
-E: module d'élasticité longitudinal (N/mm<sup>2</sup>)<input id="E" type="number" value="200000"><br/>
+E: module d'élasticité longitudinal (N/mm<sup>2</sup>)<input id="E" type="number" value="190000"><br/>
 Rm: résistance à la tension (N/mm<sup>2</sup>)<input id="Rm" type="number" value="2234"><br/>
 Rpe: résistance pratique à l'extension [0.7*Rm] (N/mm<sup>2</sup>)<input id="Rpe" readonly><br/>
 Kf: coefficient de concentration de contraintes [f(D/d)]:<input id="Kf" value="1.1" readonly><br/>
@@ -141,7 +156,8 @@ M_rup: moment à la résistance pratique [Rpe*π*d³/(32*Kf)] (N.mm):<input id="
 
 Nb: Nombre de ressort:<input id="Nb" type="number" value="1"><br/>
 l_max: Longueur maximale (mm):<input id="l_max" type="number" value="200"><br/>
-N_max: Nombre de tour maximal [l_max/d]:<input id="N_max" readonly><br/>
+N_max: Nombre de tour maximal [l_max/d]:<input id="N_max" type="number" readonly><br/>
+N_ina: Nombre de spires inactives:<input id="N_ina" value="6"><br/>
 D_roul: Diamètre du mandrin d'enroulement (mm):<input id="D_roul" type="number" value="16"><br/>
 D: Diamètre d'enroulement [D+d] (mm):<input id="D" readonly><br/>
 
@@ -164,16 +180,19 @@ alpha: Angle d'enroulement du ressort [2π*((h/(π*Dd))+nsup)] (radians):<input 
 </p>
 
 N: nombre de spires actives:<input id="N" readonly><br/>
+N_tot: Nombre de spires totales:<input id="N_tot" readonly><br/>
 D_min: diamètre minimale après la torsion:<input id="D_min" readonly><br/>
 d_calc: Diamètre du fil (mm):<input id="d_calc" readonly><br/>
 mom_gen: Moment généré (N/mm<sup>2</sup>):<input id="mom_gen" readonly><br/>
+long: Longueur de fil nécessaire [π*D*N+100](mm):<input id="long" readonly><br/>
+Nb_tour: nombre de tour à tourner:<input id="Nb_tour" readonly><br/>
 </form>
 
 <p></p>
 <h1>Sources</h1>
 Guide des sciences et technologies industrielles - Jean-Louis FANCHON
 </div>
-<!-- SECTION Untitled -->
+<!-- SECTION *Untitled -->
 <div id="Vis-Écrou">
 <h1>Les systèmes vis-écrous</h1>
 
@@ -185,7 +204,7 @@ It’s important to note that when the efficiency of a lead screw exceeds 50%, t
 On the other hand, plastic and stainless steel lead screw assembliesaretypicallylimited to a duty cycle of 50% under the rated load.  Lead screw assemblies that use bronze nuts have higher load capacities,but these heavier loads increase frictionalheat so their duty cycles must be lower, often as low as 10%.
 </p>
 </div>
-<!-- SECTION Untitled -->
+<!-- SECTION *Untitled -->
 <div id="Pivots">
 <h1>Les pivots</h1>
 <pre>
@@ -235,4 +254,14 @@ plot([90 90],[0 1])
 axis([0  180 0 1])
 title('Angle AB')
 </pre>
+</div>
+<!-- SECTION *Untitled -->
+<div id="Moteurs">
+<h1>Les moteurs</h1>
+Il va probablement falloir que ce soit des servos-moteurs et non des steppers moteurs, parce que avec un servo j'ai le feedback du positionnement, alors je peux détecter s'il y a une anomalie ou une erreur.
+</div>
+<!-- SECTION Untitled -->
+<div id="Bearings">
+<h1>Les bearings</h1>
+Deep groove ball bearings by nature of their design can carry axial loads either alone or in combination with radial loads. Axial load capacity of standard bearings is 0.5 times the Basic Static Load Rating, CO of that bearing. Smaller bearings should not be subject to a load greater than 0.25 times CO. Excessive axial loads can lead to serious reduction of bearing service life.
 </div>
