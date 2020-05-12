@@ -288,7 +288,9 @@ class EditPage extends React.Component {
     const {sections, showSidePreview, showActionDropdown, showEmojiDropdown, showTitleDropdown, showTemplateDropdown, showStyleDropdown} = this.state
     const {filename} = this.props
 
-    const content = Object.keys(sections).map(s => sections[s].content).join('')
+    const content = Object.keys(sections).map(s => (
+      sections[s].hidden ? '' : sections[s].content
+    )).join('')
 
     const id = Date.now()
 

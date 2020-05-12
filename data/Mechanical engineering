@@ -22,6 +22,7 @@
 <span class="item" onclick="menuItemClicked(this)">Moteurs</span>
 <span class="item" onclick="menuItemClicked(this)">Bearings</span>
 <span class="item" onclick="menuItemClicked(this)">Calculs</span>
+<span class="item" onclick="menuItemClicked(this)">Travail du bois</span>
 </div>
 
 <script defer>
@@ -196,6 +197,21 @@ Guide des sciences et technologies industrielles - Jean-Louis FANCHON
 <!-- SECTION *Vis-Écrou -->
 <div id="Vis-Écrou">
 <h1>Les systèmes vis-écrous</h1>
+<h2>Couple vs Force</h2>
+<p>
+Mon moteur Nema 17 possède un couple de 0.46 N*m. Avec une tige filetée 0.25", disons que la force est appliquée à 0.24", div par 2 donne 0.12". À peu près 3 mm. Donc 150 N. 10% efficacité. 15 N. Donc mon moteur avec une tige filetée pourrait soulever à peu près 1.53 kg. Pas sûr de mon calcul.
+</p>
+
+<p>
+La puissance de mon moteur (N*m/s) est trouvée par couple (N*m) * vitesse (tour/s).
+La puissance requise de la tige fileté (N*m/s) est trouvée par force (N) * distance par tour (m/tour) * (tour/s)
+En égalant les deux puissances et enlevant la vitesse qui se trouve des deux côtés, on obtient:
+Le couple (N*m) est équivalent à la force de la charge multiplié par la distance par tour.
+
+Donc pour 460 N*mm et une tige filetée de 0.25" X 20 NC (pas 0.05" ou 1.27 mm): 362 N.
+
+Avec une efficacité de 10%: 36.2N ou 3.7 kg.
+</p>
 
 <p>
 EfficiencyBalls screws also offer higher levels of efficiency because rolling contact provides a lower coefficient of friction than sliding contact.  The efficiency of ball screws isrelatively constant and is typically better than 90%.  The efficiency of lead screws, on the other hand, typically ranges between 20% and 80%.  The efficiency of a lead screw is highly dependent upon its helix angle.  As a general rule, higher helix angles mean higher efficiency.  A higher helix angle is more efficientbecause less of the energy used to drive the lead screw goes into overcoming friction.  This is because the number of times the screw must rotate to achieve the same linear displacement is reduced on a high helix screw.  A disadvantage of a high helix angle is that more torqueis required to turn the screw
@@ -261,7 +277,7 @@ title('Angle AB')
 <h1>Les moteurs</h1>
 Il va probablement falloir que ce soit des servos-moteurs et non des steppers moteurs, parce que avec un servo j'ai le feedback du positionnement, alors je peux détecter s'il y a une anomalie ou une erreur.
 </div>
-<!-- SECTION Bearings -->
+<!-- SECTION *Bearings -->
 <div id="Bearings">
 <h1>Les bearings</h1>
 Deep groove ball bearings by nature of their design can carry axial loads either alone or in combination with radial loads. Axial load capacity of standard bearings is 0.5 times the Basic Static Load Rating, CO of that bearing. Smaller bearings should not be subject to a load greater than 0.25 times CO. Excessive axial loads can lead to serious reduction of bearing service life.
@@ -320,4 +336,12 @@ Densité (kg/m³):<input id="density_val" readonly><br/>
 Volume:<input id="volume" readonly><br/>
 Poids:<input id="poids" readonly><br/>
 </form>
+</div>
+<!-- SECTION Travail du bois -->
+<div id="Travail du bois">
+<h1>Travail du bois</h1>
+Deep groove ball bearings by nature of their design can carry axial loads either alone or in combination with radial loads. Axial load capacity of standard bearings is 0.5 times the Basic Static Load Rating, CO of that bearing. Smaller bearings should not be subject to a load greater than 0.25 times CO. Excessive axial loads can lead to serious reduction of bearing service life.
+<pre>
+[6200] -> d: 10 mm, D: 30 mm, B: 9mm
+</pre>
 </div>
