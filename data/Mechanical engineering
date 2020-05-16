@@ -1,4 +1,4 @@
-<!-- SECTION *Menu -->
+<!-- SECTION Menu -->
 <style>
 #menu {
   background-color: black;
@@ -23,6 +23,10 @@
 <span class="item" onclick="menuItemClicked(this)">Bearings</span>
 <span class="item" onclick="menuItemClicked(this)">Calculs</span>
 <span class="item" onclick="menuItemClicked(this)">Travail du bois</span>
+<span class="item" onclick="menuItemClicked(this)">Engrenages</span>
+<span class="item" onclick="menuItemClicked(this)">Matériaux</span>
+<span class="item" onclick="menuItemClicked(this)">Transmission</span>
+<span class="item" onclick="menuItemClicked(this)">Électrique</span>
 </div>
 
 <script defer>
@@ -276,6 +280,21 @@ title('Angle AB')
 <div id="Moteurs">
 <h1>Les moteurs</h1>
 Il va probablement falloir que ce soit des servos-moteurs et non des steppers moteurs, parce que avec un servo j'ai le feedback du positionnement, alors je peux détecter s'il y a une anomalie ou une erreur.
+<h2>Nema 17</h2>
+<p>
+ You'll find that you need the most torque during acceleration. Since acceleration is linear, you need the same amount of torque at your max speed as you do when you start from a stop. This limits you to certain speed, where you have enough torque to accelerate at a given rate.
+Some people accelerate faster, and limit their top speed. Others accelerate lower, so they can run a bit faster.
+Source: https://www.cnczone.com/forums/stepper-motors-drives/373098-cnc.html
+</p>
+<p>
+For a given machine velocity, the faster you can spin the stepper the better.
+Since steppers have a fixed resolution, spinning twice as fast effectively doubles the resolution, and can result in smoother motion, especially at low speeds.
+</p>
+<h2>Vitesse</h2>
+La vitesse maximale que le stepper moteur peut aller dépends du moteur et du controlleur. Les facteurs sont la résolution du moteur, et la fréquence du controlleur. Si le controlleur aurait une fréquence super élevé, le moteur pourrait tourner super vite. Mais en pratique, plus que la vitesse augmente et plus que le couple diminue, et il est peu pertinent d'aller plus haut que 1500 RPM.
+<h2>Temps de course</h2>
+Le temps de course d'un stepper doit prendre en compte l'accélération et non seulement la vitesse. 
+
 </div>
 <!-- SECTION *Bearings -->
 <div id="Bearings">
@@ -283,6 +302,13 @@ Il va probablement falloir que ce soit des servos-moteurs et non des steppers mo
 Deep groove ball bearings by nature of their design can carry axial loads either alone or in combination with radial loads. Axial load capacity of standard bearings is 0.5 times the Basic Static Load Rating, CO of that bearing. Smaller bearings should not be subject to a load greater than 0.25 times CO. Excessive axial loads can lead to serious reduction of bearing service life.
 <pre>
 [6200] -> d: 10 mm, D: 30 mm, B: 9mm
+
+[R6] -> d: 3/8, D: 7/8, B: 0.2812
+Dynamic Load Rating (Cr) 	749	lbs
+Static Load Rating (Cor) 	301	lbs
+
+Je prendrais donc des R6-2RS.
+
 </pre>
 </div>
 <!-- SECTION *Calculs -->
@@ -337,11 +363,215 @@ Volume:<input id="volume" readonly><br/>
 Poids:<input id="poids" readonly><br/>
 </form>
 </div>
-<!-- SECTION Travail du bois -->
+<!-- SECTION *Travail du bois -->
 <div id="Travail du bois">
 <h1>Travail du bois</h1>
-Deep groove ball bearings by nature of their design can carry axial loads either alone or in combination with radial loads. Axial load capacity of standard bearings is 0.5 times the Basic Static Load Rating, CO of that bearing. Smaller bearings should not be subject to a load greater than 0.25 times CO. Excessive axial loads can lead to serious reduction of bearing service life.
-<pre>
-[6200] -> d: 10 mm, D: 30 mm, B: 9mm
-</pre>
+<h2>"Masonite"</h2>
+<p>Je coirs qu'en général ils creusent une cavité pour encastré le masonite derrière les meubles. Mais ça risque d'être un peu difficile sans scie à table. Ex: https://www.youtube.com/watch?v=9MWdBlbT9AE&t=325s. Est-ce que c'est nécessaire?</p>
+</div>
+<!-- SECTION *Engrenages -->
+<div id="Engrenages">
+<h1>Engrenages</h1>
+<p>Pour que deux engrenages s'imbriquent, ils doivent posséder le même angle de pression et le même module.</p>
+
+<p>Module. Le module utilisé est une valeur standardisée (puisqu'un outil fabrique un seul module). Les valeurs principales (mm) sont 0.06, 0.08, 0.10, 0.12, 0.15, 0.20, 0.25, 0.30, 0.40, 1.0, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10, 12, 16, 20, 25, 32, 40, 50, 60. Dans la liste, peut-être rajouter aussi les modules secondaires. Mettre les primaires en bold et les secondaires normals.</p>
+
+<p>
+For pressure angle 20 degrees, the minimum number of teeth free of undercutting is 17. However, gears with 16 teeth or less can be usable if their strength and contact ratio pose any ill effect. z=2/sin²(alpha). Source: https://khkgears.net/new/gear_knowledge/gear_technical_reference/involute_gear_profile.html
+</p>
+
+<h2>Efforts sur les dentures</h2>
+
+<p>
+Si rendement = 1, la puissance de chaque engrenage est la même et équivaut au couple (N*m) multiplié par la vitesse angulaire. (rad/s)
+</p>
+
+<p>
+La force tangentiel Ft équivaut au couple diviser par le rayon.
+</p>
+
+<p>
+La force radiale Fr équivaut à la force tangentiel multiplié par la tangente de l'angle de pression.
+</p>
+
+<p>
+La force totale sur la denture est donc de Ft/cos(alpha).
+</p>
+
+<script>
+function calculateEfforts() {
+  // variables
+  var C = parseFloat(this.C.value)
+  var b = parseFloat(this.b2.value)
+  var m = parseFloat(this.m2.value)
+  var Y = parseFloat(this.Y2.value)
+  var Z = parseFloat(this.Z2.value)
+  var r = Z*m/2/1000
+  var d = Z*m
+  var alpha = parseFloat(this.alpha2.value) * Math.PI / 180
+
+  var density = parseFloat(this.density.value)
+  var k1 = this.unit_long.value === "mm" ? 0.001 : 0.0254;
+  var k2 = this.unit_poids.value === "kg" ? 1 : 2.20462;
+
+  var Ft = C/r
+  var Fr = Ft*Math.tan(alpha)
+  var F = Ft/Math.cos(alpha)
+
+  var sigma = Ft/(b*m*Y)
+
+  // Set calculated values
+  this.d2.value = d
+  this.Ft.value = Ft
+  this.Fr.value = Fr
+  this.F2.value = F
+  this.sigma2.value = sigma
+}
+window.onload = calculate()
+</script>
+
+<form id="theForm" oninput="calculateEfforts()">
+
+Matériau:<select id="density">
+  <option value="450">épinette</option>
+  <option value="7700" selected>acier</option>
+</select><br/>
+Unité de longueur:<select id="unit_long">
+  <option value="mm">mm</option>
+  <option value="in" selected>in</option>
+</select><br/>
+Unité de poids:<select id="unit_poids">
+  <option value="lb" selected>lb</option>
+  <option value="kg">kg</option>
+</select><br/>
+Couple <i>C</i> [N.m]:<input id="C" type="number" value="0"><br/>
+Nombre de dents <i>Z</i>:<input id="Z2" type="number" value="0"><br/>
+Angle de pression <i>α</i> [deg]:<input id="alpha2" type="number" value="20"><br/>
+Module <i>m</i> [mm]:<select id="m2">
+0.06, 0.08, 0.10, 0.12, 0.15, 0.20, 0.25, 0.30, 0.40, 1.0, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10, 12, 16, 20, 25, 32, 40, 50, 60
+  <option value="0.06">0.06</option>
+  <option value="0.08">0.08</option>
+  <option value="0.10">0.10</option>
+  <option value="0.12">0.12</option>
+  <option value="0.15">0.15</option>
+  <option value="0.20">0.15</option>
+  <option value="0.20">0.20</option>
+  <option value="0.25">0.25</option>
+  <option value="0.30">0.30</option>
+  <option value="0.40">0.40</option>
+  <option value="1.0" selected>1.0</option>
+  <option value="1.25">1.25</option>
+  <option value="1.5">1.5</option>
+  <option value="2">2</option>
+  <option value="2.5">2.5</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="8">8</option>
+  <option value="10">10</option>
+  <option value="12">12</option>
+  <option value="16">16</option>
+  <option value="20">20</option>
+  <option value="25">25</option>
+  <option value="32">32</option>
+  <option value="40">40</option>
+  <option value="50">50</option>
+  <option value="60">60</option>
+</select><br/>
+Largeur <i>b</i> [mm]:<input id="b2" type="number" value="0"><br/>
+Facteur <i>Y</i> [mm]:<input id="Y2" type="number" value="0"><br/>
+<br/>
+
+Diamètre primitif [mm]:<input id="d2" readonly><br/>
+Force tangentielle [N]:<input id="Ft" readonly><br/>
+Force radiale [N]:<input id="Fr" readonly><br/>
+Force totale [N]:<input id="F2" readonly><br/>
+Contrainte [N/mm²]:<input id="sigma2" readonly><br/>
+</form>
+
+<h2>Calcul de la résistance de la dent (méthode de Lewis)</h2>
+<p>
+C'est une approximation et une étude simplifiée.
+</p>
+
+<p>
+La contraine maximale équivaut à la force tangentielle diviser par (la largeur de la dent, le module et une constance Y). À 12 dents, Y vaut: 0.245. À 60 dents, Y vaut 0.42.
+</p>
+
+<p>
+La contrainte maximale doit être plus petite que la résistance à la tension du matériau.
+</p>
+
+<p>
+Mon calcul me donne une contraine de 11 MPa pour la petite menante et 1 MPa pour la grande menée. C'est bon!
+</p>
+
+<p>
+Le calcul de la force se fait avec la roue menante. Par la 2e loi de Newton, la même force va être appliquée à la roue menée. Elle aura donc un plus grand couple (même force, mais plus grande distance), toutefois la vitesse angulaire va diminuée.
+</p>
+
+</div>
+<!-- SECTION *Matériaux -->
+<div id="Matériaux">
+<h1>Matériaux</h1>
+<h2>ABS</h2>
+<h2>PLA</h2>
+Properties*	ABS	PLA
+Tensile Strength**		37 MPa
+
+<h2>Acier</h2>
+Tensile Strength, Yield	370 MPa
+
+<h2>Résistance à la tension</h2>
+<select id="density" onchange="document.getElementById('tensileStrength').value = this.value">
+  <option value="27">ABS</option>
+  <option value="37">PLA</option>
+  <option value="370" selected>acier</option>
+</select>
+<input id="tensileStrength" type="text" value="370" size="4" readonly> MPa
+
+<h2>Module de Young</h2>
+<select id="density" onchange="document.getElementById('moduleYoung').value = this.value">
+  <option value="1.4 - 3.1">ABS</option>
+  <option value="3.5">PLA</option>
+  <option value="200" selected>acier</option>
+</select>
+<input id="moduleYoung" type="text" value="370" size="4" readonly> GPa
+
+</div>
+<!-- SECTION *Transmission -->
+<div id="Transmission">
+<h1>Transmission</h1>
+<h2>Comment choisir</h2>
+<p>
+Prérequis: À partir de ce point, le moteur devrait déjà être choisi selon la puissance requise pour déplacer la charge à une certaine vitesse.
+</p>
+<p>
+La première chose à faire est de déterminer la ratio désiré. 
+</p>
+<p>
+Il y a deux inputs: précision et vitesse.
+</p>
+<h2>Les différents types</h2>
+<h2>Calcul de la résolution</h2>
+<p>
+Admettons que mon bras à 15" de reach. Multiplier par 3.1416 multiplier par 2 donne une circonférence de 94.248". Un stepper standard de 200 step par révolution. Avec un ratio de 5, on multiplie par 5 la résolution, donc 1000 step par révolution. Le résultat est 0.094248" de parcourue par révolution.
+</p>
+<p>
+Je veux être capable d'imprimer en 3d avec, c'est un de mes objectifs. Je dois avec une résolution de 0.2 mm ou 0.08" (répétable). Toutefois, cette résolution est requise seulement sur une petite surface de 20 cm X 20 cm. Et la précision du bras rotatif est meilleur devant dans l'axe requis. À 90 degrés, il est au maximum. 20 cm c'est 7.874". 15" - 7.874" nous donne 7.126". Donc on cherche l'angle parcouru pour que le bras soit à 7.126" en y, et non à 15". On l'obtient avec acos(7.126/15) ce qui donne 61.636 deg.
+</p>
+<p>
+On a une résolution de 200 coche par révolution, multiplié par le ratio de 5, donc 1000. 360 deg / 1000 donne 0.36 degrés.
+</p>
+<p>
+Le delta y de 61.636 à 62 degré est de 0.084" (trouvé avec FreeCAD) au lieu de 0.095". OK fuck off ça sert à rien ce que j'ai trouvé comme résolution.
+</p>
+<h2>Calcul de la vitesse</h2>
+</div>
+<!-- SECTION Électrique -->
+<div id="Électrique">
+<h1>Électrique</h1>
+<h2>Cable carreirs</h2>
+Type de cable carreirs: https://www.cablecarriers.co.in/cable-carriers-and-trollies.html
 </div>

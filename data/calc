@@ -1,10 +1,37 @@
+<!-- SECTION *style -->
 <style>
-#content {
+#container{
+  display: flex;
+}
+#left{
+  height: 100%;
+  width:300px;
+  margin-left: 20px;
+  flex-grow: 0;
+  display:inline-block;
+}
+#center{
+  height: 100%;
+  min-width:400px;
+  flex-grow: 1000;
+  display:inline-block;
   text-align: center;
 }
+#right{
+  height: 100%;
+  width:300px;
+  flex-grow: 0;
+  display:inline-block;
+}
 </style>
-
-<div id="content">
+<!-- SECTION *left -->
+<div id="container">
+<div id="left">
+<h2>Variables</h2>
+<div id="variables"></div>
+</div>
+<!-- SECTION *center -->
+<div id="center">
   <h1>Calculatrice</h1>
   <br/>
 
@@ -19,9 +46,23 @@
   <br/>
   <br/>
   <br/>
-  TODO: Afficher les values de a b c et de x y z, c'est utile de pouvoir avoir des variables. TODO: Gerer la conversion d'unites aussi.
+  TODO: Afficher les values de a b c et de x y z, c'est utile de pouvoir avoir des variables. TODO: Gerer la conversion d'unites aussi. Trois colonnes, à gauche les variables utilisées. Au centre l'input et l'output, et à droite une liste de fonction (cos, sin, etc..)
 </div>
+<!-- SECTION right -->
+<div id="right">
+<h2>Fonctions</h2>
 
+<button onclick="addFunction('Math.sin(',')')">sin</button>
+<button onclick="addFunction('Math.cos(',')')">cos</button>
+<button onclick="addFunction('Math.tan(',')')">tan</button>
+<button onclick="addFunction(this)">pow</button>
+<button onclick="addFunction(this)">sqrt</button>
+<button onclick="addFunction(this)">exp</button>
+<button onclick="addFunction(this)">log</button>
+<button onclick="addFunction('Math.PI')">π</button>
+</div>
+</div>
+<!-- SECTION script -->
 <script defer>
 
 $(document).ready(function(){
@@ -29,6 +70,14 @@ $(document).ready(function(){
 });
 
 function calculate() {
+  if (!window.notVariableNames) {
+    window.variableNames = {}
+    window.notVariableNames = {}
+    for ( var i in window ) {
+      window.notVariableNames[i] = true
+    }
+  }
+
   const val = document.getElementById('val')
   const evaluated = eval(val.value)
 
@@ -38,7 +87,27 @@ function calculate() {
   result.scrollTop = result.scrollHeight;
 
   val.value = evaluated
-}
-</script>
 
-          
+  for ( var i in window ) {
+    if (!window.notVariableNames[i]) {
+      window.variableNames[i] = true
+    }
+  }
+
+  var html = ""
+  Object.keys(window.variableNames).forEach(name => {
+    html += "<b>"+name+"</b> "+window[name]+"<br/>"
+    console.log(name)
+  })
+  document.getElementById("variables").innerHTML = html
+}
+
+function addFunction(before,after) {
+  const val = document.getElementById('val')
+
+  val.value = val.value.slice(0, val.selectionStart) + (before || '') + val.value.slice(val.selectionStart, val.selectionEnd) + (after || '') + val.value.slice(val.selectionEnd)
+}
+
+  setTimeout(function(){ val.focus(); }, 1000);
+  
+</script>

@@ -1,4 +1,4 @@
-<!-- SECTION *Menu -->
+<!-- SECTION Menu -->
 <style>
 #menu {
   background-color: black;
@@ -18,7 +18,9 @@
 <div id="menu">
 <span class="item" onclick="menuItemClicked(this)">TODO</span>
 <span class="item" onclick="menuItemClicked(this)">Notes</span>
-<span class="item" onclick="menuItemClicked(this)">Achats</span>
+<span class="item" onclick="menuItemClicked(this)">Design</span>
+<span class="item" onclick="menuItemClicked(this)">Pesée</span>
+<span class="item" onclick="menuItemClicked(this)">Cable</span>
 </div>
 
 <script>
@@ -45,7 +47,7 @@ Oui ça serait cool un bras robotique, mais je mets de côté pour l'instant. Te
 
 Toutefois, ce n'est pas en vaint, j'ai une bonne idée je crois. Le potentiel est dans des trucs imbriqués (comme des poupées russes!) C'est beaucoup plus éléguant qu'une structure pleine avec un petit déplacement.
 </div>
-<!-- SECTION Achats -->
+<!-- SECTION *Achats -->
 <div id="Achats">
 <h1>Achats</h1>
 <pre>
@@ -59,19 +61,19 @@ Spacer mount screw. (standoff)
 
 Boulons de l'estrie:
 (noir idéalement)
-Cap screw (Allen) 4mm X ?
-Nut 4mm
+lock washer M4
+set screw M4
+(20) M3 8mm socket cap
+
+Bearing general [Wellington]:
+- 2 bearing
+- bearing retainer ring
+- pillow block?
 
 Canac:
-Bande d'acier (strapping) 0.5".
 Tôle acier galvanisé.
 Petites marettes.
-2 bender
-2 bungee
-Vis à bois tête ronde 1/2"
-Vis à bois tête fraisée 3/4"
 Vis à bois 1"
-caoutchouc pour l'établit: 30" X 39"
 
 Acheter #8-32 X 0.75"
 Acheter #10-24
@@ -84,14 +86,10 @@ Acheter circlip?
 Plexiglass pour enclosure de mon imprimante 3d et pour mes portes de ma machine
 
 Acier Lennox:
-Une barre de 1.25" X 0.25" X 10' et une barre 1.25" X 0.375" X 10'
-Deux barres 0.5" X 0.125" X 10'
-Si possible des tubes de 7/16"
-Deux tiges pleines 7/16" X 10'
-Une tige filetée 0.25"
-Une tige filetée 4mm
-Est-ce qu'ils ont de la tôle?
-Tige 10mm ou autre pour y mettre des bearings.
+[Tôle à partir de gauge 22]
+Fer angle 3/4" X 1/8" X 10'
+Fer angle 1" X 1/8" X 10' (Pour en haut)
+Fer plat 1" X 1/16" X 10'
 
 </pre>
 </div>
@@ -102,12 +100,18 @@ Tige 10mm ou autre pour y mettre des bearings.
 Renforcir les rails qui montent en rajoutant des coches dedans, de la même manière que les brackets de menuiseries sont fait.
 </pre>
 </div>
-<!-- SECTION *Design -->
+<!-- SECTION Design -->
 Section transversale debout ou couchée:
 
 Je dois avec de l'espace derrière pour que ça monte et descende, donc debout c'est mieux pour ça?
 
 Aussi je dois avoir de l'espace pour le moteur et tout.
+
+La hauteur du meuble est de 79" pour pouvoir se déménager facilement (une porte standard mesure 80"). Une section du haut pour la machine est vissée par dessus, et toute la machine s'enlève simplement en la soulevant en haut (Ça pourrait être par en bas aussi).
+
+Pour l'instant, je fais une seule rotation parce que j'ai aussi mon déplacement gauche droite. Peut-être par contre que je vais aussi rajouter une 2e rotation (comme pour un robot SCARA). Pour avoir plus de mobilité. Aussi, ce qui pourrait être cool, c'est d'avoir un 2e bras. Donc 2 bras avec 2 rotations chacune comme ça ils peuvent se déplacer chacun indépendemment l'un de l'autre. C'est donc le torse qui se déplacerait gauche droite pour des armoire larges. Ce déplacement ne serait donc peut-être pas nécessaire pour une petite armoire (le torse toujours au milieu)
+
+Je ne suis pas sûr de faire ça parce que là ça devient vraiment compliqué. Il faut que je rajoute tous les moments doublés. Par exemple, je ne peux plus utiliser un seul monter descendre. Il en faut un pour chaque bras. Pas sûr finalment...
 <!-- SECTION *Pesée -->
 <h1>Pesée</h1>
 <pre>
@@ -132,3 +136,17 @@ J'ai décider que ce serait des poids de 1.25" X 4" X 0.25"
 Je vais acheter:
 Une barre de 1.25" X 0.25" X 10' et une barre 1.25" X 0.375" X 10'
 </pre>
+<!-- SECTION *Cable -->
+Longeur du cable: 50" + 2" + 13" + 2" + 4 tour
+
+4 tour 3.5*3.1416 donne 44".
+44 / 3.1416 / 2.625 donne 5.33
+
+6 tours 3.5" équivaut à 8 tours 2.625"
+
+Il y a un demi pouce entre les deux.
+500/72 donne 7 tours.
+
+Donc je vais me couper un cable de: 67" + 66" = 133"
+
+Regarder comment fonctionne le frein d'un cable de pont roulant.
