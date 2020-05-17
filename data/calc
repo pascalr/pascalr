@@ -30,9 +30,9 @@
 <h2>Variables</h2>
 <div id="variables"></div>
 </div>
-<!-- SECTION *center -->
+<!-- SECTION center -->
 <div id="center">
-  <h1>Calculatrice</h1>
+  <h1>Calc</h1>
   <br/>
 
   <form action="#" onsubmit="calculate();return false">
@@ -42,11 +42,6 @@
   <br/>
   <br/>
   <textarea id="result" rows=20 cols=50></textarea>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  TODO: Afficher les values de a b c et de x y z, c'est utile de pouvoir avoir des variables. TODO: Gerer la conversion d'unites aussi. Trois colonnes, à gauche les variables utilisées. Au centre l'input et l'output, et à droite une liste de fonction (cos, sin, etc..)
 </div>
 <!-- SECTION right -->
 <div id="right">
