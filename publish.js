@@ -7,18 +7,18 @@ var output_dir = '../public_pascalr/'
   
 shell(`rm -R ${output_dir}/*`);
 
-var data_list = ([
+var data_list = [
   'desktop',
   'calc',
   "Liste d'épicerie",
-]).map(s => path.join('data',s))
-shell(`mkdir -p ${path.join(output_dir,'data')}`);
+]
+//shell(`mkdir -p ${path.join(output_dir,'data')}`);
 
 var list = [...data_list]
 console.log(list)
 
 for (let i = 0; i < list.length; i++) {
-  fs.copyFile(list[i], path.join(output_dir,list[i])+'.html', (err) => {
+  fs.copyFile(path.join('data',list[i]), path.join(output_dir,list[i])+'.html', (err) => {
     if (err) throw err;
   });
 }
