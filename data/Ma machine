@@ -1,4 +1,73 @@
-<!-- SECTION Menu -->
+<!-- SECTION *Style -->
+<style>
+html *
+{
+   font-size: 0.99em;
+   font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+}
+#manuel {
+  position: relative;
+}
+.icon {
+  border: solid black 2.5px;
+  position: absolute;
+  cursor: pointer;
+  z-index: 3;
+}
+.icon:active {
+  background-color: red;
+}
+.background_image {
+  z-index: 2;
+  position: absolute;
+  user-drag: none; 
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+input[type='number'] {
+  width: 80px;
+}
+input[type=checkbox] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid gray;
+  outline: none;
+  vertical-align: middle;
+  background-color: white;
+}
+
+input[type=checkbox]:checked {
+  background-color: yellow;
+}
+
+button {
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
+<!-- SECTION *Menu -->
 <style>
 #menu {
   background-color: black;
@@ -16,11 +85,15 @@
 </style>
 
 <div id="menu">
+<span class="item" onclick="menuItemClicked(this)">Inventaire</span>
+<span class="item" onclick="menuItemClicked(this)">Recette</span>
+<span class="item" onclick="menuItemClicked(this)">Manuel</span>
 <span class="item" onclick="menuItemClicked(this)">TODO</span>
 <span class="item" onclick="menuItemClicked(this)">Notes</span>
-<span class="item" onclick="menuItemClicked(this)">Design</span>
-<span class="item" onclick="menuItemClicked(this)">Pesée</span>
-<span class="item" onclick="menuItemClicked(this)">Cable</span>
+<span class="item" onclick="menuItemClicked(this)">design</span>
+<span class="item" onclick="menuItemClicked(this)">pesée</span>
+<span class="item" onclick="menuItemClicked(this)">cable</span>
+<span class="item" onclick="menuItemClicked(this)">Achats</span>
 </div>
 
 <script>
@@ -34,6 +107,194 @@ function menuItemClicked(item) {
   if (elem) {elem.style.display = "block";}
 }
 </script>
+<!-- SECTION *Polling -->
+<script>
+(function poll() {
+  setInterval(function() {
+    $.get( "/poll/arduino", function( data ) {
+      let log = document.getElementById("log")
+      log.value += data.log;
+      log.scrollTop = log.scrollHeight;
+
+      const info = data.info
+      if (info) {
+        window.info = info
+        Object.keys(info).forEach((key) => {
+          const input = document.getElementById(key)
+          if (input) {
+            if (input.type == "checkbox") {
+              input.checked = info[key] === "1"
+            } else {
+              input.value = info[key]
+            }
+          }
+        })
+      }
+    });
+  }, 1000);
+})();
+</script>
+<!-- SECTION *Manuel -->
+<div id="Manuel">
+<h1>Commandes</h1>
+
+<div>
+<button onclick="document.getElementById('log').value='';$.get('/reloadArduino');">Connect</button>
+<button onclick="$.get('/closeArduino')">Close</button>
+<button onclick="$.get('/run/arduino?cmd=\?')">Info</button>
+<button onclick="$.get('/run/arduino?cmd=\s')" style="color: red;">Stop</button>
+</div>
+
+<div  style="position: absolute; top: 120px; left: 0px;">
+<button style="font-size: 28px; margin-bottom: 10px;" onclick="$.get('/run/arduino?cmd=H')">🏠</button><br/>
+<button onclick="$.get('/run/arduino?cmd=HX')">🏠 X</button><br/>
+<button onclick="$.get('/run/arduino?cmd=HY')">🏠 Y</button><br/>
+<button onclick="$.get('/run/arduino?cmd=HZ')">🏠 Z</button><br/>
+<button onclick="$.get('/run/arduino?cmd=HW')">🏠 W</button><br/>
+</div>
+
+<div  style="position: absolute; top: 100px; left: 100px;">
+<h2>Position</h2>
+Position X: <input id="Pos X" type="number" readonly>
+<button onclick="$.get('/run/arduino?cmd=%2DX')">-</button>
+<button onclick="$.get('/run/arduino?cmd=%2BX')">+</button>
+<br/>
+Position Y: <input id="Pos Y" type="number" readonly>
+<button onmousedown="$.get('/run/arduino?cmd=%2DY')"
+onclick="$.get('/run/arduino?cmd=s')">-</button>
+<button onmousedown="$.get('/run/arduino?cmd=%2BY')"
+onclick="$.get('/run/arduino?cmd=s')">+</button>
+<br/>
+Position Z: <input id="Pos Z" type="number" readonly>
+<button onclick="$.get('/run/arduino?cmd=%2DZ')">-</button>
+<button onclick="$.get('/run/arduino?cmd=%2BZ')">+</button>
+<br/>
+Position W: <input id="Pos W" type="number" readonly>
+<button onclick="$.get('/run/arduino?cmd=%2DW')">-</button>
+<button onclick="$.get('/run/arduino?cmd=%2BW')">+</button>
+<br/>
+</div>
+<div  style="position: absolute; top: 100px; left: 400px;">
+<h2>Destination</h2>
+<form action="#" onsubmit="$.get(`/run/arduino?cmd=MX${this[0].value}Y${this[1].value}Z${this[2].value}W${this[3].value}`);return false">
+Position X: <input id="Dest X" type="number" readonly><br/>
+Position Y: <input id="Dest Y" type="number" readonly><br/>
+Position Z: <input id="Dest Z" type="number" readonly><br/>
+Position W: <input id="Dest W" type="number" readonly><br/>
+</form>
+</div>
+
+<div  style="position: absolute; top: 100px; left: 620px;">
+<h2>Outputs</h2> Axis
+<select id="axis" name="axis">
+  <option value="X">X</option>
+  <option value="Y">Y</option>
+  <option value="Z">Z</option>
+  <option value="W">W</option>
+</select>
+<br/>
+<input id="PIN enabled Y" type="checkbox">Enabled
+<br/>
+<input id="PIN dir Y" type="checkbox" readonly>Direction<br/>
+<input id="PIN step Y" type="checkbox" readonly>Step<br/>
+<input id="PIN limit switch Y" type="checkbox" readonly>Limit switch<br/>
+<input id="Force Y" type="checkbox" readonly>Force rotation<br/>
+</div>
+
+<div  style="position: absolute; top: 100px; left: 800px;">
+<h2>Inputs</h2> Axis
+<select id="axis" name="axis">
+  <option value="X">X</option>
+  <option value="Y">Y</option>
+  <option value="Z">Z</option>
+  <option value="W">W</option>
+</select>
+<br/>
+Speed: <input type="range" min="500" max="3000" value="500" style ="direction: rtl;" onchange="$.get('/run/arduino?cmd=v' + this.value)">
+<br/>
+</div>
+
+<script>
+function sendMessage() {
+  let v = document.getElementById('message');
+  $.get('/run/arduino?cmd=' + encodeURI(v.value));
+  v.value = "";
+}
+</script>
+
+<div  style="position: absolute; top: 300px; left: 0px;">
+<form action="#" onsubmit="sendMessage(); return false;" autocomplete="off">
+  Message: <input id="message" type="text">
+  <input type="submit" value="Send"/>
+</form>
+</div>
+
+<div  style="position: absolute; top: 350px; left: 0px;">
+
+ <textarea id="log" cols=100 rows=14 readonly>
+Log...
+</textarea> 
+</div>
+
+<div style="padding-top: 512px;"></div>
+
+<h1>Console</h1>
+</div>
+<!-- SECTION *Inventaire -->
+<div id="Inventaire">
+<h1>Inventaire</h1>
+
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<br/>
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+<img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
+
+</div>
+<!-- SECTION *Recette -->
+<div id="Recette">
+<h1>Recettes</h1>
+
+<h2>Entrées</h2>
+Soupe aux pois
+<h2>Brevages</h2>
+Chocolat chaud
+Capuccino vanille française
+Fraise kiwi
+<h2>Repas</h2>
+Riz
+Pâtes
+
+<h2>Desserts</h2>
+Gateau aux carottes
+<h2>Accompagnements</h2>
+<div><a href="/show/hummus">Hummus</a></div>
+<div><a href="/show/tahini">Tahini</a></div>
+
+50g riz
+
+<img src="/images/1582349055246_image.png" width=128 onclick="$.get('/run/arduino?cmd=riz')">
+
+<h2>Codes</h2>
+Riz au jasmin: 1610
+
+</div>
 <!-- SECTION *Notes -->
 <div id="Notes">
 
@@ -47,14 +308,11 @@ Oui ça serait cool un bras robotique, mais je mets de côté pour l'instant. Te
 
 Toutefois, ce n'est pas en vaint, j'ai une bonne idée je crois. Le potentiel est dans des trucs imbriqués (comme des poupées russes!) C'est beaucoup plus éléguant qu'une structure pleine avec un petit déplacement.
 </div>
-<!-- SECTION *Achats -->
+<!-- SECTION Achats -->
 <div id="Achats">
 <h1>Achats</h1>
 <pre>
 Internet:
-Raspberry PI
-Acheter d'autres controlleurs de stepper (attendre un peu, pas nécessaire pour l'instant.)
-PLA orange ou noir
 
 Addisson électronique:
 Spacer mount screw. (standoff)
@@ -63,10 +321,9 @@ Boulons de l'estrie:
 (noir idéalement)
 lock washer M4
 set screw M4
-(20) M3 8mm socket cap
+(20) M3 8mm socket cap (pk déjà?)
 
 Bearing general [Wellington]:
-- 2 bearing
 - bearing retainer ring
 - pillow block?
 
@@ -87,9 +344,6 @@ Plexiglass pour enclosure de mon imprimante 3d et pour mes portes de ma machine
 
 Acier Lennox:
 [Tôle à partir de gauge 22]
-Fer angle 3/4" X 1/8" X 10'
-Fer angle 1" X 1/8" X 10' (Pour en haut)
-Fer plat 1" X 1/16" X 10'
 
 </pre>
 </div>
@@ -100,7 +354,8 @@ Fer plat 1" X 1/16" X 10'
 Renforcir les rails qui montent en rajoutant des coches dedans, de la même manière que les brackets de menuiseries sont fait.
 </pre>
 </div>
-<!-- SECTION Design -->
+<!-- SECTION *Design -->
+<div id="design">
 Section transversale debout ou couchée:
 
 Je dois avec de l'espace derrière pour que ça monte et descende, donc debout c'est mieux pour ça?
@@ -112,7 +367,9 @@ La hauteur du meuble est de 79" pour pouvoir se déménager facilement (une port
 Pour l'instant, je fais une seule rotation parce que j'ai aussi mon déplacement gauche droite. Peut-être par contre que je vais aussi rajouter une 2e rotation (comme pour un robot SCARA). Pour avoir plus de mobilité. Aussi, ce qui pourrait être cool, c'est d'avoir un 2e bras. Donc 2 bras avec 2 rotations chacune comme ça ils peuvent se déplacer chacun indépendemment l'un de l'autre. C'est donc le torse qui se déplacerait gauche droite pour des armoire larges. Ce déplacement ne serait donc peut-être pas nécessaire pour une petite armoire (le torse toujours au milieu)
 
 Je ne suis pas sûr de faire ça parce que là ça devient vraiment compliqué. Il faut que je rajoute tous les moments doublés. Par exemple, je ne peux plus utiliser un seul monter descendre. Il en faut un pour chaque bras. Pas sûr finalment...
+</div>
 <!-- SECTION *Pesée -->
+<div id="pesée">
 <h1>Pesée</h1>
 <pre>
 Pour me donner une référence, le plus pesant est mes 2 tubes carés. Ils mesurent 40" X (0.75"^2-0.5"^2) C'est 12.5 po^3. C'est 3.6 lbs. Donc des plates de 1" X 4" serait bon en masse.
@@ -136,7 +393,9 @@ J'ai décider que ce serait des poids de 1.25" X 4" X 0.25"
 Je vais acheter:
 Une barre de 1.25" X 0.25" X 10' et une barre 1.25" X 0.375" X 10'
 </pre>
+</div>
 <!-- SECTION *Cable -->
+<div id="cable">
 Longeur du cable: 50" + 2" + 13" + 2" + 4 tour
 
 4 tour 3.5*3.1416 donne 44".
@@ -150,3 +409,4 @@ Il y a un demi pouce entre les deux.
 Donc je vais me couper un cable de: 67" + 66" = 133"
 
 Regarder comment fonctionne le frein d'un cable de pont roulant.
+</div>
