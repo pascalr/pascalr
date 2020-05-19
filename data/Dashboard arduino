@@ -5,19 +5,6 @@ html *
    font-size: 0.99em;
    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
 }
-#menu {
-  background-color: black;
-  color: white;
-}
-.item:hover {
-  background-color: orange;
-}
-.item {
-  padding-left: 6px;
-  padding-right: 10px;
-  border-right: solid 1px white;
-  cursor: pointer;
-}
 #manuel {
   position: relative;
 }
@@ -107,23 +94,42 @@ input[type=number] {
   }, 1000);
 })();
 </script>
-<!-- SECTION *Menu -->
+<!-- SECTION Menu -->
+<style>
+#menu {
+  background-color: black;
+  color: white;
+}
+.item:hover {
+  background-color: orange;
+}
+.item {
+  padding-left: 6px;
+  padding-right: 10px;
+  border-right: solid 1px white;
+  cursor: pointer;
+}
+</style>
+
 <div id="menu">
-<span class="item" onclick="menuItemClicked('inventaire')">Inventaire</span>
-<span class="item" onclick="menuItemClicked('recette')">Recette</span>
-<span class="item" onclick="menuItemClicked('manuel')">Manuel</span>
+<span class="item" onclick="menuItemClicked(this)">Inventaire</span>
+<span class="item" onclick="menuItemClicked(this)">Recette</span>
+<span class="item" onclick="menuItemClicked(this)">Manuel</span>
 </div>
 
 <script>
-function menuItemClicked(id) {
-  document.getElementById("inventaire").style.display = "none";
-  document.getElementById("recette").style.display = "none";
-  document.getElementById("manuel").style.display = "none";
-  document.getElementById(id).style.display = "block";
+function menuItemClicked(item) {
+  let siblings = item.parentElement.children;
+  for (let i = 0; i < siblings.length; i++) {
+    let elem = document.getElementById(siblings[i].innerText)
+    if (elem) {elem.style.display = "none";}
+  }
+  let elem = document.getElementById(item.innerText)
+  if (elem) {elem.style.display = "block";}
 }
 </script>
 <!-- SECTION *Manuel -->
-<div id="manuel" style="display: none;">
+<div id="Manuel">
 <h1>Commandes</h1>
 
 <div>
@@ -229,7 +235,7 @@ Log...
 <h1>Console</h1>
 </div>
 <!-- SECTION *Inventaire -->
-<div id="inventaire" style="display: none;">
+<div id="Inventaire">
 <h1>Inventaire</h1>
 
 <img src="/images/invention/pot.svg" onclick="$.get('/run/arduino?cmd=?')">
@@ -256,7 +262,7 @@ Log...
 
 </div>
 <!-- SECTION *Recette -->
-<div id="recette">
+<div id="Recette">
 <h1>Recettes</h1>
 
 <h2>Entrées</h2>

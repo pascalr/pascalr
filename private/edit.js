@@ -322,7 +322,7 @@ class EditPage extends React.Component {
         e('input', {id: 'filterVal2', onKeyDown: this.onKeyDown, type: 'text', value: this.state.query, onChange: ({target}) => {this.setState({query: target.value})}}),
       ),
       e('div', {className: 'toolbarMenu'},
-        //e('span', {onClick: () => {this.setState({showSidePreview: !showSidePreview})}}, 'Side preview'),
+        e('span', {onClick: () => {this.setState({showSidePreview: !showSidePreview})}}, 'Side preview'),
         e('span', {onClick: this.removeHtml}, icon('format_clear-24px.svg')),
         e('span', {onClick: () => this.insertText('<pre>\n\n</pre>', 6) }, icon('subject-24px.svg')),
         e('span', {onClick: () => this.insertText('<blockquote>\n\n</blockquote>\n<cite>\n\n</cite>', 13) }, icon('format_quote-24px.svg')),
