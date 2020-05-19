@@ -18,8 +18,8 @@ body {
 </style>
 
 <div id="icons">
-<a href="show/Liste d'épicerie"><img class="image2" src="images/1575322767912_image.png" width="64" height="64"></a>
-<a href="show/calc"><img class="image2" src="images/calculator.svg" width="64" height="64"></a>
+<a href="show/Liste d'épicerie.html"><img class="image2" src="images/1575322767912_image.png" width="64" height="64"></a>
+<a href="show/calc.html"><img class="image2" src="images/calculator.svg" width="64" height="64"></a>
 <a href="show/MouseControl"><img src="images/mouse.svg" width="64" height="64"></a>
 <a href="show/Mechanical engineering"><img src="images/gears.svg" width="64" height="64"></a>
 <a href="show/Ma machine"><img src="images/robot_arm.svg" width="64" height="64"></a>
