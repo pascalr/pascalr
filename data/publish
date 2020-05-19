@@ -1,0 +1,27 @@
+<!-- SECTION Untitled -->
+<h1>Publié<h1>
+
+<h2>Liste de pages</h2>
+<ul id="listePages">
+<li>desktop</li>
+<li>calc</li>
+<li>Liste d'épicerie</li>
+</ul>
+
+<button onclick="publish()">Publish</button>
+
+<script>
+function publish() {
+  let list = document.getElementById('listePages').children
+}
+function menuItemClicked(item) {
+  console.log('lalalal')
+  let siblings = item.parentElement.children;
+  for (let i = 0; i < siblings.length; i++) {
+    let elem = document.getElementById(siblings[i].innerText)
+    if (elem) {elem.style.display = "none";}
+  }
+  let elem = document.getElementById(item.innerText)
+  if (elem) {elem.style.display = "block";}
+}
+</script>
