@@ -308,7 +308,7 @@ Oui ça serait cool un bras robotique, mais je mets de côté pour l'instant. Te
 
 Toutefois, ce n'est pas en vaint, j'ai une bonne idée je crois. Le potentiel est dans des trucs imbriqués (comme des poupées russes!) C'est beaucoup plus éléguant qu'une structure pleine avec un petit déplacement.
 </div>
-<!-- SECTION *Achats -->
+<!-- SECTION Achats -->
 <div id="Achats">
 <h1>Achats</h1>
 <pre>
@@ -331,6 +331,8 @@ Canac:
 Tôle acier galvanisé.
 Petites marettes.
 Vis à bois 1"
+Bois 2X2"
+Lame scie a metal
 
 Acheter #8-32 X 0.75"
 Acheter #10-24
@@ -354,7 +356,7 @@ Acier Lennox:
 Renforcir les rails qui montent en rajoutant des coches dedans, de la même manière que les brackets de menuiseries sont fait.
 </pre>
 </div>
-<!-- SECTION Design -->
+<!-- SECTION *Design -->
 <div id="design">
 <pre>
 Section transversale debout ou couchée:
