@@ -727,6 +727,7 @@ app.get('*',function (req, res) {
 
 var portnb = 3000
 
+//app.listen(portnb, '192.168.0.20');
 app.listen(portnb);
 
-console.log('Listening on http://localhost:' + portnb)
+console.log('Listening on:' + portnb)
