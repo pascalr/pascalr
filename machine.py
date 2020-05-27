@@ -74,116 +74,73 @@ class Axis:
         self.destination = -1
         self.maxPosition = 9999999
         self.previousStepTime = time.time()
-        self.isStepHigh = false;
-        self.isMotorEnabled = false;
-        self.isClockwise = false;
-        self.isReferenced = false;
-        self.isReferencing = false;
+        self.isStepHigh = False;
+        self.isMotorEnabled = False;
+        self.isClockwise = False;
+        self.isReferenced = False;
+        self.isReferencing = False;
         self.speed = speed;
-        self.forceRotation = false;
+        self.forceRotation = False;
         self.enabledPin = enabledPin
         self.dirPin = dirPin
         self.stepPin = stepPin
         self.limitSwitchPin = limitSwitchPin
+        self.setMotorEnabled(False)
+        self.moveThread = None
 
     def setMotorEnabled(self, value):
-        digitalWrite(axis.enabledPin, LOW) # FIXME: ALWAYS ENABLED
         #digitalWrite(axisY.enabledPin, value ? LOW : HIGH);
+        digitalWrite(axis.enabledPin, LOW) # FIXME: ALWAYS ENABLED
         self.isMotorEnabled = value
 
-        digitalWrite(ledPin, value ? HIGH : LOW);
+    def setMotorDirection(self, clockwise):
+        digitalWrite(axis.dirPin, clockwise ? LOW : HIGH)
+        self.isClockwise = clockwise;
 
+    def turnOneStep(self):
+        digitalWrite(slef.stepPin, self.isStepHigh ? LOW : HIGH)
+        self.isStepHigh = !self.isStepHigh
+        self.position = self.position + (self.isClockwise ? 1 : -1)
 
-void setMotorEnabled(Axis& axis, bool value) {
-}
-
-void setMotorDirection(Axis& axis, bool clockwise) {
-  digitalWrite(axis.dirPin, clockwise ? LOW : HIGH);
-  axis.isClockwise = clockwise;
-
-  delayMicroseconds(SLOW_SPEED_DELAY);
-}
-
-void turnOneStep(Axis& axis) {
-  digitalWrite(axis.stepPin, axis.isStepHigh ? LOW : HIGH);
-  axis.isStepHigh = !axis.isStepHigh;
-  axis.position = axis.position + (axis.isClockwise ? 1 : -1);
-}
+    def setDestination(self, destination):
+        self.destination = destination
+        if (self.destination > self.maxPosition):
+            self.destination = self.maxPosition
+        self.setMotorEnabled(True)
+        self.setMotorDirection(self.destination > self.position)
 
 #(name, speed, enabledPin, dirPin, stepPin, limitSwithPin)
-axisX = Axis('X', 500)
-axisY = Axis('y', 500)
-axisA = Axis('a', 500)
-axisB = Axis('b', 500)
-axisT = Axis('t', 500)
-void setup() {
+axisX = Axis('X', 500, 2, 3, 4, 5)
+axisY = Axis('Y', 500, 14, 15, 18, 6)
+axisA = Axis('A', 500, 17, 27, 22, 13)
+axisB = Axis('B', 500, 10, 9, 11, 19)
+axisT = Axis('T', 500, 25, 8, 7, 26)
 
-  //Initiate Serial communication.
-  Serial.begin(9600);
-  Serial.println("Setup...");
+axes = {'X': axisX, 'Y': axisY, 'A': axisA, 'B': axisB, 'T': axisB}
 
-  // ************* PIN LAYOUT **************
-  pinMode(ledPin, OUTPUT);
+def digitalWrite(foo, bar):
+    print('digitalWrite')
 
-  axisX.enabledPin = 8;
-  axisX.dirPin = 10;
-  axisX.stepPin = 11;
-  axisX.limitSwitchPin = 12;
+def numberLength(str) :
+    i = 0
+    for e in str:
+        if (e < '0' || e > '9'):
+            break
+    return i
 
-  axisY.enabledPin = 8;
-  axisY.dirPin = 2;
-  axisY.stepPin = 3;
-  axisY.limitSwitchPin = 12;
+def parseSpeed(cmd):
+    for i in range(0, len(cmd)):
+        axis = axes[cmd[i]]
+        if (axis):
+            nbLength = numberLength(cmd[i+1:]);
+            axis.speed = int(cmd[i+1:i+1+nbLength])
 
-  axisZ.enabledPin = 8;
-  axisZ.dirPin = 7;
-  axisZ.stepPin = 6;
-  axisZ.limitSwitchPin = 12;
-  // ***************************************
-
-  setupAxis(axisX, 'X', 500);
-  setupAxis(axisY, 'Y', 500);
-  setupAxis(axisZ, 'Z', 500);
-
-  axisX.maxPosition = 999999;
-  axisY.maxPosition = 999999;
-  axisZ.maxPosition = 999999;
-
-  setMotorEnabled(axisX,false);
-  setMotorEnabled(axisY,false);
-  setMotorEnabled(axisZ,false);
-
-  Serial.println("Done");
-}
-
-int numberLength(String str) {
-  int i;
-  for (i = 0; i < str.length(); i++) {
-    if (str[i] < '0' || str[i] > '9') {break;}
-  }
-  return i;
-}
-
-void parseSpeed(String cmd) {
-  for (int i = 0; i < cmd.length(); i++) {
-    int nbLength = numberLength(cmd.substring(i+1));
-    Axis& axis = axisByLetter(cmd[i]);
-    axis.speed = cmd.substring(i+1,i+1+nbLength).toInt();
-    i = i+nbLength;
-  }
-}
-
-void parseMove(String cmd) {
-  for (int i = 0; i < cmd.length(); i++) {
-    int nbLength = numberLength(cmd.substring(i+1));
-    Axis& axis = axisByLetter(cmd[i]);
-    axis.destination = cmd.substring(i+1,i+1+nbLength).toInt();
-    if (axis.destination > axis.maxPosition) {axis.destination = axis.maxPosition;}
-    setMotorEnabled(axis, true);
-    setMotorDirection(axis, axis.destination > axis.position);
-    i = i+nbLength;
-  }
-}
+def parseMove(cmd):
+    for i in range(0, len(cmd)):
+        axis = axes[cmd[i]]
+        if (axis):
+            nbLength = numberLength(cmd[i+1:]);
+            axis.setDestination(int(cmd[i+1:i+1+nbLength]))
 
 void handleAxis(Axis& axis) {
   if (axis.isReferencing) {
@@ -192,9 +149,9 @@ void handleAxis(Axis& axis) {
       Serial.print("Done referencing axis ");
       Serial.println(axis.name);
       axis.position = 0;
-      setMotorEnabled(axis, false);
-      axis.isReferenced = true;
-      axis.isReferencing = false;
+      setMotorEnabled(axis, False);
+      axis.isReferenced = True;
+      axis.isReferencing = False;
     } else {
       turnOneStep(axis);
       delayMicroseconds(SLOW_SPEED_DELAY);
@@ -206,19 +163,7 @@ void handleAxis(Axis& axis) {
   }
 }
 
-Axis& axisByLetter(char letter) {
-  if (letter == 'X' || letter == 'x') {
-    return axisX;
-  } else if (letter == 'Y' || letter == 'y') {
-    return axisY;
-  } else if (letter == 'Z' || letter == 'z') {
-    return axisZ;
-  } else if (letter == 'W' || letter == 'w') {
-    return axisW;
-  } else {
-    return oups;
-  }
-}
+
 
 void loop() {
   currentTime = time.time();
@@ -234,46 +179,46 @@ void loop() {
     } else if (input.charAt(0) == 'V' || input.charAt(0) == 'v') { // speed (eg. VX300 -> axis X speed 300 microseconds delay per step)
       parseSpeed(input.substring(1));
     } else if (input.charAt(0) == 's' || input.charAt(0) == 'S') { // stop
-      //setMotorsEnabled(false);
+      //setMotorsEnabled(False);
       axisX.destination = axisX.position;
       axisY.destination = axisY.position;
       axisZ.destination = axisZ.position;
       axisW.destination = axisW.position;
-      axisX.forceRotation = false;
-      axisY.forceRotation = false;
-      axisZ.forceRotation = false;
-      axisW.forceRotation = false;
+      axisX.forceRotation = False;
+      axisY.forceRotation = False;
+      axisZ.forceRotation = False;
+      axisW.forceRotation = False;
     } else if (input.charAt(0) == 'H' || input.charAt(0) == 'h') { // home reference (eg. H, or HX, or HY, ...)
       Serial.println("Referencing...");
       if (input.length() == 1) {
-        axisX.isReferencing = true;
-        axisY.isReferencing = true;
-        axisZ.isReferencing = true;
-        axisW.isReferencing = true;
+        axisX.isReferencing = True;
+        axisY.isReferencing = True;
+        axisZ.isReferencing = True;
+        axisW.isReferencing = True;
         setMotorDirection(axisX, CCW);
         setMotorDirection(axisY, CCW);
         setMotorDirection(axisZ, CCW);
-        setMotorEnabled(axisX, true);
-        setMotorEnabled(axisY, true);
-        setMotorEnabled(axisZ, true);
+        setMotorEnabled(axisX, True);
+        setMotorEnabled(axisY, True);
+        setMotorEnabled(axisZ, True);
       } else {
         Axis& axis = axisByLetter(input.charAt(1));
-        axis.isReferencing = true;
+        axis.isReferencing = True;
         setMotorDirection(axis, CCW);
-        setMotorEnabled(axis, true);
+        setMotorEnabled(axis, True);
       }
     } else if (input == "?") { // debug info
       printDebugInfo();
     } else if (input.charAt(0) == '+') {
       Axis& axis = axisByLetter(input.charAt(1));
       setMotorDirection(axis,CW);
-      axis.forceRotation = true;
-      setMotorEnabled(axis,true);
+      axis.forceRotation = True;
+      setMotorEnabled(axis,True);
     } else if (input.charAt(0) == '-') {
       Axis& axis = axisByLetter(input.charAt(1));
       setMotorDirection(axis,CCW);
-      axis.forceRotation = true;
-      setMotorEnabled(axis, true);
+      axis.forceRotation = True;
+      setMotorEnabled(axis, True);
     }
   }
 
