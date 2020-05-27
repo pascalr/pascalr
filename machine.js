@@ -16,7 +16,8 @@ const SerialPort = require('serialport');
 app.get('/hello',function (req, res) {
   console.log('Received command hello')
   //res.sendFile(path.join(__dirname, req.path));
-  res.sendFile(path.join(__dirname, 'data/Ma machine'));
+  //res.sendFile(path.join(__dirname, 'data/Ma machine'));
+  res.sendFile(path.join(__dirname, 'hello.html'));
 })
 
 // https://stackoverflow.com/questions/16333790/node-js-quick-file-server-static-files-over-http
