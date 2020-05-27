@@ -9,18 +9,30 @@ var exec = require('child_process').exec;
 
 const SerialPort = require('serialport');
 
-//app.get('/home', function(req, res) {
-//  res.send({templates})
-//})
+var Gpio = require('onoff').Gpio;
 
-app.get('/hello',function (req, res) {
-  console.log('Received command hello')
-  //res.sendFile(path.join(__dirname, req.path));
-  //res.sendFile(path.join(__dirname, 'data/Ma machine'));
-  res.sendFile(path.join(__dirname, 'hello.html'));
+
+
+
+// ---------------- INIT --------------------
+var ip_address = null
+Object.values(require('os').networkInterfaces()).forEach(function (ifaces) {
+  const iface = ifaces[0]
+  // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
+  if (!('IPv4' !== iface.family || iface.internal !== false)) {
+    ip_address = iface.address
+  }
+})
+// -------------- END INIT ------------------
+
+var myWorker = new Worker('firmware.js');
+myWorker.postMessage("hello");
+myWorker.postMessage({name:"name value"});
+
+app.get('/',function (req, res) {
+  res.sendFile(path.join(__dirname, 'data/Ma machine.html'));
 })
 
-// https://stackoverflow.com/questions/16333790/node-js-quick-file-server-static-files-over-http
 app.get('*',function (req, res) {
   res.writeHead(404, 'Not Found');
   res.end();
@@ -28,6 +40,6 @@ app.get('*',function (req, res) {
 
 var portnb = 3009
 
-app.listen(portnb, "192.168.0.20");
+app.listen(portnb, ip_address);
 
-console.log('Listening on port:' + portnb)
+console.log(`Listening on ${ip_address}:${portnb}`)

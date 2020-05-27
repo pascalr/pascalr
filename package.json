@@ -11,6 +11,7 @@
     "lodash": "^4.17.15",
     "ml-kmeans": "^5.0.0",
     "multer": "^1.4.2",
+    "onoff": "^6.0.0",
     "quill-better-table": "^1.2.2",
     "serialport": "^8.0.8",
     "uuid": "^7.0.3"
