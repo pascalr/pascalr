@@ -25,7 +25,9 @@ for (let i = 0; i < list.length; i++) {
   //});
 }
 
-shell(`cp data/desktop ../public_pascalr/`);
+shell(`cp data/desktop ../public_pascalr/show/desktop.html`);
+//shell(`cp private/show.html ../public_pascalr/show`);
+//shell(`cp private/show.js ../public_pascalr/show`);
 
 function cpDir(dir) {
   var output_path = path.join(output_dir,dir)

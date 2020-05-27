@@ -1,0 +1,28 @@
+<!-- SECTION *Ubuntu Server 20.04 -->
+<h2>Ubuntu Server</h1>
+<pre>
+Username: ubuntu, password: ubuntu
+Le password est modifié ensuite, pas le username
+
+wifi je n'ai pas réussi, brancher ethernet directement
+
+sudo apt-get update && sudo apt-get upgrade
+sudo apt-get install lubuntu-desktop
+</pre>
+<!-- SECTION *Repetier Server -->
+<h2>Repetier Server</h2>
+
+https://www.repetier-server.com/download-images/
+<!-- SECTION Mon site -->
+<h2>Mon site</h2>
+https://github.com/pascalr/pascalr_private.git
+
+Installer nvm
+https://github.com/creationix/nvm
+reload terminal
+Puis installer node.js
+nvm install node
+
+
+sudo apt-get install npm
+cd pascalr_private && npm install

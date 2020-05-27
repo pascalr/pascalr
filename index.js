@@ -711,12 +711,19 @@ app.get('*',function (req, res) {
   if (req.query.contentType && req.query.contentType == 'text')
     contentType = 'text/plain'
 
+  console.log(extname)
+  if (extname === '.html') {
+    filePath = path.join('./data/',filePath).slice(0,-5)
+    console.log(filePath)
+  }
+
   res.set({ 'content-type': 'text/html; charset=utf-8' });
   //res.set({ 'content-type': 'charset=utf-8' });
 
   const stream = fs.createReadStream(filePath, {encoding: 'utf-8'});
 
   stream.on('error', function(error) {
+    console.log('File not found')
     res.writeHead(404, 'Not Found');
     res.end();
   });

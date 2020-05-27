@@ -4,3 +4,7 @@ Ajouter un field id a tous les fichiers html. Au lieu de le mettre dans le nom.
 / in names doesnt work
 
 sudo apt install python3-opencv
+
+Je ne me rappelle plus pourquoi j'avais décidé de ne pas mettre l'extension .html aux fichiers battare il me semble que ça devrait être le cas.
+
+Oupsi, je n'ai plus la barre en haut. il faut vraiment que je copie le fichier show.html

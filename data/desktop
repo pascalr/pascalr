@@ -5,6 +5,7 @@ body, html {
 }
 body {
   margin-top: 0px;
+  /*Source: http://www.seekgif.com/free-image/white-abstract-wallpapers-hd-15116.html*/
   background-image: url("images/white-background.jpeg") !important;
   height: 100%;
   background-position: center;
@@ -20,27 +21,22 @@ body {
 <div id="icons">
 <a href="show/Liste d'épicerie.html"><img class="image2" src="images/1575322767912_image.png" width="64" height="64"></a>
 <a href="show/calc.html"><img class="image2" src="images/calculator.svg" width="64" height="64"></a>
-<a href="show/MouseControl"><img src="images/mouse.svg" width="64" height="64"></a>
-<a href="show/Mechanical engineering"><img src="images/gears.svg" width="64" height="64"></a>
-<a href="show/Ma machine"><img src="images/robot_arm.svg" width="64" height="64"></a>
-<a href="show/publish"><img src="images/internet.svg" width="64" height="64"></a>
+<a href="show/MouseControl.html"><img src="images/mouse.svg" width="64" height="64"></a>
+<a href="show/Mechanical engineering.html"><img src="images/gears.svg" width="64" height="64"></a>
+<a href="show/Ma machine.html"><img src="images/robot_arm.svg" width="64" height="64"></a>
+<a href="show/publish.html"><img src="images/internet.svg" width="64" height="64"></a>
 
 <br/>
 
 <a href="/?f=todo"><img src="images/1575399072750_image.png"  width="64" height="64"></a>
-
 <a href="/?f=music"><img src="images/1575399501187_image.png" width="64" height="64"></a>
-
 <a href="/?f=livre"><img src="images/1575399508109_image.png" width="64" height="64"></a>
-
 <a href="/?f=accords"><img src="images/1575399516179_image.png" width="64" height="64"></a>
-
 <a href="/?f=recette"><img src="images/1575399525010_image.png" width="64" height="64"></a>
 
 <br/>
 
 <a href="https://news.ycombinator.com/"><img src="images/1575399678859_image.png" width="64" height="64"></a>
-
 <a href="https://meteo.gc.ca/city/pages/qc-136_metric_f.html"><img src="images/1578091188486_image.png" width="64" height="64"></a>
 
 <br/>
