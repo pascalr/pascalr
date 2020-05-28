@@ -1,4 +1,4 @@
-<!-- SECTION Ubuntu Server 20.04 -->
+<!-- SECTION *Ubuntu Server 20.04 -->
 <h2>Ubuntu Server</h1>
 <pre>
 Username: ubuntu, password: ubuntu
@@ -29,3 +29,41 @@ nvm install node
 
 sudo apt-get install npm
 cd pascalr_private && npm install
+<!-- SECTION Raspbian -->
+<h2>tmux</h2>
+<p>
+Le but est d'avoir plusieurs fenetres les unes a cotes des autres.
+</p>
+<ul>
+<li>Ctrl-b, % -> split horizontal</li>
+<li>Ctrol-b, " -> split vertical</li>
+<li>Ctrol-b, 0 a 9 -> change la fenetre selon son chiffre</li>
+<li>Ctrol-b, n -> change la fenetre pour la prochaine </li>
+<li>Ctrol-b, p -> change la fenetre pour celle d'avant -> </li>
+<li>Ctrol-b, fleche -> change le paneau </li>
+<li>Ctrol-b,  -> </li>
+<li>Ctrol-b,  -> </li>
+</ul>
+<pre>
+sudo apt install tmux
+</pre>
+
+<h2>Enable SSH</h2>
+<pre>
+As of the November 2016 release, Raspberry Pi OS has the SSH server disabled by default. It can be enabled manually from the desktop:
+
+    Launch Raspberry Pi Configuration from the Preferences menu
+    Navigate to the Interfaces tab
+    Select Enabled next to SSH
+    Click OK
+
+Alternatively, raspi-config can be used in the terminal:
+
+    Enter sudo raspi-config in a terminal window
+    Select Interfacing Options
+    Navigate to and select SSH
+    Choose Yes
+    Select Ok
+    Choose Finish
+
+</pre>
