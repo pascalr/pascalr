@@ -736,6 +736,18 @@ app.get('*',function (req, res) {
 var server_address = process.argv[2] || 'localhost'
 var portnb = process.argv[3] || '3000'
 
+if (server_address === 'local' || server_address === 'lan') {
+  var ip_address = null
+  Object.values(require('os').networkInterfaces()).forEach(function (ifaces) {
+    const iface = ifaces[0]
+    // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
+    if (!('IPv4' !== iface.family || iface.internal !== false)) {
+      ip_address = iface.address
+    }
+  })
+  server_address = ip_address
+}
+
 app.listen(portnb, server_address);
 //app.listen(portnb, '192.168.0.20');
 //app.listen(portnb);
