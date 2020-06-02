@@ -1,4 +1,4 @@
-<!-- SECTION Menu -->
+<!-- SECTION *Menu -->
 <style>
 #menu {
   background-color: black;
@@ -296,7 +296,7 @@ La vitesse maximale que le stepper moteur peut aller dépends du moteur et du co
 Le temps de course d'un stepper doit prendre en compte l'accélération et non seulement la vitesse. 
 
 </div>
-<!-- SECTION *Bearings -->
+<!-- SECTION Bearings -->
 <div id="Bearings">
 <h1>Les bearings</h1>
 Deep groove ball bearings by nature of their design can carry axial loads either alone or in combination with radial loads. Axial load capacity of standard bearings is 0.5 times the Basic Static Load Rating, CO of that bearing. Smaller bearings should not be subject to a load greater than 0.25 times CO. Excessive axial loads can lead to serious reduction of bearing service life.
@@ -308,6 +308,18 @@ Dynamic Load Rating (Cr) 	749	lbs
 Static Load Rating (Cor) 	301	lbs
 
 Je prendrais donc des R6-2RS.
+
+
+608
+
+Principal Dimensions
+Inside diameter: 8mm
+Outside diameter: 22mm
+Width: 7mm
+
+Basic Load Ratings
+Dynamic: 3.45kn
+Static: 1.37kn
 
 </pre>
 </div>
