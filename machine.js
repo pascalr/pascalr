@@ -210,6 +210,12 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'data/Ma machine.html'));
 })
 
+app.get('*',function (req, res) {
+  console.log('GET * path=' + req.path);
+  res.writeHead(404, 'Not Found');
+  res.end();
+});
+
 var server_address = process.argv[2] || 'localhost'
 var portnb = process.argv[3] || '3000'
 
