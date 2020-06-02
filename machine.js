@@ -96,6 +96,20 @@ function retract() {
   return pince.z <= 0 ? "" : "G00Z0\n"
 }
 
+app.get('/run/arduino',function (req, res) {
+  // TODO: write to serial directly
+  let fn = (query) => (`echo ${query.cmd} > /dev/ttyACM0`)
+  console.log('Running command arduino: ' + req.query.cmd)
+  const toExe = fn(req.query)
+  exec(toExe, function(err, stdout, stderr) {
+    console.log(err)
+    console.log(stderr)
+    console.log(stdout);
+    res.set({ 'content-type': 'text/plain; charset=utf-8' });
+    res.send(stdout)
+  });
+})
+
 app.post('/run/recette',function (req, res) {
   console.log('HERE! About to run command: ' + req.params.command)
   var gcode = ""
