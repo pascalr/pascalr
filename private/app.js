@@ -37,7 +37,7 @@ class Item extends React.Component {
   onNameSubmit = (event) => {
     // TODO: Make a controlled input for the name, on focus lost save the name
     const args = {oldName: this.props.elem, newName: event.target.value}
-    $.post('http://localhost:3000/renameFile', args, data => {
+    $.post('/renameFile', args, data => {
       this.setState({elem: args.newName})
       console.log('Filename changed')
     });
@@ -116,7 +116,7 @@ const SuggestCreate = (props) => {
   if (!props.filter) return null
 
   return e('button', {style: {float: 'right', marginRight: '200px'}, onClick: () => {
-    $.post('http://localhost:3000/newFile', {newFilename: props.filter}, data => {
+    $.post('/newFile', {newFilename: props.filter}, data => {
       const href = `/edit/${encodeURIComponent(props.filter)}`
       window.location.href = href
     });
@@ -163,7 +163,7 @@ class App extends React.Component {
 
     console.log('query = ' + query)
 
-    $.getJSON(`http://localhost:3000/search/${query}`, ({data, shouldUseSearchEngine}) => {
+    $.getJSON(`/search/${query}`, ({data, shouldUseSearchEngine}) => {
 
       if (!data) return
       

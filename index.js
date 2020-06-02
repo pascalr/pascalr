@@ -732,9 +732,12 @@ app.get('*',function (req, res) {
   stream.pipe(res)
 });
 
-var portnb = 3000
+// todo: if 'local', get local ip
+var server_address = process.argv[2] || 'localhost'
+var portnb = process.argv[3] || '3000'
 
+app.listen(portnb, server_address);
 //app.listen(portnb, '192.168.0.20');
-app.listen(portnb);
+//app.listen(portnb);
 
-console.log('Listening on:' + portnb)
+console.log('Listening on ' + server_address + ' port ' + portnb)

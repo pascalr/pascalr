@@ -76,5 +76,8 @@ Select Interfacing Options
 Navigate to and select VNC
 Choose Yes
 </pre>
-<!-- SECTION 3d printer -->
+<!-- SECTION *3d printer -->
 socat PTY,raw,echo=0,link=/dev/ttyUSB0,b115200 tcp:192.168.0.18:8888
+<!-- SECTION General -->
+<h2>Pinout</h2>
+<img src="/images/1591016055901_image.png">

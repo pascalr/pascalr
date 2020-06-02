@@ -33,7 +33,7 @@ class EditPage extends React.Component {
 
   componentDidMount() {
     const {filename} = this.props
-    $.get('http://localhost:3000/getFile/'+encodeURIComponent(filename), (content) => {
+    $.get('/getFile/'+encodeURIComponent(filename), (content) => {
       let rawSections = content.split('<!-- SECTION')
       let sections = {}
       if (rawSections[0].trim()) {
@@ -55,10 +55,10 @@ class EditPage extends React.Component {
 
       this.setState({content,sections})
     })
-    $.get('http://localhost:3000/listeTemplates', ({templates}) => {
+    $.get('/listeTemplates', ({templates}) => {
       this.setState({templates})
     })
-    $.get('http://localhost:3000/listeStyles', ({styles}) => {
+    $.get('/listeStyles', ({styles}) => {
       this.setState({styles})
     })
     window.addEventListener('beforeunload', this.handleLeavePage)
@@ -85,7 +85,7 @@ class EditPage extends React.Component {
     })
     content = content.trim()
 
-    $.post('http://localhost:3000/save', {content, filename}, data => {
+    $.post('/save', {content, filename}, data => {
       console.log('Document saved')
       this.setState({modified: false})
     });
@@ -298,8 +298,8 @@ class EditPage extends React.Component {
       //e('div', {className: 'navigationMenu'},
       //),
       e('div', {className: 'navbar'},
-        e('a', {href: 'http://localhost:3000/show/desktop'}, 'Home'),
-        e('a', {href: `http://localhost:3000/show/${encodeURIComponent(filename)}`}, 'Show'),
+        e('a', {href: '/show/desktop'}, 'Home'),
+        e('a', {href: `/show/${encodeURIComponent(filename)}`}, 'Show'),
         e('span', {className: 'dropdown'},
           e('button', {className: 'dropbtn', onClick: () => {this.setState({showActionDropdown: !showActionDropdown})}}, 'Actions', e('i', {className: 'fa fa-caret-down'})),
           showActionDropdown ? e('div', {id: 'myDropdown', className: 'dropdown-content'},

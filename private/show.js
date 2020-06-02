@@ -22,7 +22,7 @@ function rIcon(filename) {
 }
 
 console.log('show.js')
-$.get('http://localhost:3000/getFile'+window.location.pathname.slice(5), function(data) {
+$.get('/getFile'+window.location.pathname.slice(5), function(data) {
   console.log('Got file: ' + window.location.pathname)
   $("#root").html(data)
 
@@ -48,7 +48,7 @@ class ShowNav extends React.Component {
 
   handleSuggestionInput = (event) => {
     const query = event.target.value
-    $.getJSON(`http://localhost:3000/search/${query}`, ({data, shouldUseSearchEngine}) => {
+    $.getJSON(`/search/${query}`, ({data, shouldUseSearchEngine}) => {
       this.setState({suggestions: data})
     })
   }
@@ -56,10 +56,10 @@ class ShowNav extends React.Component {
     const {showActionDropdown, marginWidth} = this.state
 
     return e('div', {className: 'navbar'},
-      e('a', {href: 'http://localhost:3000/show/desktop'}, icon('home.svg')),
-      e('a', {href: 'http://localhost:3000/'}, icon('list.svg')),
-      e('a', {href: `http://localhost:3000/edit/${encodeURIComponent(filename)}`}, icon('brush.svg')),
-      //e('a', {href: `http://localhost:3000/publish/${encodeURIComponent(filename)}`}, 'Publish'),
+      e('a', {href: '/show/desktop'}, icon('home.svg')),
+      e('a', {href: '/'}, icon('list.svg')),
+      e('a', {href: `/edit/${encodeURIComponent(filename)}`}, icon('brush.svg')),
+      //e('a', {href: `/publish/${encodeURIComponent(filename)}`}, 'Publish'),
       /*e('span', {onClick: () => {
         if (marginWidth === '0%') {
           $('#root').css('margin-left', '15%')
