@@ -388,10 +388,10 @@ app.get('/search/:query?', function(req, res) {
 app.get('/getFile/:filename', function(req, res) {
 
   let filePath = decodeURIComponent(req.params.filename)
-  const extension = filePath.split('.').pop();
-  if (extension === 'html') { // The files in data are not stored with .html, (though maybe they should.
-    filePath = filePath.slice(0,-5)
-  }
+  //const extension = filePath.split('.').pop();
+  //if (extension === 'html') { // The files in data are not stored with .html, (though maybe they should.
+  //  filePath = filePath.slice(0,-5)
+  //}
 
   fs.readFile('data/'+filePath, function(error, content) {
     if (error) {
