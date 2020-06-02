@@ -207,7 +207,7 @@ app.get('/poll/arduino', nocache, function(req, res) {
 // *****************************************
 
 app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'data/Ma machine'));
+  res.sendFile(path.join(__dirname, 'data/Ma machine.html'));
 })
 
 var server_address = process.argv[2] || 'localhost'
