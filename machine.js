@@ -35,6 +35,10 @@ app.use(function(req, res, next) {
 // TODO: read this
 // https://blog.soshace.com/en/programming-en/node-lessons-safe-way-to-file/
 
+app.get('/capture.jpg',function (req, res) {
+  res.sendFile(path.join(__dirname, req.path));
+})
+
 app.get('/common/*',function (req, res) {
   res.sendFile(path.join(__dirname, req.path));
 })
