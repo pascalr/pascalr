@@ -1,3 +1,4 @@
+<!-- SECTION *Untitled -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -105,6 +106,7 @@ input[type=number] {
 <span class="item" onclick="menuItemClicked(this)">pesée</span>
 <span class="item" onclick="menuItemClicked(this)">cable</span>
 <span class="item" onclick="menuItemClicked(this)">Achats</span>
+<span class="item" onclick="menuItemClicked(this)">Camera</span>
 </div>
 
 <script>
@@ -319,7 +321,7 @@ Oui ça serait cool un bras robotique, mais je mets de côté pour l'instant. Te
 
 Toutefois, ce n'est pas en vaint, j'ai une bonne idée je crois. Le potentiel est dans des trucs imbriqués (comme des poupées russes!) C'est beaucoup plus éléguant qu'une structure pleine avec un petit déplacement.
 </div>
-<!-- SECTION Achats -->
+<!-- SECTION *Achats -->
 <div id="Achats">
 <h1>Achats</h1>
 <pre>
@@ -387,6 +389,10 @@ Pour l'instant, je fais une seule rotation parce que j'ai aussi mon déplacement
 Je ne suis pas sûr de faire ça parce que là ça devient vraiment compliqué. Il faut que je rajoute tous les moments doublés. Par exemple, je ne peux plus utiliser un seul monter descendre. Il en faut un pour chaque bras. Pas sûr finalment...
 
 C'est mieux si c'est le bras qui monte et descends et non seulement la tablette mobile pour plusieurs raisons. Premièrement, le bras doit pouvoir monter et descendre pour prendre des pots. Aussi, ça voudrait dire qu'il pourrait utiliser la tablette mobile comme surface de travail.
+
+Il va y avoir une camera sur le robot pour determiner la position des pots. Il va pouvoir trouver la position en x et z. Aussi, il va pouvoir determiner la hauteur des pots. Ainsi, le bras va se positionner au dessus en x et z. Ensuite il va descendre dessus.
+
+Il va y avoir un gros ressort au bout pour donner une marche de manoeuvre sur la hauteur.
 </pre>
 </div>
 <!-- SECTION *Pesée -->
@@ -434,3 +440,30 @@ Regarder comment fonctionne le frein d'un cable de pont roulant.
 
 </body>
 </html>
+<!-- SECTION *Camera -->
+<div id="Camera">
+<h1>Camera</h1>
+
+<div>
+<video autoplay></video>
+</div>
+
+<div>
+<button onclick="showVideo()">Show</button>
+</div>
+
+</div>
+
+<script>
+function showVideo() {
+  console.log('here')
+  const constraints = {
+    video: true
+  };
+ 
+  const video = document.querySelector('video');
+
+  navigator.mediaDevices.getUserMedia(constraints).
+    then((stream) => {video.srcObject = stream});
+}
+</script>
