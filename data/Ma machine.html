@@ -79,7 +79,7 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 </style>
-<!-- SECTION *Menu -->
+<!-- SECTION Menu -->
 <style>
 #menu {
   background-color: black;
@@ -107,6 +107,7 @@ input[type=number] {
 <span class="item" onclick="menuItemClicked(this)">cable</span>
 <span class="item" onclick="menuItemClicked(this)">Achats</span>
 <span class="item" onclick="menuItemClicked(this)">Camera</span>
+<span class="item" onclick="menuItemClicked(this)">RPI Camera</span>
 </div>
 
 <script>
@@ -393,6 +394,8 @@ C'est mieux si c'est le bras qui monte et descends et non seulement la tablette 
 Il va y avoir une camera sur le robot pour determiner la position des pots. Il va pouvoir trouver la position en x et z. Aussi, il va pouvoir determiner la hauteur des pots. Ainsi, le bras va se positionner au dessus en x et z. Ensuite il va descendre dessus.
 
 Il va y avoir un gros ressort au bout pour donner une marche de manoeuvre sur la hauteur.
+
+Avec la camera sur mon robot, peut-etre que le raspeberry pi devrait etre sur l'ordinateur.
 </pre>
 </div>
 <!-- SECTION *Pesée -->
@@ -466,4 +469,22 @@ function showVideo() {
   navigator.mediaDevices.getUserMedia(constraints).
     then((stream) => {video.srcObject = stream});
 }
+</script>
+<!-- SECTION RPI Camera -->
+<div id="RPI Camera">
+<h1>Camera</h1>
+
+<div>
+<img src="capture.jpg" id="captureImg" />
+</div>
+
+</div>
+
+<script>
+
+setInterval(function() {
+    var myImageElement = document.getElementById('captureImg');
+    myImageElement.src = 'capture.jpg?rand=' + Math.random();
+})
+
 </script>
