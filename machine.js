@@ -188,6 +188,18 @@ app.get('/closeArduino', function(req, res) {
   res.end()
 })
 
+app.get('/takePicture', function(req, res) {
+	
+  exec('fswebcam --no-banner -r 640x480 -i 0 -F 2 --flip v capture.jpg', function(err, stdout, stderr) {
+    console.log(err)
+    console.log(stderr)
+    console.log(stdout);
+    res.set({ 'content-type': 'text/plain; charset=utf-8' });
+    res.send(stdout)
+  });
+  res.end()
+})
+
 app.get('/reloadArduino', function(req, res) {
   console.log('GET path=' + req.path);
   console.log('*** reloadingArduino ***')

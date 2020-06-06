@@ -296,7 +296,7 @@ La vitesse maximale que le stepper moteur peut aller dépends du moteur et du co
 Le temps de course d'un stepper doit prendre en compte l'accélération et non seulement la vitesse. 
 
 </div>
-<!-- SECTION Bearings -->
+<!-- SECTION *Bearings -->
 <div id="Bearings">
 <h1>Les bearings</h1>
 Deep groove ball bearings by nature of their design can carry axial loads either alone or in combination with radial loads. Axial load capacity of standard bearings is 0.5 times the Basic Static Load Rating, CO of that bearing. Smaller bearings should not be subject to a load greater than 0.25 times CO. Excessive axial loads can lead to serious reduction of bearing service life.
@@ -381,7 +381,7 @@ Poids:<input id="poids" readonly><br/>
 <h2>"Masonite"</h2>
 <p>Je coirs qu'en général ils creusent une cavité pour encastré le masonite derrière les meubles. Mais ça risque d'être un peu difficile sans scie à table. Ex: https://www.youtube.com/watch?v=9MWdBlbT9AE&t=325s. Est-ce que c'est nécessaire?</p>
 </div>
-<!-- SECTION *Engrenages -->
+<!-- SECTION Engrenages -->
 <div id="Engrenages">
 <h1>Engrenages</h1>
 <p>Pour que deux engrenages s'imbriquent, ils doivent posséder le même angle de pression et le même module.</p>
@@ -391,6 +391,16 @@ Poids:<input id="poids" readonly><br/>
 <p>
 For pressure angle 20 degrees, the minimum number of teeth free of undercutting is 17. However, gears with 16 teeth or less can be usable if their strength and contact ratio pose any ill effect. z=2/sin²(alpha). Source: https://khkgears.net/new/gear_knowledge/gear_technical_reference/involute_gear_profile.html
 </p>
+
+<pre>
+https://engineerdog.com/2017/01/07/a-practical-guide-to-fdm-3d-printing-gears/
+
+How few teeth is too few?
+
+This is information that can be looked up in resources like the Machinery Handbook.  13 is the minimum recommended for gears with a 20 deg pressure angle, and 9 is the minimum recommended for gears with a 25 deg pressure angle.
+
+Fewer teeth that that are not recommended because it would require undercut, which weakens the teeth and is tougher to 3D print without having meshing problems.
+</pre>
 
 <h2>Efforts sur les dentures</h2>
 

@@ -79,7 +79,7 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 </style>
-<!-- SECTION Menu -->
+<!-- SECTION *Menu -->
 <style>
 #menu {
   background-color: black;
@@ -148,7 +148,7 @@ function menuItemClicked(item) {
   }, 1000);
 })();
 </script>
-<!-- SECTION *Manuel -->
+<!-- SECTION Manuel -->
 <div id="Manuel">
 <h1>Commandes</h1>
 
@@ -157,6 +157,7 @@ function menuItemClicked(item) {
 <button onclick="$.get('/closeArduino')">Close</button>
 <button onclick="$.get('/run/arduino?cmd=\?')">Info</button>
 <button onclick="$.get('/run/arduino?cmd=\s')" style="color: red;">Stop</button>
+<button onclick="$.get('/takePicture')">Picture</button>
 </div>
 
 <div  style="position: absolute; top: 120px; left: 0px;">
@@ -252,7 +253,9 @@ Log...
 
 <div style="padding-top: 512px;"></div>
 
-<h1>Console</h1>
+<div>
+<img src="capture.jpg" id="captureImg" />
+</div>
 </div>
 <!-- SECTION *Inventaire -->
 <div id="Inventaire">
@@ -396,6 +399,8 @@ Il va y avoir une camera sur le robot pour determiner la position des pots. Il v
 Il va y avoir un gros ressort au bout pour donner une marche de manoeuvre sur la hauteur.
 
 Avec la camera sur mon robot, peut-etre que le raspeberry pi devrait etre sur l'ordinateur.
+
+Il n'y a pas le choix, il y a de l'impreicision dans mon systeme. Il y a plusieurs solutions possibles. Des encodeurs pour s'assurer que je ne manque pas de step. Des capteur de force pour arreter a temps, mais je crois que le plus simple et le moins dispendieux serait de simplement donner du lousse a tous les axes avec des ressorts. Je crois que je n'ai pas besoin de haute precision et c'est plus safe ainsi au lieu d'un bras rigide. Ca me prendrait une genre de clutch a ressort sur les gears. Ou peut-etre bien avec une bille et un ressort, ca serait un limiteur de couple. Ca serait rigide sauf si c'est un trop gros contant, et idealement je detecte si le contact n'est plus la donc je sais qu'il a assez force.
 </pre>
 </div>
 <!-- SECTION *Pesée -->
@@ -470,7 +475,7 @@ function showVideo() {
     then((stream) => {video.srcObject = stream});
 }
 </script>
-<!-- SECTION RPI Camera -->
+<!-- SECTION *RPI Camera -->
 <div id="RPI Camera">
 <h1>Camera</h1>
 
