@@ -1,0 +1,8 @@
+<!-- SECTION TODO -->
+<pre>
+Faire une macro pour faire quatre cercle aux quatres coin d'un rectange.
+
+Le fillet devrait creer un sketch, Faire un arc et deux lignes, et faire un extrude negatif. Ca fonctionnerait toujours au lieu de la bullshit presentement.
+
+C'est pas normal qu'il soit aussi perdu quand tu fais des modifications. Le nom des faces et des edges devrait etre garde. Tu devrais pouvoir changer des operations d'ordre aussi.
+</pre>
