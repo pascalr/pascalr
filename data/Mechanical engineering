@@ -27,6 +27,7 @@
 <span class="item" onclick="menuItemClicked(this)">Matériaux</span>
 <span class="item" onclick="menuItemClicked(this)">Transmission</span>
 <span class="item" onclick="menuItemClicked(this)">Électrique</span>
+<span class="item" onclick="menuItemClicked(this)">Camera</span>
 </div>
 
 <script defer>
@@ -381,7 +382,7 @@ Poids:<input id="poids" readonly><br/>
 <h2>"Masonite"</h2>
 <p>Je coirs qu'en général ils creusent une cavité pour encastré le masonite derrière les meubles. Mais ça risque d'être un peu difficile sans scie à table. Ex: https://www.youtube.com/watch?v=9MWdBlbT9AE&t=325s. Est-ce que c'est nécessaire?</p>
 </div>
-<!-- SECTION Engrenages -->
+<!-- SECTION *Engrenages -->
 <div id="Engrenages">
 <h1>Engrenages</h1>
 <p>Pour que deux engrenages s'imbriquent, ils doivent posséder le même angle de pression et le même module.</p>
@@ -591,9 +592,31 @@ Le delta y de 61.636 à 62 degré est de 0.084" (trouvé avec FreeCAD) au lieu d
 </p>
 <h2>Calcul de la vitesse</h2>
 </div>
-<!-- SECTION Électrique -->
+<!-- SECTION *Électrique -->
 <div id="Électrique">
 <h1>Électrique</h1>
 <h2>Cable carreirs</h2>
 Type de cable carreirs: https://www.cablecarriers.co.in/cable-carriers-and-trollies.html
+</div>
+<!-- SECTION Caméra -->
+<div id="Camera">
+<h1>Caméra</h1>
+
+<h2>Exemple: Ma machine</h2>
+
+<p>J'ai besoin de:</p>
+<p>Être capable de lire de très 1 po à 8 po à peu près.</p>
+<p>Une source de lumière pour éclairer la vue.</p>
+<p>Un long fil ou un autre raspberry pi pas loin ou le meme raspberry pi sur le bras direct (il communique avec l'arduino par wifi)</p>
+<p>Un champs de vision de combien?</p>
+<p></p>
+
+<h2>Medium</h2>
+
+<h3>Code bar 1d</h3>
+<h3>Code bar 2d</h3>
+<h3>Text</h3>
+J'aimerais beaucoup que le poids puisse être marqué en texte sur le dessus du pot, ça serait important pour le bulk barn.
+<h3>Image</h3>
+
 </div>
