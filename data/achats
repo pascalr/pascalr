@@ -5,6 +5,10 @@
 <pre>
 Internet:
 
+Des moteurs NEMA23 pour les axes X et theta aussi. Sinon je ne serai même pas
+capable de prendre des ingrédients (aucune force latéral sinon mon moteur ne tiendra pas)
+Ou bien un plus grand ratio. C'est l'axe theta surtout le problème...
+
 Addisson électronique:
 Spacer mount screw. (standoff)
 40 mm 5V fan (pour raspberry pi 4)
@@ -40,6 +44,9 @@ Plexiglass pour enclosure de mon imprimante 3d et pour mes portes de ma machine
 
 Acier Lennox:
 [Tôle à partir de gauge 22]
+
+Autres:
+Petit escabot
 
 </pre>
 <!-- SECTION *Source -->

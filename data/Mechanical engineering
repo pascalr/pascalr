@@ -277,7 +277,7 @@ axis([0  180 0 1])
 title('Angle AB')
 </pre>
 </div>
-<!-- SECTION *Moteurs -->
+<!-- SECTION Moteurs -->
 <div id="Moteurs">
 <h1>Les moteurs</h1>
 Il va probablement falloir que ce soit des servos-moteurs et non des steppers moteurs, parce que avec un servo j'ai le feedback du positionnement, alors je peux détecter s'il y a une anomalie ou une erreur.
@@ -295,6 +295,15 @@ Since steppers have a fixed resolution, spinning twice as fast effectively doubl
 La vitesse maximale que le stepper moteur peut aller dépends du moteur et du controlleur. Les facteurs sont la résolution du moteur, et la fréquence du controlleur. Si le controlleur aurait une fréquence super élevé, le moteur pourrait tourner super vite. Mais en pratique, plus que la vitesse augmente et plus que le couple diminue, et il est peu pertinent d'aller plus haut que 1500 RPM.
 <h2>Temps de course</h2>
 Le temps de course d'un stepper doit prendre en compte l'accélération et non seulement la vitesse. 
+
+<h2>Moteur DC</h2>
+<p>
+https://www.electricaltechnology.org/2015/11/what-are-dc-drives-types-of-electrical-dc-drives.html
+In DC motors, the speed is proportional to the armature voltage and inversely proportional to the field current. And also, the armature current is proportional to the motor torque.
+<img src="/images/1595428856642_image.png">
+</p>
+
+pwm
 
 </div>
 <!-- SECTION *Bearings -->
@@ -598,7 +607,7 @@ Le delta y de 61.636 à 62 degré est de 0.084" (trouvé avec FreeCAD) au lieu d
 <h2>Cable carreirs</h2>
 Type de cable carreirs: https://www.cablecarriers.co.in/cable-carriers-and-trollies.html
 </div>
-<!-- SECTION Caméra -->
+<!-- SECTION *Caméra -->
 <div id="Camera">
 <h1>Caméra</h1>
 
